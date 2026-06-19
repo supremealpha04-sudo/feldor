@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Dashboard — FELDOR_HEALTH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css">
+<script>
+tailwind.config = { theme: { extend: { colors: { primary: '#0A84FF', secondary: '#00C9A7', dark: '#081B4B', light: '#F8FAFC' } } } }
+</script>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen">
+  <div class="loader"></div>
+  <p>Loading Dashboard...</p>
+</div>
+
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo"><i class="fas fa-heart-pulse"></i> FELDOR_HEALTH</div>
+    <ul class="sidebar-nav">
+      <li><a href="patient-dashboard.html" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fas fa-cloud-upload"></i> Upload Scan</a></li>
+      <li><a href="#"><i class="fas fa-file-medical"></i> Reports</a></li>
+      <li><a href="#"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+      <li><a href="telemedicine.html"><i class="fas fa-user-doctor"></i> Doctors</a></li>
+      <li><a href="ai-assistant.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+      <li><a href="#"><i class="fas fa-credit-card"></i> Billing</a></li>
+      <li><a href="#"><i class="fas fa-gear"></i> Settings</a></li>
+    </ul>
+    <div style="margin-top:auto;padding:20px 24px;border-top:1px solid var(--border)">
+      <a href="index.html" class="btn btn-ghost" style="width:100%;font-size:0.85rem"><i class="fas fa-arrow-left"></i> Back to Website</a>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:16px">
+        <button class="topbar-btn" style="display:none" id="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <div class="topbar-search">
+          <i class="fas fa-search" style="color:var(--text-muted);font-size:0.85rem"></i>
+          <input type="text" placeholder="Search scans, reports, doctors...">
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-btn"><i class="fas fa-bell"></i><span class="badge-dot"></span></button>
+        <button class="topbar-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="dash-theme-icon"></i></button>
+        <div class="user-avatar">JD</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Body -->
+    <div class="dashboard-body page-content">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
+        <div>
+          <h1 style="font-size:1.6rem;font-weight:800">Welcome back, John</h1>
+          <p style="color:var(--text-muted);font-size:0.9rem;margin-top:4px">Here's your health overview for today</p>
+        </div>
+        <a href="#" class="btn btn-primary"><i class="fas fa-cloud-upload"></i> Upload New Scan</a>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="grid-4" style="margin-bottom:28px">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-heart-pulse"></i></div>
+          <div class="stat-info">
+            <h4>Health Score</h4>
+            <div class="stat-value">87<span style="font-size:1rem;color:var(--text-muted)">/100</span></div>
+            <div class="stat-change up"><i class="fas fa-arrow-up"></i> +3.2% this month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon red"><i class="fas fa-triangle-exclamation"></i></div>
+          <div class="stat-info">
+            <h4>Risk Level</h4>
+            <div class="stat-value" style="color:var(--success)">Low</div>
+            <div class="stat-change up"><i class="fas fa-arrow-down"></i> -12% from last scan</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fas fa-x-ray"></i></div>
+          <div class="stat-info">
+            <h4>Latest Screening</h4>
+            <div class="stat-value" style="font-size:1.2rem">Jun 12, 2026</div>
+            <div class="stat-change up"><i class="fas fa-check"></i> No anomalies found</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="fas fa-calendar"></i></div>
+          <div class="stat-info">
+            <h4>Upcoming Appointment</h4>
+            <div class="stat-value" style="font-size:1.2rem">Jun 24, 2026</div>
+            <div class="stat-change" style="color:var(--primary)"><i class="fas fa-video"></i> Dr. Sarah Chen</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts & Reports -->
+      <div class="grid-2" style="margin-bottom:28px">
+        <div class="widget">
+          <div class="widget-header">
+            <h3><i class="fas fa-chart-line" style="color:var(--primary);margin-right:8px"></i>Health Progress</h3>
+            <a href="#">View Details</a>
+          </div>
+          <div class="chart-placeholder" style="height:240px;padding:0">
+            <div class="chart-bar" style="height:45%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Jan"></div>
+            <div class="chart-bar" style="height:52%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Feb"></div>
+            <div class="chart-bar" style="height:48%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Mar"></div>
+            <div class="chart-bar" style="height:61%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Apr"></div>
+            <div class="chart-bar" style="height:58%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="May"></div>
+            <div class="chart-bar" style="height:72%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Jun"></div>
+            <div class="chart-bar" style="height:78%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Jul"></div>
+            <div class="chart-bar" style="height:87%;background:linear-gradient(180deg,var(--secondary),var(--primary))" data-label="Aug"></div>
+          </div>
+        </div>
+        <div class="widget">
+          <div class="widget-header">
+            <h3><i class="fas fa-history" style="color:var(--secondary);margin-right:8px"></i>Screening History</h3>
+            <a href="#">View All</a>
+          </div>
+          <div class="chart-placeholder" style="height:240px;padding:0">
+            <div class="chart-bar" style="height:30%;background:linear-gradient(180deg,var(--secondary),#00a884)" data-label="2023"></div>
+            <div class="chart-bar" style="height:45%;background:linear-gradient(180deg,var(--secondary),#00a884)" data-label="2024"></div>
+            <div class="chart-bar" style="height:60%;background:linear-gradient(180deg,var(--secondary),#00a884)" data-label="2025"></div>
+            <div class="chart-bar" style="height:85%;background:linear-gradient(180deg,var(--secondary),#00a884)" data-label="2026"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Reports -->
+      <div class="widget" style="margin-bottom:28px">
+        <div class="widget-header">
+          <h3><i class="fas fa-file-medical" style="color:var(--primary);margin-right:8px"></i>Recent Reports</h3>
+          <a href="#">View All Reports</a>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr><th>Report ID</th><th>Type</th><th>Date</th><th>AI Finding</th><th>Doctor Review</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>#REP-2026-0612</strong></td>
+                <td><span class="badge badge-primary"><i class="fas fa-magnet"></i> MRI</span></td>
+                <td>Jun 12, 2026</td>
+                <td>No anomalies (98.2%)</td>
+                <td>Dr. Sarah Chen</td>
+                <td><span class="badge badge-success"><i class="fas fa-check"></i> Clear</span></td>
+                <td><a href="#" style="color:var(--primary);font-size:0.85rem;font-weight:600"><i class="fas fa-eye"></i> View</a></td>
+              </tr>
+              <tr>
+                <td><strong>#REP-2026-0518</strong></td>
+                <td><span class="badge badge-warning"><i class="fas fa-x-ray"></i> CT</span></td>
+                <td>May 18, 2026</td>
+                <td>Minor nodule (2.1mm)</td>
+                <td>Dr. James Wilson</td>
+                <td><span class="badge badge-warning"><i class="fas fa-triangle-exclamation"></i> Watch</span></td>
+                <td><a href="#" style="color:var(--primary);font-size:0.85rem;font-weight:600"><i class="fas fa-eye"></i> View</a></td>
+              </tr>
+              <tr>
+                <td><strong>#REP-2026-0422</strong></td>
+                <td><span class="badge badge-primary"><i class="fas fa-magnet"></i> MRI</span></td>
+                <td>Apr 22, 2026</td>
+                <td>No anomalies (97.8%)</td>
+                <td>Dr. Sarah Chen</td>
+                <td><span class="badge badge-success"><i class="fas fa-check"></i> Clear</span></td>
+                <td><a href="#" style="color:var(--primary);font-size:0.85rem;font-weight:600"><i class="fas fa-eye"></i> View</a></td>
+              </tr>
+              <tr>
+                <td><strong>#REP-2026-0315</strong></td>
+                <td><span class="badge badge-danger"><i class="fas fa-bone"></i> X-Ray</span></td>
+                <td>Mar 15, 2026</td>
+                <td>No anomalies (96.5%)</td>
+                <td>Dr. Emily Park</td>
+                <td><span class="badge badge-success"><i class="fas fa-check"></i> Clear</span></td>
+                <td><a href="#" style="color:var(--primary);font-size:0.85rem;font-weight:600"><i class="fas fa-eye"></i> View</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px">Quick Actions</h3>
+      <div class="grid-4">
+        <div class="quick-action" onclick="window.location.href='#'">
+          <i class="fas fa-cloud-upload"></i>
+          <span>Upload Scan</span>
+        </div>
+        <div class="quick-action" onclick="window.location.href='#'">
+          <i class="fas fa-file-medical"></i>
+          <span>View Reports</span>
+        </div>
+        <div class="quick-action" onclick="window.location.href='ai-assistant.html'">
+          <i class="fas fa-robot"></i>
+          <span>Chat With AI</span>
+        </div>
+        <div class="quick-action" onclick="window.location.href='telemedicine.html'">
+          <i class="fas fa-calendar-plus"></i>
+          <span>Book Appointment</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+<script>
+// Dashboard-specific theme icon update
+document.addEventListener('DOMContentLoaded', () => {
+  const icon = document.getElementById('dash-theme-icon');
+  if (icon) {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+  }
+  // Show sidebar toggle on mobile
+  if (window.innerWidth <= 1024) {
+    document.getElementById('sidebar-toggle').style.display = 'flex';
+  }
+});
+</script>
+</body>
+</html>

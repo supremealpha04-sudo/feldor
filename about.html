@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — FELDOR_HEALTH</title>
+<meta name="description" content="Learn about FELDOR_HEALTH's mission to revolutionize cancer detection through AI-powered healthcare technology.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css">
+<script>
+tailwind.config = { theme: { extend: { colors: { primary: '#0A84FF', secondary: '#00C9A7', dark: '#081B4B', light: '#F8FAFC' } } } }
+</script>
+</head>
+<body>
+
+<div class="loading-screen">
+  <div class="loader"></div>
+  <p>Loading About...</p>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="index.html" class="logo"><i class="fas fa-heart-pulse"></i> FELDOR_HEALTH</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#solution">Solution</a></li>
+    <li><a href="index.html#hospitals">Hospitals</a></li>
+    <li><a href="index.html#doctors">Doctors</a></li>
+    <li><a href="index.html#research">Research</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-buttons">
+    <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+    <a href="patient-dashboard.html" class="btn btn-primary">Get Started</a>
+    <span class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></span>
+  </div>
+</nav>
+
+<!-- Mission -->
+<section class="section" style="padding-top:120px">
+  <div style="max-width:800px;margin:0 auto;text-align:center">
+    <span class="badge badge-primary reveal" style="font-size:0.85rem;padding:8px 18px;margin-bottom:20px;display:inline-block"><i class="fas fa-bullseye"></i> OUR MISSION</span>
+    <h2 class="section-title reveal" style="font-size:3rem">Detect Earlier.<br><span class="gradient-text">Save More Lives.</span></h2>
+    <p class="reveal" style="font-size:1.15rem;color:var(--text-muted);line-height:1.8;margin-top:20px">
+      At FELDOR_HEALTH, we believe that every person deserves access to world-class cancer detection. Our mission is to harness the power of artificial intelligence to make early cancer detection accessible, affordable, and accurate for everyone — regardless of geography, income, or background.
+    </p>
+  </div>
+</section>
+
+<!-- Vision -->
+<section class="section" style="background:linear-gradient(180deg,var(--bg),rgba(10,132,255,0.03))">
+  <div class="grid-2" style="max-width:1000px;margin:0 auto;align-items:center">
+    <div class="reveal">
+      <span class="badge badge-success" style="font-size:0.85rem;padding:8px 18px;margin-bottom:20px;display:inline-block"><i class="fas fa-eye"></i> OUR VISION</span>
+      <h2 style="font-size:2.2rem;font-weight:800;line-height:1.2;margin-bottom:20px">A World Where <span class="gradient-text">No Cancer Goes Undetected</span></h2>
+      <p style="color:var(--text-muted);line-height:1.8;margin-bottom:16px">
+        We envision a future where AI-powered screening is as routine as a blood pressure check. Where a single scan can detect multiple cancer types with near-perfect accuracy. Where geographic barriers to specialist care are eliminated through telemedicine.
+      </p>
+      <p style="color:var(--text-muted);line-height:1.8">
+        By 2030, we aim to screen 100 million people globally, reducing late-stage cancer diagnoses by 80% and saving millions of lives through early intervention.
+      </p>
+    </div>
+    <div class="reveal" style="display:flex;justify-content:center">
+      <div style="width:360px;height:360px;border-radius:50%;background:linear-gradient(135deg,rgba(10,132,255,0.1),rgba(0,201,167,0.1));display:flex;align-items:center;justify-content:center;position:relative">
+        <div style="font-size:8rem;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent"><i class="fas fa-globe"></i></div>
+        <div class="float-anim" style="position:absolute;top:20px;right:20px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;box-shadow:var(--shadow);font-size:0.85rem;font-weight:600"><i class="fas fa-heart" style="color:var(--danger);margin-right:6px"></i> 12,453+ Lives</div>
+        <div class="float-anim" style="position:absolute;bottom:30px;left:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;box-shadow:var(--shadow);font-size:0.85rem;font-weight:600;animation-delay:1s"><i class="fas fa-hospital" style="color:var(--primary);margin-right:6px"></i> 128+ Hospitals</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Company Story -->
+<section class="section">
+  <div style="max-width:800px;margin:0 auto;text-align:center">
+    <span class="badge badge-warning reveal" style="font-size:0.85rem;padding:8px 18px;margin-bottom:20px;display:inline-block"><i class="fas fa-book-open"></i> OUR STORY</span>
+    <h2 class="section-title reveal">From a Garage to Global Impact</h2>
+    <p class="reveal" style="font-size:1.05rem;color:var(--text-muted);line-height:1.8;margin-top:20px">
+      FELDOR_HEALTH was founded in 2022 by a team of oncologists, AI researchers, and healthcare technologists who shared a common frustration: too many cancers were being detected too late. What started as a research project at Stanford University's medical AI lab has grown into a global platform serving 128+ hospitals and impacting over 12,000 lives.
+    </p>
+    <p class="reveal" style="font-size:1.05rem;color:var(--text-muted);line-height:1.8;margin-top:16px">
+      Our breakthrough came when our AI model achieved 97.4% accuracy on lung cancer detection — outperforming even experienced radiologists on challenging cases. Today, we continue to push the boundaries of what's possible at the intersection of artificial intelligence and oncology.
+    </p>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="section" style="background:linear-gradient(180deg,rgba(10,132,255,0.03),var(--bg))">
+  <h2 class="section-title reveal">Our Journey</h2>
+  <p class="section-subtitle reveal">Key milestones in our mission to transform cancer care.</p>
+  <div style="max-width:700px;margin:0 auto">
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <h4>Company Founded</h4>
+        <span>2022</span>
+        <p>FELDOR_HEALTH founded at Stanford University with a $2M seed round led by Andreessen Horowitz.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <h4>First AI Model Deployed</h4>
+        <span>2023</span>
+        <p>Our lung cancer detection AI achieves 94.2% accuracy in clinical trials at Mayo Clinic and Johns Hopkins.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <h4>FDA Breakthrough Designation</h4>
+        <span>2024</span>
+        <p>Received FDA Breakthrough Device Designation for our multi-cancer early detection platform.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <h4>100+ Hospital Network</h4>
+        <span>2025</span>
+        <p>Expanded to 128 hospitals across North America, Europe, and Asia-Pacific. Series B raised at $150M valuation.</p>
+      </div>
+      <div class="timeline-item reveal">
+        <h4>12,000+ Lives Impacted</h4>
+        <span>2026</span>
+        <p>Surpassed 12,000 lives positively impacted through early detection. Launched telemedicine and AI assistant features.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="section" id="team">
+  <h2 class="section-title reveal">Meet Our Leadership</h2>
+  <p class="section-subtitle reveal">World-class experts in oncology, AI, and healthcare technology.</p>
+  <div class="grid-4">
+    <div class="team-card reveal">
+      <div class="team-img"><i class="fas fa-user-tie"></i></div>
+      <div class="team-info">
+        <h4>Dr. Alexander Feldor</h4>
+        <p>CEO & Co-Founder</p>
+        <div style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.6">Former Stanford Oncology Fellow. 15+ years in cancer research. Published 40+ papers on AI in healthcare.</div>
+        <div class="team-social">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-img" style="background:linear-gradient(135deg,var(--secondary),#00a884)"><i class="fas fa-user-tie"></i></div>
+      <div class="team-info">
+        <h4>Dr. Priya Sharma</h4>
+        <p>Chief Medical Officer</p>
+        <div style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.6">Board-certified oncologist. Former Chief of Oncology at Cleveland Clinic. Led 200+ clinical trials.</div>
+        <div class="team-social">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-img" style="background:linear-gradient(135deg,var(--warning),#d97706)"><i class="fas fa-user-tie"></i></div>
+      <div class="team-info">
+        <h4>James Nakamura</h4>
+        <p>CTO & Co-Founder</p>
+        <div style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.6">Ex-Google DeepMind. PhD in Computer Vision from MIT. Built AI systems processing 10M+ medical images.</div>
+        <div class="team-social">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-img" style="background:linear-gradient(135deg,var(--danger),#DC2626)"><i class="fas fa-user-tie"></i></div>
+      <div class="team-info">
+        <h4>Sarah Mitchell</h4>
+        <p>Chief Operations Officer</p>
+        <div style="font-size:0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.6">Former VP at Epic Systems. Scaled healthcare platforms to serve 50M+ patients across 3 continents.</div>
+        <div class="team-social">
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="reveal">Join Our Mission</h2>
+  <p class="reveal">We're always looking for passionate people who want to make a difference in cancer care.</p>
+  <div class="btn-group reveal">
+    <a href="contact.html" class="btn btn-primary" style="padding:14px 36px;font-size:1rem"><i class="fas fa-briefcase"></i> View Open Positions</a>
+    <a href="contact.html" class="btn btn-secondary" style="padding:14px 36px;font-size:1rem;color:#fff;border-color:rgba(255,255,255,0.4)"><i class="fas fa-envelope"></i> Get in Touch</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><i class="fas fa-heart-pulse" style="color:var(--primary)"></i> FELDOR_HEALTH</div>
+      <p class="footer-desc">Detect Earlier. Treat Faster. Save More Lives. FELDOR_HEALTH is revolutionizing cancer care through advanced artificial intelligence.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div><h4>Product</h4><ul><li><a href="index.html#features">AI Detection</a></li><li><a href="telemedicine.html">Telemedicine</a></li><li><a href="ai-assistant.html">AI Assistant</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="patient-dashboard.html">For Patients</a></li><li><a href="doctor-dashboard.html">For Doctors</a></li><li><a href="hospital-dashboard.html">For Hospitals</a></li><li><a href="index.html#research">Research</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="about.html#team">Team</a></li><li><a href="about.html#careers">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">HIPAA Compliance</a></li><li><a href="#">Security</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 FELDOR_HEALTH. All rights reserved.</span>
+    <span>Made with <i class="fas fa-heart" style="color:var(--danger)"></i> for better healthcare</span>
+  </div>
+</footer>
+
+<script src="scripts.js"></script>
+</body>
+</html>

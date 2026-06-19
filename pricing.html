@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — FELDOR_HEALTH</title>
+<meta name="description" content="Transparent pricing for FELDOR_HEALTH AI-powered cancer detection. Plans for patients and hospitals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css">
+<script>
+tailwind.config = { theme: { extend: { colors: { primary: '#0A84FF', secondary: '#00C9A7', dark: '#081B4B', light: '#F8FAFC' } } } }
+</script>
+</head>
+<body>
+
+<div class="loading-screen">
+  <div class="loader"></div>
+  <p>Loading Pricing...</p>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="index.html" class="logo"><i class="fas fa-heart-pulse"></i> FELDOR_HEALTH</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#solution">Solution</a></li>
+    <li><a href="index.html#hospitals">Hospitals</a></li>
+    <li><a href="index.html#doctors">Doctors</a></li>
+    <li><a href="index.html#research">Research</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-buttons">
+    <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+    <a href="patient-dashboard.html" class="btn btn-primary">Get Started</a>
+    <span class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></span>
+  </div>
+</nav>
+
+<section class="section" style="padding-top:120px">
+  <h2 class="section-title reveal">Simple, Transparent Pricing</h2>
+  <p class="section-subtitle reveal">Choose the plan that works for you. No hidden fees. Cancel anytime.</p>
+
+  <!-- Patient Plans -->
+  <div style="text-align:center;margin-bottom:40px">
+    <span class="badge badge-primary" style="font-size:0.9rem;padding:8px 20px"><i class="fas fa-user"></i> FOR PATIENTS</span>
+  </div>
+  <div class="grid-3" style="margin-bottom:80px">
+    <div class="pricing-card reveal">
+      <h3>Basic</h3>
+      <div class="price">$0<span>/month</span></div>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px">Perfect for getting started with AI screening</p>
+      <ul>
+        <li><i class="fas fa-check"></i> 1 scan per month</li>
+        <li><i class="fas fa-check"></i> Basic AI analysis</li>
+        <li><i class="fas fa-check"></i> Email support</li>
+        <li><i class="fas fa-check"></i> Health dashboard</li>
+        <li><i class="fas fa-check"></i> Basic reports (PDF)</li>
+        <li><i class="fas fa-times" style="color:var(--text-muted);opacity:0.4"></i> <span style="color:var(--text-muted);opacity:0.5">Telemedicine</span></li>
+        <li><i class="fas fa-times" style="color:var(--text-muted);opacity:0.4"></i> <span style="color:var(--text-muted);opacity:0.5">AI Assistant</span></li>
+        <li><i class="fas fa-times" style="color:var(--text-muted);opacity:0.4"></i> <span style="color:var(--text-muted);opacity:0.5">Family sharing</span></li>
+      </ul>
+      <a href="patient-dashboard.html" class="btn btn-ghost" style="width:100%">Get Started Free</a>
+    </div>
+    <div class="pricing-card featured reveal">
+      <div class="featured-badge">MOST POPULAR</div>
+      <h3>Pro</h3>
+      <div class="price">$9<span>/month</span></div>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px">Best for individuals monitoring their health</p>
+      <ul>
+        <li><i class="fas fa-check"></i> 10 scans per month</li>
+        <li><i class="fas fa-check"></i> Advanced AI + human review</li>
+        <li><i class="fas fa-check"></i> Priority email support</li>
+        <li><i class="fas fa-check"></i> Full health dashboard</li>
+        <li><i class="fas fa-check"></i> Detailed reports with annotations</li>
+        <li><i class="fas fa-check"></i> 2 telemedicine sessions/month</li>
+        <li><i class="fas fa-check"></i> AI Assistant access</li>
+        <li><i class="fas fa-times" style="color:var(--text-muted);opacity:0.4"></i> <span style="color:var(--text-muted);opacity:0.5">Family sharing</span></li>
+      </ul>
+      <a href="patient-dashboard.html" class="btn btn-primary" style="width:100%">Start Pro Plan</a>
+    </div>
+    <div class="pricing-card reveal">
+      <h3>Premium</h3>
+      <div class="price">$29<span>/month</span></div>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px">Complete health monitoring for you and your family</p>
+      <ul>
+        <li><i class="fas fa-check"></i> Unlimited scans</li>
+        <li><i class="fas fa-check"></i> Premium AI + specialist review</li>
+        <li><i class="fas fa-check"></i> 24/7 dedicated support</li>
+        <li><i class="fas fa-check"></i> Full health dashboard</li>
+        <li><i class="fas fa-check"></i> Advanced reports with trends</li>
+        <li><i class="fas fa-check"></i> Unlimited telemedicine</li>
+        <li><i class="fas fa-check"></i> AI Assistant access</li>
+        <li><i class="fas fa-check"></i> Family account (5 members)</li>
+      </ul>
+      <a href="patient-dashboard.html" class="btn btn-ghost" style="width:100%">Start Premium</a>
+    </div>
+  </div>
+
+  <!-- Hospital Plans -->
+  <div style="text-align:center;margin-bottom:40px">
+    <span class="badge badge-success" style="font-size:0.9rem;padding:8px 20px"><i class="fas fa-hospital"></i> FOR HOSPITALS</span>
+  </div>
+  <div class="grid-3">
+    <div class="pricing-card reveal">
+      <h3>Starter</h3>
+      <div class="price">$299<span>/month</span></div>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px">For small clinics and private practices</p>
+      <ul>
+        <li><i class="fas fa-check"></i> Up to 500 scans/month</li>
+        <li><i class="fas fa-check"></i> AI analysis for 5 cancer types</li>
+        <li><i class="fas fa-check"></i> 3 doctor accounts</li>
+        <li><i class="fas fa-check"></i> Basic analytics dashboard</li>
+        <li><i class="fas fa-check"></i> Email support</li>
+        <li><i class="fas fa-check"></i> Standard API access</li>
+      </ul>
+      <a href="contact.html" class="btn btn-ghost" style="width:100%">Contact Sales</a>
+    </div>
+    <div class="pricing-card featured reveal">
+      <div class="featured-badge">RECOMMENDED</div>
+      <h3>Professional</h3>
+      <div class="price">$999<span>/month</span></div>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px">For mid-size hospitals and medical groups</p>
+      <ul>
+        <li><i class="fas fa-check"></i> Up to 5,000 scans/month</li>
+        <li><i class="fas fa-check"></i> AI analysis for 15+ cancer types</li>
+        <li><i class="fas fa-check"></i> 25 doctor accounts</li>
+        <li><i class="fas fa-check"></i> Advanced analytics & reports</li>
+        <li><i class="fas fa-check"></i> Priority phone & email support</li>
+        <li><i class="fas fa-check"></i> Full API + integrations</li>
+        <li><i class="fas fa-check"></i> Custom branding</li>
+        <li><i class="fas fa-check"></i> Dedicated account manager</li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary" style="width:100%">Contact Sales</a>
+    </div>
+    <div class="pricing-card reveal">
+      <h3>Enterprise</h3>
+      <div class="price" style="font-size:2.2rem">Custom<span style="font-size:1rem"> Pricing</span></div>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px">For large hospital networks and health systems</p>
+      <ul>
+        <li><i class="fas fa-check"></i> Unlimited scans</li>
+        <li><i class="fas fa-check"></i> All cancer types + research</li>
+        <li><i class="fas fa-check"></i> Unlimited doctor accounts</li>
+        <li><i class="fas fa-check"></i> Enterprise analytics suite</li>
+        <li><i class="fas fa-check"></i> 24/7 dedicated support</li>
+        <li><i class="fas fa-check"></i> White-label solution</li>
+        <li><i class="fas fa-check"></i> On-premise deployment option</li>
+        <li><i class="fas fa-check"></i> Custom AI model training</li>
+      </ul>
+      <a href="contact.html" class="btn btn-ghost" style="width:100%">Contact Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" style="margin-top:60px">
+  <h2 class="reveal">Need Help Choosing?</h2>
+  <p class="reveal">Our team is here to help you find the perfect plan for your needs.</p>
+  <div class="btn-group reveal">
+    <a href="contact.html" class="btn btn-primary" style="padding:14px 36px;font-size:1rem"><i class="fas fa-phone"></i> Talk to Sales</a>
+    <a href="contact.html" class="btn btn-secondary" style="padding:14px 36px;font-size:1rem;color:#fff;border-color:rgba(255,255,255,0.4)"><i class="fas fa-envelope"></i> Email Us</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><i class="fas fa-heart-pulse" style="color:var(--primary)"></i> FELDOR_HEALTH</div>
+      <p class="footer-desc">Detect Earlier. Treat Faster. Save More Lives. FELDOR_HEALTH is revolutionizing cancer care through advanced artificial intelligence.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div><h4>Product</h4><ul><li><a href="index.html#features">AI Detection</a></li><li><a href="telemedicine.html">Telemedicine</a></li><li><a href="ai-assistant.html">AI Assistant</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="patient-dashboard.html">For Patients</a></li><li><a href="doctor-dashboard.html">For Doctors</a></li><li><a href="hospital-dashboard.html">For Hospitals</a></li><li><a href="index.html#research">Research</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="about.html#team">Team</a></li><li><a href="about.html#careers">Careers</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">HIPAA Compliance</a></li><li><a href="#">Security</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 FELDOR_HEALTH. All rights reserved.</span>
+    <span>Made with <i class="fas fa-heart" style="color:var(--danger)"></i> for better healthcare</span>
+  </div>
+</footer>
+
+<script src="scripts.js"></script>
+</body>
+</html>

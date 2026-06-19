@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FELDOR_HEALTH — AI-Powered Early Cancer Detection</title>
+<meta name="description" content="FELDOR_HEALTH uses advanced AI to analyze medical scans for earlier cancer detection and improved treatment outcomes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css">
+<script>
+tailwind.config = { theme: { extend: { colors: { primary: '#0A84FF', secondary: '#00C9A7', dark: '#081B4B', light: '#F8FAFC' } } } }
+</script>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen">
+  <div class="loader"></div>
+  <p>Loading FELDOR_HEALTH...</p>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <a href="index.html" class="logo"><i class="fas fa-heart-pulse"></i> FELDOR_HEALTH</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#hospitals">Hospitals</a></li>
+    <li><a href="#doctors">Doctors</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-buttons">
+    <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+    <a href="patient-dashboard.html" class="btn btn-ghost" style="display:none" id="nav-login">Login</a>
+    <a href="patient-dashboard.html" class="btn btn-primary">Get Started</a>
+    <span class="mobile-toggle" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></span>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge fade-in"><i class="fas fa-shield-halved"></i> Trusted by 128+ Hospitals Worldwide</div>
+      <h1 class="hero-title fade-in" style="animation-delay:0.1s">AI-Powered Early <span class="gradient-text">Cancer Detection</span> For Better Outcomes</h1>
+      <p class="hero-subtitle fade-in" style="animation-delay:0.2s">FELDOR_HEALTH uses advanced artificial intelligence to analyze medical scans and patient data for earlier cancer detection and improved treatment outcomes.</p>
+      <div class="hero-buttons fade-in" style="animation-delay:0.3s">
+        <a href="patient-dashboard.html" class="btn btn-primary" style="padding:14px 32px;font-size:1rem"><i class="fas fa-play"></i> Start Screening</a>
+        <a href="contact.html" class="btn btn-secondary" style="padding:14px 32px;font-size:1rem"><i class="fas fa-calendar"></i> Request Demo</a>
+      </div>
+    </div>
+    <div class="hero-visual fade-in" style="animation-delay:0.4s">
+      <div class="main-orb"></div>
+      <div class="orb-1"><i class="fas fa-brain"></i> AI Analysis</div>
+      <div class="orb-2"><i class="fas fa-x-ray"></i> CT Scan</div>
+      <div class="orb-3"><i class="fas fa-magnet"></i> MRI Scan</div>
+      <div class="orb-4"><i class="fas fa-chart-line"></i> Dashboard</div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-num" data-countup="97.4" data-suffix="%">0%</div>
+    <div class="stat-label">AI Accuracy</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-countup="128" data-suffix="+">0</div>
+    <div class="stat-label">Hospitals Connected</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-countup="12453" data-suffix="+">0</div>
+    <div class="stat-label">Lives Impacted</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-num" data-countup="15" data-suffix="+">0</div>
+    <div class="stat-label">Cancer Types Detected</div>
+  </div>
+</section>
+
+<!-- Problem Section -->
+<section class="section" id="problem">
+  <h2 class="section-title reveal">The Problem We're Solving</h2>
+  <p class="section-subtitle reveal">Cancer remains one of the leading causes of death worldwide. Here's why early detection matters.</p>
+  <div class="grid-4">
+    <div class="problem-card reveal">
+      <div class="prob-icon"><i class="fas fa-clock"></i></div>
+      <h3>Late Detection</h3>
+      <p>70% of cancer cases are detected at advanced stages, reducing survival rates by up to 60% and limiting treatment options.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="prob-icon"><i class="fas fa-dollar-sign"></i></div>
+      <h3>High Treatment Costs</h3>
+      <p>Late-stage cancer treatment costs average $150,000+ per patient, compared to $30,000 for early-stage intervention.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="prob-icon"><i class="fas fa-user-doctor"></i></div>
+      <h3>Specialist Shortages</h3>
+      <p>There is a global shortage of 4.3 million healthcare workers, with oncologists being among the most critically needed.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="prob-icon"><i class="fas fa-globe"></i></div>
+      <h3>Accessibility Challenges</h3>
+      <p>Over 50% of the world's population lacks access to timely cancer screening, especially in rural and underserved regions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Solution Section -->
+<section class="section" id="solution" style="background:linear-gradient(180deg,var(--bg),rgba(10,132,255,0.03))">
+  <h2 class="section-title reveal">Our 4-Step Solution</h2>
+  <p class="section-subtitle reveal">A seamless process from scan upload to doctor-reviewed results, powered by cutting-edge AI.</p>
+  <div class="grid-4">
+    <div class="solution-step reveal">
+      <div class="step-num">1</div>
+      <h3>Upload Scan</h3>
+      <p>Securely upload your MRI, CT, or X-ray scans through our encrypted portal in seconds.</p>
+    </div>
+    <div class="solution-step reveal">
+      <div class="step-num">2</div>
+      <h3>AI Analysis</h3>
+      <p>Our deep learning models analyze every pixel with 97.4% accuracy, detecting anomalies invisible to the human eye.</p>
+    </div>
+    <div class="solution-step reveal">
+      <div class="step-num">3</div>
+      <h3>Risk Assessment</h3>
+      <p>Receive a comprehensive risk score and detailed report highlighting areas of concern.</p>
+    </div>
+    <div class="solution-step reveal">
+      <div class="step-num">4</div>
+      <h3>Doctor Review</h3>
+      <p>Board-certified oncologists review AI findings and provide personalized recommendations within 24 hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="section" id="how-it-works">
+  <h2 class="section-title reveal">How It Works</h2>
+  <p class="section-subtitle reveal">From your first scan to life-saving early detection — here's the complete journey.</p>
+  <div class="hiw-timeline reveal">
+    <div class="hiw-step">
+      <div class="hiw-dot"><i class="fas fa-user-plus"></i></div>
+      <h4>Sign Up</h4>
+      <p>Create your secure health profile in under 2 minutes</p>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-dot"><i class="fas fa-cloud-upload"></i></div>
+      <h4>Upload Scans</h4>
+      <p>Drag and drop medical images to our encrypted cloud</p>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-dot"><i class="fas fa-microchip"></i></div>
+      <h4>AI Processes</h4>
+      <p>Advanced neural networks analyze your data in real-time</p>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-dot"><i class="fas fa-file-medical"></i></div>
+      <h4>Get Report</h4>
+      <p>Receive detailed findings with confidence scores</p>
+    </div>
+    <div class="hiw-step">
+      <div class="hiw-dot"><i class="fas fa-user-doctor"></i></div>
+      <h4>Consult Doctor</h4>
+      <p>Book a telemedicine session with a specialist</p>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="section" id="features" style="background:linear-gradient(180deg,rgba(10,132,255,0.03),var(--bg))">
+  <h2 class="section-title reveal">Powerful Features</h2>
+  <p class="section-subtitle reveal">Everything you need for comprehensive cancer screening and care management.</p>
+  <div class="grid-4">
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-brain"></i></div>
+      <h3>AI Detection</h3>
+      <p>State-of-the-art deep learning models trained on millions of medical images for unmatched accuracy.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-video"></i></div>
+      <h3>Telemedicine</h3>
+      <p>Connect with board-certified oncologists via secure HD video consultations from anywhere.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-calendar-check"></i></div>
+      <h3>Appointment Booking</h3>
+      <p>Seamlessly schedule screenings, follow-ups, and specialist consultations with one click.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-robot"></i></div>
+      <h3>AI Assistant</h3>
+      <p>24/7 AI health assistant to answer questions, explain results, and guide your care journey.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-hospital"></i></div>
+      <h3>Hospital Portal</h3>
+      <p>Integrated hospital management system for seamless patient data flow and coordination.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-user-doctor"></i></div>
+      <h3>Doctor Portal</h3>
+      <p>Comprehensive tools for physicians to review AI findings, annotate scans, and manage patients.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-chart-pie"></i></div>
+      <h3>Analytics</h3>
+      <p>Real-time dashboards and reports tracking screening outcomes, trends, and hospital performance.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-flask"></i></div>
+      <h3>Research Center</h3>
+      <p>Access to cutting-edge cancer research, clinical trials, and peer-reviewed publications.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-file-pdf"></i></div>
+      <h3>Reports</h3>
+      <p>Generate and download detailed PDF reports with AI annotations for your medical records.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-bell"></i></div>
+      <h3>Notifications</h3>
+      <p>Smart alerts for upcoming screenings, abnormal findings, and appointment reminders.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-dna"></i></div>
+      <h3>Multi-Cancer Detection</h3>
+      <p>Detect 15+ cancer types including lung, breast, prostate, skin, and colorectal from a single scan.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feat-icon"><i class="fas fa-lock"></i></div>
+      <h3>Secure Storage</h3>
+      <p>HIPAA-compliant, end-to-end encrypted cloud storage for all your medical imaging data.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section" id="testimonials">
+  <h2 class="section-title reveal">Trusted by Patients & Doctors</h2>
+  <p class="section-subtitle reveal">See what healthcare professionals and patients say about FELDOR_HEALTH.</p>
+  <div class="grid-3">
+    <div class="testimonial-card reveal">
+      <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      <p class="quote">"FELDOR_HEALTH detected my early-stage lung cancer that was missed during a routine checkup. The AI flagged a 3mm nodule that saved my life."</p>
+      <div class="author">
+        <div class="author-avatar">MR</div>
+        <div class="author-info"><h5>Michael Roberts</h5><span>Patient, New York</span></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      <p class="quote">"As an oncologist, FELDOR_HEALTH has become an indispensable tool. The AI findings are remarkably accurate and significantly reduce my diagnostic time."</p>
+      <div class="author">
+        <div class="author-avatar">DS</div>
+        <div class="author-info"><h5>Dr. Sarah Chen</h5><span>Oncologist, Mayo Clinic</span></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      <p class="quote">"We've integrated FELDOR_HEALTH across 12 of our hospitals. Screening efficiency improved by 340% and false negatives dropped to near zero."</p>
+      <div class="author">
+        <div class="author-avatar">JK</div>
+        <div class="author-info"><h5>Dr. James Kim</h5><span>CMO, Pacific Health Network</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing Preview -->
+<section class="section" id="pricing" style="background:linear-gradient(180deg,var(--bg),rgba(0,201,167,0.03))">
+  <h2 class="section-title reveal">Simple, Transparent Pricing</h2>
+  <p class="section-subtitle reveal">Choose the plan that fits your needs. All plans include core AI detection features.</p>
+  <div class="grid-3">
+    <div class="pricing-card reveal">
+      <h3>Basic</h3>
+      <div class="price">$0<span>/month</span></div>
+      <ul>
+        <li><i class="fas fa-check"></i> 1 scan per month</li>
+        <li><i class="fas fa-check"></i> Basic AI analysis</li>
+        <li><i class="fas fa-check"></i> Email support</li>
+        <li><i class="fas fa-check"></i> Health dashboard</li>
+        <li><i class="fas fa-times" style="color:var(--text-muted);opacity:0.4"></i> <span style="color:var(--text-muted);opacity:0.5">Telemedicine</span></li>
+      </ul>
+      <a href="pricing.html" class="btn btn-ghost" style="width:100%">Get Started</a>
+    </div>
+    <div class="pricing-card featured reveal">
+      <div class="featured-badge">MOST POPULAR</div>
+      <h3>Pro</h3>
+      <div class="price">$9<span>/month</span></div>
+      <ul>
+        <li><i class="fas fa-check"></i> 10 scans per month</li>
+        <li><i class="fas fa-check"></i> Advanced AI + human review</li>
+        <li><i class="fas fa-check"></i> Priority support</li>
+        <li><i class="fas fa-check"></i> Full health dashboard</li>
+        <li><i class="fas fa-check"></i> 2 telemedicine sessions</li>
+      </ul>
+      <a href="pricing.html" class="btn btn-primary" style="width:100%">Get Started</a>
+    </div>
+    <div class="pricing-card reveal">
+      <h3>Premium</h3>
+      <div class="price">$29<span>/month</span></div>
+      <ul>
+        <li><i class="fas fa-check"></i> Unlimited scans</li>
+        <li><i class="fas fa-check"></i> Premium AI + specialist review</li>
+        <li><i class="fas fa-check"></i> 24/7 dedicated support</li>
+        <li><i class="fas fa-check"></i> Family account (5 members)</li>
+        <li><i class="fas fa-check"></i> Unlimited telemedicine</li>
+      </ul>
+      <a href="pricing.html" class="btn btn-ghost" style="width:100%">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="reveal">Ready to Detect Earlier?</h2>
+  <p class="reveal">Join 128+ hospitals and thousands of patients who trust FELDOR_HEALTH for early cancer detection.</p>
+  <div class="btn-group reveal">
+    <a href="patient-dashboard.html" class="btn btn-primary" style="padding:14px 36px;font-size:1rem"><i class="fas fa-play"></i> Start Free Screening</a>
+    <a href="contact.html" class="btn btn-secondary" style="padding:14px 36px;font-size:1rem;color:#fff;border-color:rgba(255,255,255,0.4)"><i class="fas fa-phone"></i> Talk to Sales</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><i class="fas fa-heart-pulse" style="color:var(--primary)"></i> FELDOR_HEALTH</div>
+      <p class="footer-desc">Detect Earlier. Treat Faster. Save More Lives. FELDOR_HEALTH is revolutionizing cancer care through advanced artificial intelligence and accessible healthcare technology.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div>
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#features">AI Detection</a></li>
+        <li><a href="telemedicine.html">Telemedicine</a></li>
+        <li><a href="ai-assistant.html">AI Assistant</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Solutions</h4>
+      <ul>
+        <li><a href="patient-dashboard.html">For Patients</a></li>
+        <li><a href="doctor-dashboard.html">For Doctors</a></li>
+        <li><a href="hospital-dashboard.html">For Hospitals</a></li>
+        <li><a href="#research">Research</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="about.html#team">Team</a></li>
+        <li><a href="about.html#careers">Careers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">HIPAA Compliance</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 FELDOR_HEALTH. All rights reserved.</span>
+    <span>Made with <i class="fas fa-heart" style="color:var(--danger)"></i> for better healthcare</span>
+  </div>
+</footer>
+
+<script src="scripts.js"></script>
+</body>
+</html>

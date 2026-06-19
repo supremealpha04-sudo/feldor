@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospital Admin Dashboard — FELDOR_HEALTH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css">
+<script>
+tailwind.config = { theme: { extend: { colors: { primary: '#0A84FF', secondary: '#00C9A7', dark: '#081B4B', light: '#F8FAFC' } } } }
+</script>
+</head>
+<body>
+
+<div class="loading-screen">
+  <div class="loader"></div>
+  <p>Loading Admin Dashboard...</p>
+</div>
+
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><i class="fas fa-heart-pulse"></i> FELDOR_HEALTH</div>
+    <ul class="sidebar-nav">
+      <li><a href="hospital-dashboard.html" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fas fa-hospital"></i> Hospitals</a></li>
+      <li><a href="#"><i class="fas fa-user-doctor"></i> Doctors</a></li>
+      <li><a href="#"><i class="fas fa-users"></i> Patients</a></li>
+      <li><a href="#"><i class="fas fa-dollar-sign"></i> Revenue</a></li>
+      <li><a href="#"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+      <li><a href="#"><i class="fas fa-gear"></i> Settings</a></li>
+    </ul>
+    <div style="margin-top:auto;padding:20px 24px;border-top:1px solid var(--border)">
+      <a href="index.html" class="btn btn-ghost" style="width:100%;font-size:0.85rem"><i class="fas fa-arrow-left"></i> Back to Website</a>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:16px">
+        <button class="topbar-btn" style="display:none" id="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <div class="topbar-search">
+          <i class="fas fa-search" style="color:var(--text-muted);font-size:0.85rem"></i>
+          <input type="text" placeholder="Search hospitals, doctors, analytics...">
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-btn"><i class="fas fa-bell"></i><span class="badge-dot"></span></button>
+        <button class="topbar-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="dash-theme-icon"></i></button>
+        <div class="user-avatar" style="background:linear-gradient(135deg,var(--warning),#d97706)">AD</div>
+      </div>
+    </div>
+
+    <div class="dashboard-body page-content">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
+        <div>
+          <h1 style="font-size:1.6rem;font-weight:800">Hospital Network Overview</h1>
+          <p style="color:var(--text-muted);font-size:0.9rem;margin-top:4px">Admin: Alex Davidson | Pacific Health Network</p>
+        </div>
+        <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i> Add Hospital</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid-4" style="margin-bottom:28px">
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-hospital"></i></div>
+          <div class="stat-info">
+            <h4>Total Hospitals</h4>
+            <div class="stat-value">128</div>
+            <div class="stat-change up"><i class="fas fa-arrow-up"></i> +6 this quarter</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fas fa-user-doctor"></i></div>
+          <div class="stat-info">
+            <h4>Total Doctors</h4>
+            <div class="stat-value">4,532</div>
+            <div class="stat-change up"><i class="fas fa-arrow-up"></i> +142 this month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange"><i class="fas fa-users"></i></div>
+          <div class="stat-info">
+            <h4>Total Patients</h4>
+            <div class="stat-value">89,420</div>
+            <div class="stat-change up"><i class="fas fa-arrow-up"></i> +3,241 this month</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fas fa-dollar-sign"></i></div>
+          <div class="stat-info">
+            <h4>Monthly Revenue</h4>
+            <div class="stat-value">$2.4M</div>
+            <div class="stat-change up"><i class="fas fa-arrow-up"></i> +18.5% vs last month</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Large Analytics -->
+      <div class="grid-2" style="margin-bottom:28px">
+        <div class="widget">
+          <div class="widget-header">
+            <h3><i class="fas fa-chart-area" style="color:var(--primary);margin-right:8px"></i>Network Growth</h3>
+            <a href="#">View Report</a>
+          </div>
+          <div class="chart-placeholder" style="height:280px;padding:0">
+            <div class="chart-bar" style="height:25%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Q1"></div>
+            <div class="chart-bar" style="height:38%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Q2"></div>
+            <div class="chart-bar" style="height:52%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Q3"></div>
+            <div class="chart-bar" style="height:68%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Q4"></div>
+            <div class="chart-bar" style="height:75%;background:linear-gradient(180deg,var(--primary),#0066CC)" data-label="Q1"></div>
+            <div class="chart-bar" style="height:88%;background:linear-gradient(180deg,var(--secondary),var(--primary))" data-label="Q2"></div>
+          </div>
+        </div>
+        <div class="widget">
+          <div class="widget-header">
+            <h3><i class="fas fa-chart-pie" style="color:var(--secondary);margin-right:8px"></i>Screening Distribution</h3>
+            <a href="#">View Details</a>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;height:280px;gap:40px">
+            <div class="progress-ring-container">
+              <svg class="progress-ring-svg" width="140" height="140" viewBox="0 0 140 140">
+                <circle class="progress-ring-bg" cx="70" cy="70" r="45"/>
+                <circle class="progress-ring-fill" cx="70" cy="70" r="45" data-percent="42" stroke-dasharray="283" stroke-dashoffset="283"/>
+              </svg>
+              <div class="progress-ring-text">42%</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:center;gap:10px"><div style="width:12px;height:12px;border-radius:3px;background:var(--primary)"></div><span style="font-size:0.85rem">MRI (42%)</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><div style="width:12px;height:12px;border-radius:3px;background:var(--secondary)"></div><span style="font-size:0.85rem">CT (28%)</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><div style="width:12px;height:12px;border-radius:3px;background:var(--success)"></div><span style="font-size:0.85rem">X-Ray (18%)</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><div style="width:12px;height:12px;border-radius:3px;background:var(--warning)"></div><span style="font-size:0.85rem">Mammogram (12%)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hospital Comparison -->
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px">Hospital Performance Comparison</h3>
+      <div class="grid-3" style="margin-bottom:28px">
+        <div class="hospital-compare">
+          <div class="hospital-header">
+            <div class="hospital-avatar"><i class="fas fa-hospital"></i></div>
+            <div>
+              <div style="font-weight:700">Mayo Clinic</div>
+              <div style="font-size:0.8rem;color:var(--text-muted)">Rochester, MN</div>
+            </div>
+          </div>
+          <div class="hospital-metrics">
+            <div class="metric"><div class="val">2,340</div><div class="lbl">Patients</div></div>
+            <div class="metric"><div class="val">98.1%</div><div class="lbl">AI Accuracy</div></div>
+            <div class="metric"><div class="val">$420K</div><div class="lbl">Revenue</div></div>
+          </div>
+        </div>
+        <div class="hospital-compare">
+          <div class="hospital-header">
+            <div class="hospital-avatar" style="background:linear-gradient(135deg,var(--secondary),#00a884)"><i class="fas fa-hospital"></i></div>
+            <div>
+              <div style="font-weight:700">Cleveland Clinic</div>
+              <div style="font-size:0.8rem;color:var(--text-muted)">Cleveland, OH</div>
+            </div>
+          </div>
+          <div class="hospital-metrics">
+            <div class="metric"><div class="val">1,890</div><div class="lbl">Patients</div></div>
+            <div class="metric"><div class="val">97.6%</div><div class="lbl">AI Accuracy</div></div>
+            <div class="metric"><div class="val">$385K</div><div class="lbl">Revenue</div></div>
+          </div>
+        </div>
+        <div class="hospital-compare">
+          <div class="hospital-header">
+            <div class="hospital-avatar" style="background:linear-gradient(135deg,var(--warning),#d97706)"><i class="fas fa-hospital"></i></div>
+            <div>
+              <div style="font-weight:700">Johns Hopkins</div>
+              <div style="font-size:0.8rem;color:var(--text-muted)">Baltimore, MD</div>
+            </div>
+          </div>
+          <div class="hospital-metrics">
+            <div class="metric"><div class="val">1,560</div><div class="lbl">Patients</div></div>
+            <div class="metric"><div class="val">97.2%</div><div class="lbl">AI Accuracy</div></div>
+            <div class="metric"><div class="val">$310K</div><div class="lbl">Revenue</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revenue Table -->
+      <div class="widget">
+        <div class="widget-header">
+          <h3><i class="fas fa-table" style="color:var(--primary);margin-right:8px"></i>Revenue by Hospital</h3>
+          <a href="#">Export CSV</a>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr><th>Hospital</th><th>Location</th><th>Patients</th><th>Screenings</th><th>Revenue</th><th>Growth</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Mayo Clinic</strong></td>
+                <td>Rochester, MN</td>
+                <td>2,340</td>
+                <td>4,680</td>
+                <td>$420,000</td>
+                <td><span style="color:var(--success);font-weight:600">+12.4%</span></td>
+                <td><span class="badge badge-success">Active</span></td>
+              </tr>
+              <tr>
+                <td><strong>Cleveland Clinic</strong></td>
+                <td>Cleveland, OH</td>
+                <td>1,890</td>
+                <td>3,780</td>
+                <td>$385,000</td>
+                <td><span style="color:var(--success);font-weight:600">+8.7%</span></td>
+                <td><span class="badge badge-success">Active</span></td>
+              </tr>
+              <tr>
+                <td><strong>Johns Hopkins</strong></td>
+                <td>Baltimore, MD</td>
+                <td>1,560</td>
+                <td>3,120</td>
+                <td>$310,000</td>
+                <td><span style="color:var(--success);font-weight:600">+15.2%</span></td>
+                <td><span class="badge badge-success">Active</span></td>
+              </tr>
+              <tr>
+                <td><strong>Mass General</strong></td>
+                <td>Boston, MA</td>
+                <td>1,420</td>
+                <td>2,840</td>
+                <td>$275,000</td>
+                <td><span style="color:var(--warning);font-weight:600">+3.1%</span></td>
+                <td><span class="badge badge-success">Active</span></td>
+              </tr>
+              <tr>
+                <td><strong>UCSF Medical</strong></td>
+                <td>San Francisco, CA</td>
+                <td>1,180</td>
+                <td>2,360</td>
+                <td>$240,000</td>
+                <td><span style="color:var(--success);font-weight:600">+9.8%</span></td>
+                <td><span class="badge badge-success">Active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const icon = document.getElementById('dash-theme-icon');
+  if (icon) {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+  }
+  if (window.innerWidth <= 1024) {
+    document.getElementById('sidebar-toggle').style.display = 'flex';
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telemedicine — FELDOR_HEALTH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css">
+<script>
+tailwind.config = { theme: { extend: { colors: { primary: '#0A84FF', secondary: '#00C9A7', dark: '#081B4B', light: '#F8FAFC' } } } }
+</script>
+</head>
+<body>
+
+<div class="loading-screen">
+  <div class="loader"></div>
+  <p>Loading Telemedicine...</p>
+</div>
+
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><i class="fas fa-heart-pulse"></i> FELDOR_HEALTH</div>
+    <ul class="sidebar-nav">
+      <li><a href="patient-dashboard.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fas fa-cloud-upload"></i> Upload Scan</a></li>
+      <li><a href="#"><i class="fas fa-file-medical"></i> Reports</a></li>
+      <li><a href="#"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+      <li><a href="telemedicine.html" class="active"><i class="fas fa-user-doctor"></i> Doctors</a></li>
+      <li><a href="ai-assistant.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+      <li><a href="#"><i class="fas fa-credit-card"></i> Billing</a></li>
+      <li><a href="#"><i class="fas fa-gear"></i> Settings</a></li>
+    </ul>
+    <div style="margin-top:auto;padding:20px 24px;border-top:1px solid var(--border)">
+      <a href="index.html" class="btn btn-ghost" style="width:100%;font-size:0.85rem"><i class="fas fa-arrow-left"></i> Back to Website</a>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:16px">
+        <button class="topbar-btn" style="display:none" id="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <div class="topbar-search">
+          <i class="fas fa-search" style="color:var(--text-muted);font-size:0.85rem"></i>
+          <input type="text" placeholder="Search doctors by name or specialty...">
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-btn"><i class="fas fa-bell"></i><span class="badge-dot"></span></button>
+        <button class="topbar-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="dash-theme-icon"></i></button>
+        <div class="user-avatar">JD</div>
+      </div>
+    </div>
+
+    <div class="dashboard-body page-content">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px">
+        <div>
+          <h1 style="font-size:1.6rem;font-weight:800">Telemedicine</h1>
+          <p style="color:var(--text-muted);font-size:0.9rem;margin-top:4px">Connect with top oncologists via video consultation</p>
+        </div>
+        <a href="#" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Schedule Appointment</a>
+      </div>
+
+      <!-- Video Call UI Mockup -->
+      <div class="video-grid" style="margin-bottom:28px">
+        <div class="video-main">
+          <div class="video-placeholder"><i class="fas fa-user-doctor"></i></div>
+          <div style="position:absolute;top:20px;left:20px;background:rgba(0,0,0,0.5);padding:8px 16px;border-radius:100px;color:#fff;font-size:0.85rem;backdrop-filter:blur(10px)">
+            <i class="fas fa-circle" style="color:var(--danger);font-size:0.5rem;margin-right:6px;animation:pulse-glow 2s infinite"></i> Live • 12:34
+          </div>
+          <div class="video-controls">
+            <button class="video-ctrl-btn"><i class="fas fa-microphone"></i></button>
+            <button class="video-ctrl-btn"><i class="fas fa-video"></i></button>
+            <button class="video-ctrl-btn"><i class="fas fa-desktop"></i></button>
+            <button class="video-ctrl-btn"><i class="fas fa-ellipsis-v"></i></button>
+            <button class="video-ctrl-btn danger"><i class="fas fa-phone-slash"></i></button>
+          </div>
+        </div>
+        <div class="video-sidebar">
+          <div class="video-chat">
+            <div class="video-chat-header"><i class="fas fa-comments" style="margin-right:8px;color:var(--primary)"></i>Live Chat</div>
+            <div class="video-chat-messages">
+              <div class="video-chat-msg in">Dr. Chen has joined the call</div>
+              <div class="video-chat-msg in">Good afternoon, John. I have reviewed your latest MRI results.</div>
+              <div class="video-chat-msg out">Hi Dr. Chen, thank you for seeing me today.</div>
+              <div class="video-chat-msg in">The AI analysis shows no new anomalies. Your health score improved to 87.</div>
+              <div class="video-chat-msg out">That's great news! Should I continue with the current treatment plan?</div>
+              <div class="video-chat-msg in">Yes, continue as planned. We'll schedule a follow-up in 3 months.</div>
+            </div>
+            <div class="video-chat-input">
+              <input type="text" placeholder="Type a message...">
+              <button><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor Cards -->
+      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px">Available Specialists</h3>
+      <div class="grid-4">
+        <div class="doctor-card">
+          <div class="doc-avatar">SC</div>
+          <h4>Dr. Sarah Chen</h4>
+          <div class="doc-specialty">Oncology Specialist</div>
+          <div class="doc-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 4.9</div>
+          <div class="doc-status online"><i class="fas fa-circle" style="font-size:0.5rem"></i> Available Now</div>
+          <a href="#" class="btn btn-primary" style="width:100%;margin-top:14px;font-size:0.85rem"><i class="fas fa-video"></i> Call Now</a>
+        </div>
+        <div class="doctor-card">
+          <div class="doc-avatar" style="background:linear-gradient(135deg,var(--secondary),#00a884)">JW</div>
+          <h4>Dr. James Wilson</h4>
+          <div class="doc-specialty">Radiation Oncologist</div>
+          <div class="doc-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> 4.7</div>
+          <div class="doc-status online"><i class="fas fa-circle" style="font-size:0.5rem"></i> Available Now</div>
+          <a href="#" class="btn btn-primary" style="width:100%;margin-top:14px;font-size:0.85rem"><i class="fas fa-video"></i> Call Now</a>
+        </div>
+        <div class="doctor-card">
+          <div class="doc-avatar" style="background:linear-gradient(135deg,var(--warning),#d97706)">EP</div>
+          <h4>Dr. Emily Park</h4>
+          <div class="doc-specialty">Breast Cancer Specialist</div>
+          <div class="doc-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 5.0</div>
+          <div class="doc-status offline"><i class="fas fa-circle" style="font-size:0.5rem"></i> Next: 3:00 PM</div>
+          <a href="#" class="btn btn-ghost" style="width:100%;margin-top:14px;font-size:0.85rem"><i class="fas fa-calendar-plus"></i> Book</a>
+        </div>
+        <div class="doctor-card">
+          <div class="doc-avatar" style="background:linear-gradient(135deg,var(--danger),#DC2626)">MK</div>
+          <h4>Dr. Michael Kim</h4>
+          <div class="doc-specialty">Lung Cancer Specialist</div>
+          <div class="doc-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i> 4.8</div>
+          <div class="doc-status online"><i class="fas fa-circle" style="font-size:0.5rem"></i> Available Now</div>
+          <a href="#" class="btn btn-primary" style="width:100%;margin-top:14px;font-size:0.85rem"><i class="fas fa-video"></i> Call Now</a>
+        </div>
+      </div>
+
+      <!-- Appointment Booking Widget -->
+      <div class="widget" style="margin-top:28px">
+        <div class="widget-header">
+          <h3><i class="fas fa-calendar-alt" style="color:var(--primary);margin-right:8px"></i>Book an Appointment</h3>
+        </div>
+        <div class="grid-2">
+          <div>
+            <div class="form-group">
+              <label>Select Doctor</label>
+              <select>
+                <option>Dr. Sarah Chen — Oncology</option>
+                <option>Dr. James Wilson — Radiation</option>
+                <option>Dr. Emily Park — Breast Cancer</option>
+                <option>Dr. Michael Kim — Lung Cancer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Preferred Date</label>
+              <input type="date" value="2026-06-24">
+            </div>
+            <div class="form-group">
+              <label>Reason for Visit</label>
+              <textarea placeholder="Briefly describe your symptoms or concerns..."></textarea>
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.9rem;font-weight:500;margin-bottom:12px">Available Time Slots</label>
+            <div class="appt-slot selected">
+              <span class="time">9:00 AM</span>
+              <span class="status available"><i class="fas fa-check-circle"></i> Available</span>
+            </div>
+            <div class="appt-slot">
+              <span class="time">10:30 AM</span>
+              <span class="status booked"><i class="fas fa-times-circle"></i> Booked</span>
+            </div>
+            <div class="appt-slot">
+              <span class="time">2:00 PM</span>
+              <span class="status available"><i class="fas fa-check-circle"></i> Available</span>
+            </div>
+            <div class="appt-slot">
+              <span class="time">3:30 PM</span>
+              <span class="status available"><i class="fas fa-check-circle"></i> Available</span>
+            </div>
+            <div class="appt-slot">
+              <span class="time">5:00 PM</span>
+              <span class="status booked"><i class="fas fa-times-circle"></i> Booked</span>
+            </div>
+            <button class="btn btn-primary" style="width:100%;margin-top:12px"><i class="fas fa-calendar-check"></i> Confirm Booking</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const icon = document.getElementById('dash-theme-icon');
+  if (icon) {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+  }
+  if (window.innerWidth <= 1024) {
+    document.getElementById('sidebar-toggle').style.display = 'flex';
+  }
+  // Slot selection
+  document.querySelectorAll('.appt-slot').forEach(slot => {
+    slot.addEventListener('click', () => {
+      document.querySelectorAll('.appt-slot').forEach(s => s.classList.remove('selected'));
+      slot.classList.add('selected');
+    });
+  });
+});
+</script>
+</body>
+</html>

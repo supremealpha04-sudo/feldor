@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Health Assistant — FELDOR_HEALTH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css">
+<script>
+tailwind.config = { theme: { extend: { colors: { primary: '#0A84FF', secondary: '#00C9A7', dark: '#081B4B', light: '#F8FAFC' } } } }
+</script>
+</head>
+<body>
+
+<div class="loading-screen">
+  <div class="loader"></div>
+  <p>Loading AI Assistant...</p>
+</div>
+
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><i class="fas fa-heart-pulse"></i> FELDOR_HEALTH</div>
+    <ul class="sidebar-nav">
+      <li><a href="patient-dashboard.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fas fa-cloud-upload"></i> Upload Scan</a></li>
+      <li><a href="#"><i class="fas fa-file-medical"></i> Reports</a></li>
+      <li><a href="#"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+      <li><a href="telemedicine.html"><i class="fas fa-user-doctor"></i> Doctors</a></li>
+      <li><a href="ai-assistant.html" class="active"><i class="fas fa-robot"></i> AI Assistant</a></li>
+      <li><a href="#"><i class="fas fa-credit-card"></i> Billing</a></li>
+      <li><a href="#"><i class="fas fa-gear"></i> Settings</a></li>
+    </ul>
+    <div style="margin-top:auto;padding:20px 24px;border-top:1px solid var(--border)">
+      <a href="index.html" class="btn btn-ghost" style="width:100%;font-size:0.85rem"><i class="fas fa-arrow-left"></i> Back to Website</a>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:16px">
+        <button class="topbar-btn" style="display:none" id="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;color:#fff"><i class="fas fa-robot" style="font-size:0.9rem"></i></div>
+          <div>
+            <div style="font-weight:700;font-size:0.95rem">FELDOR AI</div>
+            <div style="font-size:0.75rem;color:var(--success);display:flex;align-items:center;gap:4px"><i class="fas fa-circle" style="font-size:0.4rem"></i> Online</div>
+          </div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="topbar-btn"><i class="fas fa-bell"></i></button>
+        <button class="topbar-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="dash-theme-icon"></i></button>
+        <div class="user-avatar">JD</div>
+      </div>
+    </div>
+
+    <div class="chat-container">
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-message ai">
+          <div class="chat-avatar ai"><i class="fas fa-robot"></i></div>
+          <div class="chat-bubble">
+            <strong>Hello, John! I'm FELDOR AI.</strong><br><br>
+            I'm your personal health assistant, powered by advanced artificial intelligence. I can help you with:<br><br>
+            • Understanding your screening results<br>
+            • Explaining medical terminology<br>
+            • Providing general health guidance<br>
+            • Answering questions about cancer prevention<br>
+            • Scheduling reminders and follow-ups<br><br>
+            How can I assist you today?
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <div class="suggested-prompts">
+          <button>What does my latest MRI mean?</button>
+          <button>How can I reduce cancer risk?</button>
+          <button>Explain my risk score</button>
+          <button>When should I get screened?</button>
+        </div>
+        <div class="chat-input-wrap">
+          <input type="text" id="chat-input" placeholder="Ask FELDOR AI anything about your health...">
+          <button class="send-btn" id="send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        <div style="text-align:center;font-size:0.75rem;color:var(--text-muted);margin-top:10px">
+          FELDOR AI provides general health information. Always consult a doctor for medical decisions.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const icon = document.getElementById('dash-theme-icon');
+  if (icon) {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+  }
+  if (window.innerWidth <= 1024) {
+    document.getElementById('sidebar-toggle').style.display = 'flex';
+  }
+});
+</script>
+</body>
+</html>
