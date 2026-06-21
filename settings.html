@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Feldor Health</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; }
+        .theme-transition { transition: all 0.3s ease; }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        [data-theme="dark"] .glass-nav {
+            background: rgba(10, 22, 40, 0.85);
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            border-radius: 10px;
+        }
+        .floating-symbol {
+            position: fixed;
+            font-size: 3rem;
+            opacity: 0.04;
+            animation: floatSymbol 25s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+            color: #0ea5e9;
+        }
+        @keyframes floatSymbol {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(30px, -40px) rotate(10deg) scale(1.1); }
+            50% { transform: translate(-20px, 30px) rotate(-5deg) scale(0.9); }
+            75% { transform: translate(40px, 20px) rotate(15deg) scale(1.05); }
+        }
+        .setting-item {
+            transition: all 0.3s ease;
+        }
+        .setting-item:hover {
+            transform: translateX(4px);
+            background: #f0f9ff;
+        }
+        [data-theme="dark"] .setting-item:hover {
+            background: rgba(14, 165, 233, 0.1);
+        }
+        .toggle-switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            background: #d1d5db;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .toggle-switch.active {
+            background: #0ea5e9;
+        }
+        .toggle-switch .toggle-knob {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-knob {
+            left: 27px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-[#0a1628] text-gray-900 dark:text-gray-100 theme-transition">
+    <!-- Floating Symbols -->
+    <div class="floating-symbol" style="top:10%;left:5%;animation-delay:0s;"><i class="fas fa-stethoscope"></i></div>
+    <div class="floating-symbol" style="top:20%;right:8%;animation-delay:2s;"><i class="fas fa-hospital"></i></div>
+    <div class="floating-symbol" style="top:50%;left:3%;animation-delay:4s;"><i class="fas fa-syringe"></i></div>
+    <div class="floating-symbol" style="bottom:25%;right:5%;animation-delay:1.5s;"><i class="fas fa-heartbeat"></i></div>
+
+    <!-- Theme Toggle -->
+    <button onclick="toggleTheme()" class="fixed top-4 right-4 z-50 w-12 h-12 rounded-full bg-white dark:bg-[#1a2744] shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center text-2xl hover:scale-110 transition-transform">
+        <span id="themeIcon"><i class="fas fa-moon"></i></span>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 z-40 glass-nav rounded-full shadow-2xl border border-gray-200/50 dark:border-gray-700/50 px-4 py-3 flex items-center gap-1 mb-4 w-auto min-w-[320px] max-w-[95%]">
+        <a href="index.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+            <span class="text-xl"><i class="fas fa-home"></i></span>
+            <span class="text-[10px] uppercase tracking-wider">Home</span>
+        </a>
+        <a href="detector.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+            <span class="text-xl"><i class="fas fa-robot"></i></span>
+            <span class="text-[10px] uppercase tracking-wider">AI Detector</span>
+        </a>
+        <a href="team.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+            <span class="text-xl"><i class="fas fa-users"></i></span>
+            <span class="text-[10px] uppercase tracking-wider">Team</span>
+        </a>
+        <a href="profile.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+            <span class="text-xl"><i class="fas fa-user"></i></span>
+            <span class="text-[10px] uppercase tracking-wider">Profile</span>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-32">
+        <div class="bg-white dark:bg-[#1a2744] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8 md:p-12">
+            <div class="text-center mb-8">
+                <div class="text-5xl text-blue-500 mb-4"><i class="fas fa-cog"></i></div>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">Settings</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">Manage your account preferences and customization (All functional fewatures coming soon........)</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Profile Settings -->
+                <div>
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4"><i class="fas fa-user-circle text-blue-500 mr-2"></i>Profile Settings</h2>
+                    <div class="space-y-3">
+                        <div class="setting-item flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">Display Name</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">John Doe</p>
+                            </div>
+                            <button class="text-blue-500 hover:text-blue-600"><i class="fas fa-pen"></i></button>
+                        </div>
+                        <div class="setting-item flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">Email Address</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">john.doe@email.com</p>
+                            </div>
+                            <button class="text-blue-500 hover:text-blue-600"><i class="fas fa-pen"></i></button>
+                        </div>
+                        <div class="setting-item flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">Phone Number</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">+234 800 000 0000</p>
+                            </div>
+                            <button class="text-blue-500 hover:text-blue-600"><i class="fas fa-pen"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences -->
+                <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4"><i class="fas fa-sliders-h text-blue-500 mr-2"></i>Preferences</h2>
+                    <div class="space-y-3">
+                        <div class="setting-item flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">Dark Mode</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Toggle dark/light theme</p>
+                            </div>
+                            <div class="toggle-switch active" onclick="this.classList.toggle('active')">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                        <div class="setting-item flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">Notifications</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Receive health reminders and updates</p>
+                            </div>
+                            <div class="toggle-switch active" onclick="this.classList.toggle('active')">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                        <div class="setting-item flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">Email Updates</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Get newsletter and product updates</p>
+                            </div>
+                            <div class="toggle-switch" onclick="this.classList.toggle('active')">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security -->
+                <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4"><i class="fas fa-lock text-blue-500 mr-2"></i>Security</h2>
+                    <div class="space-y-3">
+                        <div class="setting-item flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">Change Password</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Update your account password</p>
+                            </div>
+                            <button class="px-4 py-2 rounded-lg bg-blue-500 text-white font-medium hover:bg-blue-600 transition-colors">
+                                Update
+                            </button>
+                        </div>
+                        <div class="setting-item flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700">
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">Two-Factor Authentication</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Add an extra layer of security</p>
+                            </div>
+                            <button class="px-4 py-2 rounded-lg bg-emerald-500 text-white font-medium hover:bg-emerald-600 transition-colors">
+                                Enable
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Actions -->
+                <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4"><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>Account</h2>
+                    <div class="space-y-3">
+                        <div class="setting-item flex items-center justify-between p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+                            <div>
+                                <p class="font-semibold text-red-600 dark:text-red-400">Delete Account</p>
+                                <p class="text-sm text-red-500 dark:text-red-400">Permanently delete your account and data</p>
+                            </div>
+                            <button class="px-4 py-2 rounded-lg bg-red-500 text-white font-medium hover:bg-red-600 transition-colors">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="profile.html" class="inline-flex items-center px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-500 text-white font-semibold hover:shadow-lg hover:scale-[1.02] transition-all">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            document.getElementById('themeIcon').innerHTML = next === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            localStorage.setItem('theme', next);
+        }
+
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            document.getElementById('themeIcon').innerHTML = saved === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        }
+
+        // Toggle switch interaction
+        document.querySelectorAll('.toggle-switch').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
