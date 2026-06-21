@@ -1,1240 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Feldor Health - AI-Powered Cancer Detection for Early Intervention. Building the future of healthcare with advanced machine learning.">
-    <meta name="keywords" content="cancer detection, AI healthcare, medical technology, early diagnosis">
+    <meta name="description" content="Feldor Health - AI-Powered Cancer Detection Platform">
+    <meta name="keywords" content="cancer detection, AI healthcare, medical technology">
     <meta name="author" content="Feldor Technology Ltd">
-    <meta property="og:title" content="Feldor Health | AI-Powered Cancer Detection">
-    <meta property="og:description" content="Advanced machine learning for early cancer detection and intervention">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#0f172a">
+    <title>Feldor Health | AI Cancer Detection</title>
     
-    <title>Feldor Health | AI-Powered Cancer Detection</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="preload" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="preload" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
     <style>
-        /* ==================== CSS Variables ==================== */
-        :root {
-            --primary: #0f172a;
-            --primary-light: #1e293b;
-            --accent: #06b6d4;
-            --accent-glow: rgba(6, 182, 212, 0.3);
-            --accent-secondary: #8b5cf6;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --gradient-1: #06b6d4;
-            --gradient-2: #8b5cf6;
-            --gradient-3: #ec4899;
-            --card-bg: rgba(30, 41, 59, 0.6);
-            --card-border: rgba(148, 163, 184, 0.1);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --transition-fast: 0.2s ease;
-            --transition-normal: 0.3s ease;
-            --transition-slow: 0.4s ease;
-        }
-
-        /* ==================== Global Styles ==================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html {
+        :root {
+            --primary-dark: #0a1628;
+            --primary-light: #f0f7ff;
+            --sky-blue: #0ea5e9;
+            --sky-blue-dark: #0284c7;
+            --white: #ffffff;
+            --black: #1a202c;
+            --orange-red: #ff6b35;
+            --green: #10b981;
+            --gray-light: #f3f4f6;
+            --gray-dark: #6b7280;
+            --shadow: 0 10px 40px rgba(14, 165, 233, 0.1);
+            --shadow-sm: 0 4px 15px rgba(14, 165, 233, 0.08);
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--black);
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--white) 100%);
         }
 
-        /* ==================== Scrollbar ==================== */
-        ::-webkit-scrollbar {
+        /* ==================== MAIN CONTAINER ==================== */
+        .main-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .page-content {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .page-content::-webkit-scrollbar {
             width: 8px;
         }
 
-        ::-webkit-scrollbar-track {
-            background: var(--primary);
+        .page-content::-webkit-scrollbar-track {
+            background: var(--gray-light);
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
+        .page-content::-webkit-scrollbar-thumb {
+            background: var(--sky-blue);
             border-radius: 4px;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-secondary);
-        }
-
-        /* ==================== Background Animation ==================== */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+        /* ==================== HOME PAGE ==================== */
+        .home-hero {
+            background: linear-gradient(135deg, var(--sky-blue) 0%, #0284c7 100%);
+            color: var(--white);
+            padding: 60px 40px;
+            text-align: center;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
             overflow: hidden;
-            pointer-events: none;
         }
 
-        .bg-animation::before {
+        .home-hero::before {
             content: '';
             position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-            top: -200px;
-            right: -200px;
-            animation: float 20s infinite ease-in-out;
-            will-change: transform;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
         }
 
-        .bg-animation::after {
+        .home-hero::after {
             content: '';
             position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.15), transparent 70%);
-            bottom: -100px;
-            left: -100px;
-            animation: float 25s infinite ease-in-out reverse;
-            will-change: transform;
+            bottom: -30%;
+            left: -5%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .logo-hero {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -1px;
+        }
+
+        .hero-title {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         @keyframes float {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 30px) scale(0.9); }
+            50% { transform: translate(20px, -30px) scale(1.1); }
         }
 
-        /* ==================== Grid Overlay ==================== */
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* ==================== Navbar ==================== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all var(--transition-slow);
-        }
-
-        .navbar.scrolled {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 3rem;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, var(--text-primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            cursor: pointer;
-            transition: transform var(--transition-normal);
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .logo span {
-            color: var(--accent);
-            -webkit-text-fill-color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color var(--transition-normal);
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width var(--transition-normal);
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-cta {
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-        }
-
-        .nav-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px var(--accent-glow);
-        }
-
-        .nav-cta:active {
-            transform: translateY(0);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            transition: transform var(--transition-normal);
-        }
-
-        .mobile-menu-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* ==================== Mobile Menu ==================== */
-        #mobileMenu {
-            position: fixed;
-            top: 70px;
-            left: 0;
-            right: 0;
-            background: rgba(15, 23, 42, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 999;
-            padding: 2rem;
-            border-bottom: 1px solid var(--card-border);
-        }
-
-        #mobileMenu ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        #mobileMenu a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 1.1rem;
-            transition: color var(--transition-normal);
-        }
-
-        #mobileMenu a:hover {
-            color: var(--accent);
-        }
-
-        /* ==================== Sections ==================== */
-        section {
-            min-height: 100vh;
-            padding: 8rem 3rem 4rem;
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* ==================== Hero Section ==================== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 900px;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 50px;
-            color: var(--accent);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .hero h1 .gradient-text {
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary), var(--gradient-3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .hero-cta-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease 0.6s both;
-        }
-
-        /* ==================== Buttons ==================== */
-        .btn-primary,
-        .btn-secondary {
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-normal);
-            border: none;
-            padding: 1rem 2.5rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px var(--accent-glow);
-        }
-
-        .btn-primary:active {
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--card-border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--card-bg);
-            border-color: var(--accent);
-        }
-
-        .btn-secondary:active {
-            transform: scale(0.98);
-        }
-
-        /* ==================== Stats Bar ==================== */
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            margin-top: 4rem;
-            animation: fadeInUp 0.8s ease 0.8s both;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
-        }
-
-        /* ==================== Section Headers ==================== */
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-tag {
-            display: inline-block;
-            padding: 0.4rem 1.2rem;
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 50px;
-            color: var(--accent);
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .section-desc {
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-        }
-
-        /* ==================== Problem Grid ==================== */
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .problem-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2.5rem;
-            transition: all var(--transition-slow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .problem-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-            transform: scaleX(0);
-            transition: transform var(--transition-slow);
-        }
-
-        .problem-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .problem-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(6, 182, 212, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .problem-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .problem-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-primary);
-        }
-
-        .problem-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        /* ==================== Insight Box ==================== */
-        .insight-box {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .insight-box p {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            font-style: italic;
-        }
-
-        .insight-box strong {
-            color: var(--accent);
-        }
-
-        /* ==================== Solution Section ==================== */
-        .solution-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .solution-visual {
-            position: relative;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .solution-visual-inner {
-            width: 350px;
-            height: 350px;
-            position: relative;
-        }
-
-        .orbit-ring {
-            position: absolute;
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 50%;
-            animation: rotate 20s linear infinite;
-            will-change: transform;
-        }
-
-        .orbit-ring-1 {
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .orbit-ring-2 {
-            width: 70%;
-            height: 70%;
-            top: 15%;
-            left: 15%;
-            animation-direction: reverse;
-            animation-duration: 15s;
-        }
-
-        .orbit-ring-3 {
-            width: 40%;
-            height: 40%;
-            top: 30%;
-            left: 30%;
-            animation-duration: 10s;
-        }
-
-        .orbit-dot {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: var(--accent);
-            border-radius: 50%;
-            box-shadow: 0 0 20px var(--accent);
-        }
-
-        .orbit-ring-1 .orbit-dot {
-            top: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .orbit-ring-2 .orbit-dot {
-            top: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent-secondary);
-            box-shadow: 0 0 20px var(--accent-secondary);
-        }
-
-        .orbit-ring-3 .orbit-dot {
-            top: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gradient-3);
-            box-shadow: 0 0 20px var(--gradient-3);
-        }
-
-        .center-core {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 0 60px var(--accent-glow);
-            animation: pulse 3s ease-in-out infinite;
-            will-change: transform;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-        }
-
-        /* ==================== Solution Features ==================== */
-        .solution-features {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.25rem;
-            padding: 1.5rem;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            transition: all var(--transition-normal);
-        }
-
-        .feature-item:hover {
-            border-color: rgba(6, 182, 212, 0.3);
-            transform: translateX(10px);
-        }
-
-        .feature-check {
-            width: 36px;
-            height: 36px;
-            min-width: 36px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .feature-text h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .feature-text p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* ==================== Outcome Banner ==================== */
-        .outcome-banner {
-            margin-top: 3rem;
-            padding: 2rem;
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 16px;
-            text-align: center;
-        }
-
-        .outcome-banner p {
-            font-size: 1.2rem;
-            color: var(--text-primary);
-        }
-
-        .outcome-banner .arrow {
-            color: var(--accent);
-            font-weight: 700;
-            margin: 0 0.5rem;
-        }
-
-        /* ==================== Revenue Grid ==================== */
-        .revenue-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .revenue-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2.5rem;
-            text-align: center;
-            transition: all var(--transition-slow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .revenue-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(6, 182, 212, 0.3);
-        }
-
-        .revenue-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-            transform: scaleX(0);
-            transition: transform var(--transition-slow);
-        }
-
-        .revenue-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        .revenue-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin: 0 auto 1rem;
-        }
-
-        .revenue-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .revenue-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* ==================== Market Section ==================== */
-        .market-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .market-chart {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 2.5rem;
-        }
-
-        .chart-bar-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .chart-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .chart-label {
-            width: 80px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            text-align: right;
-        }
-
-        .chart-bar-wrapper {
-            flex: 1;
-            height: 36px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .chart-bar {
-            height: 100%;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: white;
-            transition: width var(--transition-slow);
-            width: 0;
-        }
-
-        .chart-bar.bar-1 { background: linear-gradient(90deg, var(--accent), var(--accent-secondary)); }
-        .chart-bar.bar-2 { background: linear-gradient(90deg, var(--accent-secondary), var(--gradient-3)); }
-        .chart-bar.bar-3 { background: linear-gradient(90deg, var(--gradient-3), #f43f5e); }
-        .chart-bar.bar-4 { background: linear-gradient(90deg, #f43f5e, #ef4444); }
-
-        /* ==================== Market Stats Grid ==================== */
-        .market-stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .market-stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all var(--transition-normal);
-        }
-
-        .market-stat-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        .market-stat-card .year {
-            font-size: 0.8rem;
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .market-stat-card .value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-primary);
-        }
-
-        .market-stat-card .desc {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-
-        /* ==================== Product Flow ==================== */
-        .product-flow {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 3rem;
-        }
-
-        .flow-step {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2rem;
-            width: 220px;
-            text-align: center;
-            transition: all var(--transition-slow);
-            position: relative;
-        }
-
-        .flow-step:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .flow-step-number {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin: 0 auto 1rem;
-        }
-
-        .flow-step h4 {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .flow-step p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .flow-arrow {
-            font-size: 1.5rem;
-            color: var(--accent);
-            animation: bounce 2s infinite;
-            display: flex;
-            align-items: center;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(10px); }
-        }
-
-        /* ==================== Team Section ==================== */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .team-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            text-align: center;
-            transition: all var(--transition-slow);
-        }
-
-        .team-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(6, 182, 212, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .team-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
-            margin: 0 auto 1rem;
-        }
-
-        .team-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .team-role {
-            color: var(--accent);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .team-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-
-        /* ==================== Users Grid ==================== */
-        .users-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .user-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all var(--transition-slow);
-        }
-
-        .user-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .user-card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .user-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .user-card h3 {
-            font-size: 1.1rem;
-        }
-
-        .user-benefits {
-            list-style: none;
-        }
-
-        .user-benefits li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.6rem 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .user-benefits li:last-child {
-            border-bottom: none;
-        }
-
-        .user-benefits li::before {
-            content: '✓';
-            color: var(--success);
-            font-weight: 700;
-            min-width: 20px;
-        }
-
-        /* ==================== Contact Section ==================== */
-        .contact-section {
-            min-height: auto;
-            padding: 6rem 3rem;
-        }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .contact-info h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .contact-info p {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.25rem;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            transition: all var(--transition-normal);
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .contact-item:hover {
-            border-color: var(--accent);
-            transform: translateX(5px);
-        }
-
-        .contact-item-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            flex-shrink: 0;
-        }
-
-        .contact-item-info h4 {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 0.25rem;
-        }
-
-        .contact-item-info p {
-            margin: 0;
-            font-size: 1rem;
-            color: var(--text-primary);
-        }
-
-        /* ==================== Contact Form ==================== */
-        .contact-form {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 2.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: all var(--transition-normal);
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: var(--text-muted);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-normal);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px var(--accent-glow);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        /* ==================== Footer ==================== */
-        footer {
-            padding: 3rem;
-            text-align: center;
-            border-top: 1px solid var(--card-border);
-        }
-
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* ==================== Animations ==================== */
-        @keyframes fadeInUp {
+        @keyframes slideInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -1242,1043 +220,1122 @@
             }
         }
 
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease;
+        /* ==================== CAROUSEL SECTION ==================== */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
         }
 
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .carousel-wrapper {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
         }
 
-        /* ==================== Scroll Progress Bar ==================== */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-            z-index: 9999;
-            transition: width 0.1s ease;
+        .carousel-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 20px;
         }
 
-        /* ==================== Traction Timeline ==================== */
-        .traction-timeline {
+        .carousel-item {
+            flex: 0 0 100%;
+            min-height: 500px;
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: scaleIn 0.6s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--sky-blue-dark) 100%);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: var(--white);
+        }
+
+        .carousel-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .carousel-description {
+            color: var(--gray-dark);
+            line-height: 1.7;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .carousel-controls {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 3rem;
-            position: relative;
+            gap: 20px;
+            margin-top: 30px;
         }
 
-        .traction-timeline::before {
-            content: '';
-            position: absolute;
-            top: 25px;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
-            opacity: 0.3;
-        }
-
-        .traction-item {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            width: 200px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            transition: all var(--transition-slow);
-        }
-
-        .traction-item:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .traction-dot {
-            width: 16px;
-            height: 16px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+        .carousel-btn {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            margin: 0 auto 1rem;
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .traction-item p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* ==================== Competitive Grid ==================== */
-        .competitive-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .competitive-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
+            border: 2px solid var(--sky-blue);
+            background: var(--white);
+            color: var(--sky-blue);
+            cursor: pointer;
+            font-size: 20px;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-        }
-
-        .competitive-column.ours h3 {
-            color: var(--accent);
-        }
-
-        .competitive-column.theirs h3 {
-            color: var(--text-muted);
-        }
-
-        .competitive-list {
-            list-style: none;
-        }
-
-        .competitive-list li {
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .competitive-list li::before {
-            content: '✓';
-            color: var(--success);
+            justify-content: center;
+            transition: all 0.3s ease;
             font-weight: 700;
         }
 
-        .competitive-column.theirs .competitive-list li::before {
-            content: '×';
-            color: var(--danger);
+        .carousel-btn:hover {
+            background: var(--sky-blue);
+            color: var(--white);
+            transform: scale(1.1);
         }
 
-        /* ==================== Funding Section ==================== */
-        .funding-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
         }
 
-        .funding-card {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 24px;
-            padding: 3rem;
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gray-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .indicator.active {
+            background: var(--sky-blue);
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        /* ==================== SECTION HEADERS ==================== */
+        .section-header {
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--sky-blue-dark) 100%);
+            color: var(--white);
+            padding: 40px;
             text-align: center;
+            border-bottom: 3px solid var(--orange-red);
         }
 
-        .funding-amount {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .funding-label {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
+        .section-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            font-weight: 300;
         }
 
-        .funding-uses {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        /* ==================== CONTENT GRID ==================== */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 40px;
+            background: var(--gray-light);
+            min-height: calc(100% - 120px);
         }
 
-        .use-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.25rem;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+        .card {
+            background: var(--white);
             border-radius: 12px;
-            transition: all var(--transition-normal);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
         }
 
-        .use-item:hover {
-            border-color: var(--accent);
-            transform: translateX(5px);
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .use-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-            border-radius: 10px;
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--sky-blue-dark) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
+            font-size: 60px;
         }
 
-        .use-item h4 {
-            margin-bottom: 0.25rem;
+        .card-content {
+            padding: 25px;
         }
 
-        .use-item p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin: 0;
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--black);
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* ==================== Responsive Design ==================== */
-        @media (max-width: 968px) {
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .solution-content,
-            .market-content,
-            .contact-content,
-            .funding-content {
-                grid-template-columns: 1fr;
-            }
-
-            .solution-visual {
-                height: 350px;
-            }
-
-            .stats-bar {
-                gap: 2rem;
-            }
-
-            section {
-                padding: 6rem 1.5rem 3rem;
-            }
-
-            .navbar {
-                padding: 1rem 1.5rem;
-            }
+        .card-description {
+            color: var(--gray-dark);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .card-badge {
+            background: var(--sky-blue);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .card-icon {
+            font-size: 24px;
+        }
+
+        /* ==================== PROFILE PAGE ==================== */
+        .profile-section {
+            padding: 40px;
+            background: var(--gray-light);
+            min-height: 100%;
+        }
+
+        .profile-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-sm);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .profile-user {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid var(--gray-light);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--green) 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: var(--white);
+            border: 4px solid var(--sky-blue);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .profile-role {
+            color: var(--sky-blue);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .profile-email {
+            color: var(--gray-dark);
+            font-size: 14px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--gray-light);
+            color: var(--black);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--sky-blue-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .feature-text h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 3px;
+        }
+
+        .feature-text p {
+            font-size: 13px;
+            color: var(--gray-dark);
+        }
+
+        /* ==================== COMING SOON ==================== */
+        .coming-soon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--white) 100%);
+        }
+
+        .coming-soon-content {
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .coming-icon {
+            font-size: 120px;
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .coming-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .coming-subtitle {
+            font-size: 18px;
+            color: var(--gray-dark);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .coming-badge {
+            background: var(--orange-red);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ==================== FOOTER NAVIGATION ==================== */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 2px solid var(--gray-light);
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-item {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--gray-dark);
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: var(--sky-blue);
+            background: var(--primary-light);
+        }
+
+        .nav-item.active {
+            color: var(--sky-blue);
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--sky-blue);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .main-container {
+            padding-bottom: 90px;
+        }
+
+        /* ==================== TEAM PAGE ==================== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 40px;
+            background: var(--gray-light);
+            min-height: calc(100% - 120px);
+        }
+
+        .team-member {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .team-member:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+        }
+
+        .team-avatar {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--green) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: var(--white);
+        }
+
+        .team-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .team-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .team-title {
+            color: var(--sky-blue);
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .team-bio {
+            color: var(--gray-dark);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* ==================== MODAL ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideInUp 0.3s ease-out;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--gray-light);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--sky-blue);
+            color: var(--white);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--black);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--sky-blue);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .form-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--sky-blue) 0%, var(--sky-blue-dark) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ==================== RESPONSIVE ==================== */
         @media (max-width: 768px) {
-            .competitive-grid {
+            .carousel-item {
+                padding: 25px;
+                min-height: 400px;
+            }
+
+            .carousel-image {
+                height: 180px;
+                font-size: 50px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            .content-grid {
                 grid-template-columns: 1fr;
+                padding: 20px;
             }
 
-            .traction-timeline::before {
-                display: none;
-            }
-
-            .problem-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .market-stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .hero h1 {
-                font-size: 2.2rem;
+            .section-header {
+                padding: 30px 20px;
             }
 
             .section-title {
-                font-size: 1.8rem;
+                font-size: 24px;
             }
 
-            .navbar {
-                padding: 1rem 1.5rem;
+            .profile-card {
+                padding: 25px;
             }
 
-            .flow-arrow {
-                transform: rotate(90deg);
+            .team-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
             }
 
-            .product-flow {
-                flex-direction: column;
-            }
-
-            section {
-                padding: 4rem 1rem 2rem;
-            }
-
-            .contact-content {
-                gap: 2rem;
-            }
-
-            .funding-content {
-                gap: 2rem;
+            .modal-content {
+                padding: 25px;
+                max-width: 90%;
             }
         }
 
-        /* ==================== Print Styles ==================== */
-        @media print {
-            .navbar,
-            .scroll-progress,
-            .mobile-menu-btn {
-                display: none;
+        @media (max-width: 480px) {
+            .logo-hero {
+                font-size: 36px;
             }
 
-            body {
-                background: white;
-                color: black;
+            .hero-title {
+                font-size: 24px;
             }
 
-            section {
-                page-break-inside: avoid;
+            .hero-subtitle {
+                font-size: 16px;
             }
+
+            .stat-box {
+                padding: 15px 20px;
+            }
+
+            .stat-number {
+                font-size: 20px;
+            }
+
+            .hero-stats {
+                gap: 15px;
+            }
+
+            .nav-label {
+                font-size: 10px;
+            }
+
+            .carousel-title {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+        }
+
+        /* ==================== SMOOTH SCROLL ==================== */
+        .page-content {
+            scroll-padding-top: 100px;
         }
     </style>
 </head>
 <body>
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress" id="scrollProgress" role="progressbar" aria-label="Page scroll progress"></div>
+    <div class="main-container">
+        <div class="content-wrapper">
+            <!-- HOME PAGE -->
+            <div id="home" class="page active">
+                <div class="page-content">
+                    <div class="home-hero">
+                        <div class="hero-content">
+                            <div class="logo-hero">FELDOR</div>
+                            <h1 class="hero-title">AI-Powered Cancer Detection</h1>
+                            <p class="hero-subtitle">Revolutionizing early cancer detection with advanced artificial intelligence technology for better outcomes and healthier lives</p>
+                            
+                            <div class="hero-stats">
+                                <div class="stat-box">
+                                    <span class="stat-number">100B+</span>
+                                    <span class="stat-label">Market 2030</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-number">15+</span>
+                                    <span class="stat-label">Years Experience</span>
+                                </div>
+                                <div class="stat-box">
+                                    <span class="stat-number">4</span>
+                                    <span class="stat-label">Revenue Streams</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Background Effects -->
-    <div class="bg-animation" aria-hidden="true"></div>
-    <div class="grid-overlay" aria-hidden="true"></div>
+            <!-- PROBLEMS PAGE -->
+            <div id="problems" class="page">
+                <div class="page-content">
+                    <div class="section-header">
+                        <h2 class="section-title">The Problem</h2>
+                        <p class="section-subtitle">Challenges in Early Cancer Detection</p>
+                    </div>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-        <div class="logo" onclick="window.location.hash='#hero'" role="button" tabindex="0">
-            FELDOR<span>_HEALTH</span>
+                    <div class="carousel-container">
+                        <div class="carousel-wrapper">
+                            <div class="carousel-track" id="problemsTrack">
+                                <!-- Problem 1 -->
+                                <div class="carousel-item">
+                                    <div class="carousel-image">🔍</div>
+                                    <div>
+                                        <h3 class="carousel-title">Subtle Early Symptoms</h3>
+                                        <p class="carousel-description">Early-stage cancer symptoms are often overlooked during routine examinations. These subtle signs are easily missed by both patients and healthcare providers, leading to delayed diagnosis when treatment options are more limited.</p>
+                                        <p class="carousel-description" style="color: var(--sky-blue); font-weight: 600; margin-top: 15px;">Impact: 40% of cancers diagnosed at advanced stages</p>
+                                    </div>
+                                </div>
+
+                                <!-- Problem 2 -->
+                                <div class="carousel-item">
+                                    <div class="carousel-image">🏥</div>
+                                    <div>
+                                        <h3 class="carousel-title">Limited Specialist Access</h3>
+                                        <p class="carousel-description">Access to specialized oncologists and diagnostic experts is severely limited, particularly in developing regions. This creates a critical gap in healthcare accessibility and leads to preventable deaths in underserved populations.</p>
+                                        <p class="carousel-description" style="color: var(--sky-blue); font-weight: 600; margin-top: 15px;">Impact: 75% population lacks specialist access</p>
+                                    </div>
+                                </div>
+
+                                <!-- Problem 3 -->
+                                <div class="carousel-item">
+                                    <div class="carousel-image">⏱️</div>
+                                    <div>
+                                        <h3 class="carousel-title">Costly & Slow Screening</h3>
+                                        <p class="carousel-description">Traditional screening methods are expensive, time-consuming, and heavily dependent on human expertise. The lengthy diagnostic process creates bottlenecks in patient care and strains healthcare system resources.</p>
+                                        <p class="carousel-description" style="color: var(--sky-blue); font-weight: 600; margin-top: 15px;">Impact: 2-4 weeks average diagnostic time</p>
+                                    </div>
+                                </div>
+
+                                <!-- Problem 4 -->
+                                <div class="carousel-item">
+                                    <div class="carousel-image">💰</div>
+                                    <div>
+                                        <h3 class="carousel-title">Enormous Healthcare Costs</h3>
+                                        <p class="carousel-description">Late diagnosis dramatically increases treatment costs, mortality rates, and emotional burden on families. The financial strain affects individuals, healthcare systems, and economies globally.</p>
+                                        <p class="carousel-description" style="color: var(--orange-red); font-weight: 600; margin-top: 15px;">Impact: $200K+ average cost per patient</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="carousel-controls">
+                                <button class="carousel-btn" onclick="previousCarousel('problems')">‹</button>
+                                <button class="carousel-btn" onclick="nextCarousel('problems')">›</button>
+                            </div>
+
+                            <div class="carousel-indicators" id="problemsIndicators">
+                                <div class="indicator active" onclick="goToSlide('problems', 0)"></div>
+                                <div class="indicator" onclick="goToSlide('problems', 1)"></div>
+                                <div class="indicator" onclick="goToSlide('problems', 2)"></div>
+                                <div class="indicator" onclick="goToSlide('problems', 3)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOLUTION PAGE -->
+            <div id="solution" class="page">
+                <div class="page-content">
+                    <div class="section-header">
+                        <h2 class="section-title">Our Solution</h2>
+                        <p class="section-subtitle">Transforming Cancer Detection</p>
+                    </div>
+
+                    <div class="carousel-container">
+                        <div class="carousel-wrapper">
+                            <div class="carousel-track" id="solutionTrack">
+                                <!-- Solution 1 -->
+                                <div class="carousel-item">
+                                    <div class="carousel-image" style="background: linear-gradient(135deg, var(--green) 0%, #059669 100%);">🧠</div>
+                                    <div>
+                                        <h3 class="carousel-title">Advanced Machine Learning</h3>
+                                        <p class="carousel-description">Our cutting-edge AI algorithms analyze medical images and patient data with unprecedented accuracy. The system learns from millions of cases to identify patterns that even experienced radiologists might miss.</p>
+                                        <p class="carousel-description" style="color: var(--green); font-weight: 600; margin-top: 15px;">Accuracy: 95%+ detection rate</p>
+                                    </div>
+                                </div>
+
+                                <!-- Solution 2 -->
+                                <div class="carousel-item">
+                                    <div class="carousel-image" style="background: linear-gradient(135deg, var(--orange-red) 0%, #dc2626 100%);">🎯</div>
+                                    <div>
+                                        <h3 class="carousel-title">Pattern Recognition</h3>
+                                        <p class="carousel-description">Detects invisible patterns and anomalies imperceptible to human eyes. Our deep learning models catch cancer at the earliest stages when treatment success rates are highest, significantly improving patient outcomes.</p>
+                                        <p class="carousel-description" style="color: var(--orange-red); font-weight: 600; margin-top: 15px;">Early Detection: Stage I-II diagnosis</p>
+                                    </div>
+                                </div>
+
+                                <!-- Solution 3 -->
+                                <div class="carousel-item">
+                                    <div class="carousel-image" style="background: linear-gradient(135deg, #06b6d4 0%, var(--sky-blue) 100%);">⚡</div>
+                                    <div>
+                                        <h3 class="carousel-title">Instant Decision Support</h3>
+                                        <p class="carousel-description">Provides doctors with rapid, accurate clinical decision support. What used to take days now takes minutes, allowing immediate intervention and significantly improving survival rates and quality of life.</p>
+                                        <p class="carousel-description" style="color: #06b6d4; font-weight: 600; margin-top: 15px;">Speed: Results in under 5 minutes</p>
+                                    </div>
+                                </div>
+
+                                <!-- Solution 4 -->
+                                <div class="carousel-item">
+                                    <div class="carousel-image" style="background: linear-gradient(135deg, var(--sky-blue) 0%, var(--green) 100%);">🌍</div>
+                                    <div>
+                                        <h3 class="carousel-title">Global Accessibility</h3>
+                                        <p class="carousel-description">Designed for both advanced healthcare systems and low-resource settings. Our scalable platform democratizes access to world-class cancer detection technology, reaching millions of patients globally.</p>
+                                        <p class="carousel-description" style="color: var(--green); font-weight: 600; margin-top: 15px;">Coverage: Available in 50+ countries</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="carousel-controls">
+                                <button class="carousel-btn" onclick="previousCarousel('solution')">‹</button>
+                                <button class="carousel-btn" onclick="nextCarousel('solution')">›</button>
+                            </div>
+
+                            <div class="carousel-indicators" id="solutionIndicators">
+                                <div class="indicator active" onclick="goToSlide('solution', 0)"></div>
+                                <div class="indicator" onclick="goToSlide('solution', 1)"></div>
+                                <div class="indicator" onclick="goToSlide('solution', 2)"></div>
+                                <div class="indicator" onclick="goToSlide('solution', 3)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI DETECTOR PAGE (Coming Soon) -->
+            <div id="detector" class="page">
+                <div class="page-content">
+                    <div class="coming-soon">
+                        <div class="coming-soon-content">
+                            <div class="coming-icon">🤖</div>
+                            <h2 class="coming-title">AI Detector</h2>
+                            <p class="coming-subtitle">Advanced cancer detection analysis at your fingertips</p>
+                            <span class="coming-badge">Coming Soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEAM PAGE -->
+            <div id="team" class="page">
+                <div class="page-content">
+                    <div class="section-header">
+                        <h2 class="section-title">Our Team</h2>
+                        <p class="section-subtitle">Passionate Leaders Transforming Healthcare</p>
+                    </div>
+
+                    <div class="team-grid">
+                        <!-- Team Member 1 -->
+                        <div class="team-member">
+                            <div class="team-avatar">SE</div>
+                            <div class="team-info">
+                                <h3 class="team-name">Simisola Elvis</h3>
+                                <p class="team-title">Founder & CEO</p>
+                                <p class="team-bio">Masters in Accounting & Finance with passion for technology innovation. Leading the vision to revolutionize cancer detection globally.</p>
+                            </div>
+                        </div>
+
+                        <!-- Team Member 2 -->
+                        <div class="team-member">
+                            <div class="team-avatar">DY</div>
+                            <div class="team-info">
+                                <h3 class="team-name">Dr. Yakuba Yunusa</h3>
+                                <p class="team-title">Medical Adviser</p>
+                                <p class="team-bio">15+ years medical experience across Nigerian hospitals. Ensuring clinical excellence and regulatory compliance.</p>
+                            </div>
+                        </div>
+
+                        <!-- Team Member 3 -->
+                        <div class="team-member">
+                            <div class="team-avatar">CD</div>
+                            <div class="team-info">
+                                <h3 class="team-name">Chukwuebuka Divine</h3>
+                                <p class="team-title">Technical Lead</p>
+                                <p class="team-bio">Expert in technical architecture and product design. Building scalable systems that serve millions of patients.</p>
+                            </div>
+                        </div>
+
+                        <!-- Team Member 4 -->
+                        <div class="team-member">
+                            <div class="team-avatar">📊</div>
+                            <div class="team-info">
+                                <h3 class="team-name">Data Science Team</h3>
+                                <p class="team-title">AI & Machine Learning</p>
+                                <p class="team-bio">Specialists in deep learning and medical image analysis. Continuously improving detection accuracy.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFILE PAGE -->
+            <div id="profile" class="page">
+                <div class="page-content">
+                    <div class="profile-section">
+                        <!-- User Profile -->
+                        <div class="profile-card">
+                            <div class="profile-user">
+                                <div class="profile-avatar">👤</div>
+                                <h3 class="profile-name">John Doe</h3>
+                                <p class="profile-role">Patient</p>
+                                <p class="profile-email">john.doe@email.com</p>
+                            </div>
+
+                            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--black);">Available Features</h3>
+                            <ul class="feature-list">
+                                <li>
+                                    <div class="feature-icon">📅</div>
+                                    <div class="feature-text">
+                                        <h3>Booking & Scheduling</h3>
+                                        <p>Schedule appointments with specialists</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="feature-icon">🔬</div>
+                                    <div class="feature-text">
+                                        <h3>AI Analysis Results</h3>
+                                        <p>View detailed diagnostic reports</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="feature-icon">👨‍⚕️</div>
+                                    <div class="feature-text">
+                                        <h3>Doctor Consultation</h3>
+                                        <p>Schedule with your healthcare provider</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="feature-icon">📊</div>
+                                    <div class="feature-text">
+                                        <h3>Medical History</h3>
+                                        <p>Track your health records</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="feature-icon">🔔</div>
+                                    <div class="feature-text">
+                                        <h3>Notifications</h3>
+                                        <p>Get important health reminders</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Features Coming Soon -->
+                        <div class="profile-card" style="text-align: center; padding: 60px 40px;">
+                            <div style="font-size: 80px; margin-bottom: 20px;">🚀</div>
+                            <h3 style="font-size: 22px; font-weight: 700; color: var(--black); margin-bottom: 10px;">More Features Coming Soon</h3>
+                            <p style="color: var(--gray-dark); margin-bottom: 20px;">Telemedicine consultations, prescription management, and more health tools are on the way</p>
+                            <span class="coming-badge">In Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <ul class="nav-links">
-            <li><a href="#problem">Problem</a></li>
-            <li><a href="#solution">Solution</a></li>
-            <li><a href="#business">Business</a></li>
-            <li><a href="#market">Market</a></li>
-            <li><a href="#product">Product</a></li>
-            <li><a href="#team">Team</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        
-        <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" aria-label="Invest now">
-            Invest Now
-        </button>
-        
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" aria-expanded="false" id="mobileMenuBtn">
-            ☰
-        </button>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" style="display:none;">
-        <ul>
-            <li><a href="#problem" onclick="toggleMobileMenu()">Problem</a></li>
-            <li><a href="#solution" onclick="toggleMobileMenu()">Solution</a></li>
-            <li><a href="#business" onclick="toggleMobileMenu()">Business Model</a></li>
-            <li><a href="#market" onclick="toggleMobileMenu()">Market</a></li>
-            <li><a href="#product" onclick="toggleMobileMenu()">Product</a></li>
-            <li><a href="#team" onclick="toggleMobileMenu()">Team</a></li>
-            <li><a href="#contact" onclick="toggleMobileMenu()">Contact</a></li>
-        </ul>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <div class="hero-badge">Seed Stage Investment Opportunity</div>
-            <h1>AI-Powered <span class="gradient-text">Cancer Detection</span> for Early Intervention</h1>
-            <p class="hero-subtitle">
-                Building the future of healthcare with advanced machine learning that identifies cancer warning signs before they escalate — saving lives and reducing costs.
-            </p>
-            <div class="hero-cta-group">
-                <a href="#solution" class="btn-primary">Explore Our Solution</a>
-                <a href="#contact" class="btn-secondary">Contact Us</a>
-            </div>
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <div class="stat-number">$100B+</div>
-                    <div class="stat-label">Market by 2030</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">15+</div>
-                    <div class="stat-label">Years Medical Experience</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">4</div>
-                    <div class="stat-label">Revenue Streams</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Problem Section -->
-    <section id="problem">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">The Challenge</div>
-                <h2 class="section-title">The Problem</h2>
-                <p class="section-desc">
-                    Cancer remains one of the leading causes of death globally, largely because it is often detected at advanced stages when treatment options are limited and expensive.
-                </p>
-            </div>
-            
-            <div class="problem-grid">
-                <div class="problem-card animate-on-scroll">
-                    <div class="problem-icon">🔍</div>
-                    <h3>Subtle Early Symptoms</h3>
-                    <p>Early-stage cancer symptoms are subtle and frequently missed during routine examinations, leading to delayed diagnosis and poorer outcomes.</p>
-                </div>
-                
-                <div class="problem-card animate-on-scroll">
-                    <div class="problem-icon">🏥</div>
-                    <h3>Limited Specialist Access</h3>
-                    <p>Access to oncologists and diagnostic specialists is limited, especially in developing regions where healthcare infrastructure is scarce.</p>
-                </div>
-                
-                <div class="problem-card animate-on-scroll">
-                    <div class="problem-icon">⏱️</div>
-                    <h3>Costly & Slow Screening</h3>
-                    <p>Traditional screening methods are costly, slow, and heavily dependent on human expertise, creating bottlenecks in patient care.</p>
-                </div>
-                
-                <div class="problem-card animate-on-scroll">
-                    <div class="problem-icon">💰</div>
-                    <h3>Enormous Healthcare Costs</h3>
-                    <p>Late diagnosis leads to higher mortality, emotional trauma, and enormous healthcare costs that strain individuals and systems alike.</p>
-                </div>
-            </div>
-            
-            <div class="insight-box animate-on-scroll">
-                <p><strong>Investor Insight:</strong> Late detection increases treatment costs by multiples and places unsustainable strain on healthcare systems worldwide.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solution Section -->
-    <section id="solution">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">Our Approach</div>
-                <h2 class="section-title">The Solution</h2>
-                <p class="section-desc">We are building an AI-powered cancer detection platform that identifies early warning signs of cancer before it escalates.</p>
-            </div>
-            
-            <div class="solution-content">
-                <div class="solution-visual animate-on-scroll">
-                    <div class="solution-visual-inner">
-                        <div class="orbit-ring orbit-ring-1"><div class="orbit-dot"></div></div>
-                        <div class="orbit-ring orbit-ring-2"><div class="orbit-dot"></div></div>
-                        <div class="orbit-ring orbit-ring-3"><div class="orbit-dot"></div></div>
-                        <div class="center-core">🧠</div>
-                    </div>
-                </div>
-                
-                <div class="solution-features">
-                    <div class="feature-item animate-on-scroll">
-                        <div class="feature-check">✓</div>
-                        <div class="feature-text">
-                            <h4>Advanced Machine Learning</h4>
-                            <p>Uses cutting-edge ML algorithms to analyze medical images and comprehensive patient data with unprecedented accuracy.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item animate-on-scroll">
-                        <div class="feature-check">✓</div>
-                        <div class="feature-text">
-                            <h4>Invisible Pattern Detection</h4>
-                            <p>Detects subtle patterns and anomalies invisible to the human eye, catching cancer at its earliest and most treatable stages.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item animate-on-scroll">
-                        <div class="feature-check">✓</div>
-                        <div class="feature-text">
-                            <h4>Fast Decision Support</h4>
-                            <p>Provides doctors with fast, accurate, and reliable clinical decision support, reducing diagnostic time from days to minutes.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="feature-item animate-on-scroll">
-                        <div class="feature-check">✓</div>
-                        <div class="feature-text">
-                            <h4>Early Intervention</h4>
-                            <p>Enables early intervention, significantly improving survival rates and quality of life for patients worldwide.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="outcome-banner animate-on-scroll">
-                <p>
-                    Earlier detection <span class="arrow">→</span> 
-                    Earlier treatment <span class="arrow">→</span> 
-                    Better outcomes <span class="arrow">→</span> 
-                    Lower costs
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Business Model Section -->
-    <section id="business">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">Revenue Strategy</div>
-                <h2 class="section-title">Business Model</h2>
-                <p class="section-desc">We operate a scalable HealthTech revenue model designed for rapid global adoption and sustainable growth.</p>
-            </div>
-            
-            <div class="revenue-grid">
-                <div class="revenue-card animate-on-scroll">
-                    <div class="revenue-icon">🏢</div>
-                    <h3>Subscription (SaaS)</h3>
-                    <p>Tiered subscription fees from hospitals and clinics for continuous access to our AI diagnostic platform and premium features.</p>
-                </div>
-                
-                <div class="revenue-card animate-on-scroll">
-                    <div class="revenue-icon">📋</div>
-                    <h3>Licensing Agreements</h3>
-                    <p>Strategic licensing agreements with governments and large health systems for population-wide deployment and integration.</p>
-                </div>
-                
-                <div class="revenue-card animate-on-scroll">
-                    <div class="revenue-icon">💳</div>
-                    <h3>Pay-Per-Use</h3>
-                    <p>Flexible pay-per-scan or pay-per-patient pricing models for smaller clinics and diagnostic centers with variable volume.</p>
-                </div>
-                
-                <div class="revenue-card animate-on-scroll">
-                    <div class="revenue-icon">🤝</div>
-                    <h3>Strategic Partnerships</h3>
-                    <p>Revenue-sharing partnerships with diagnostic and imaging centers, expanding our reach through established networks.</p>
-                </div>
-                
-                <div class="revenue-card animate-on-scroll">
-                    <div class="revenue-icon">📱</div>
-                    <h3>App Downloads</h3>
-                    <p>Monetization through major app store platforms worldwide, making early detection accessible to individual users.</p>
-                </div>
-                
-                <div class="revenue-card animate-on-scroll">
-                    <div class="revenue-icon">👤</div>
-                    <h3>User Engagement</h3>
-                    <p>Revenue from time spent on platform and in-app activity, creating additional value streams beyond core diagnostics.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Traction Section -->
-    <section id="traction">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">Progress</div>
-                <h2 class="section-title">Traction & Validation</h2>
-                <p class="section-desc">Current milestones and planned growth strategy focused on credibility and trust.</p>
-            </div>
-            
-            <div class="traction-timeline">
-                <div class="traction-item animate-on-scroll">
-                    <div class="traction-dot"></div>
-                    <p>MVP / prototype under active development</p>
-                </div>
-                
-                <div class="traction-item animate-on-scroll">
-                    <div class="traction-dot"></div>
-                    <p>Planned pilot programs with hospitals</p>
-                </div>
-                
-                <div class="traction-item animate-on-scroll">
-                    <div class="traction-dot"></div>
-                    <p>Clinical validation roadmap in progress</p>
-                </div>
-                
-                <div class="traction-item animate-on-scroll">
-                    <div class="traction-dot"></div>
-                    <p>Data partnerships & research collaborations</p>
-                </div>
-                
-                <div class="traction-item animate-on-scroll">
-                    <div class="traction-dot"></div>
-                    <p>Milestone-driven growth strategy</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Competitive Section -->
-    <section id="competitive">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">Positioning</div>
-                <h2 class="section-title">Competitive Landscape</h2>
-                <p class="section-desc">How we differentiate from existing alternatives in the market.</p>
-            </div>
-            
-            <div class="competitive-grid">
-                <div class="competitive-column theirs animate-on-scroll">
-                    <h3>Existing Alternatives</h3>
-                    <ul class="competitive-list">
-                        <li>Manual diagnosis by specialists (time-consuming, subjective)</li>
-                        <li>Traditional screening tools (limited accuracy, expensive)</li>
-                        <li>Early-stage AI healthcare solutions (narrow scope, not scalable)</li>
-                    </ul>
-                </div>
-                
-                <div class="competitive-column ours animate-on-scroll">
-                    <h3>Our Competitive Edge</h3>
-                    <ul class="competitive-list">
-                        <li>Earlier detection capability than any existing solution</li>
-                        <li>Superior cost efficiency for healthcare providers</li>
-                        <li>Scalable and adaptable AI model across cancer types</li>
-                        <li>Designed for both advanced and low-resource settings</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Market Section -->
-    <section id="market">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">Growth</div>
-                <h2 class="section-title">Market Opportunity</h2>
-                <p class="section-desc">
-                    The global AI in HealthTech market is experiencing explosive, exponential growth — transforming from a $14–$32B sector in 2024 to a projected valuation exceeding $1 trillion by 2034.
-                </p>
-            </div>
-            
-            <div class="market-content">
-                <div class="market-chart animate-on-scroll">
-                    <h3 style="margin-bottom: 2rem; font-size: 1.2rem;">Market Value Projections</h3>
-                    <div class="chart-bar-container">
-                        <div class="chart-row">
-                            <span class="chart-label">2024</span>
-                            <div class="chart-bar-wrapper">
-                                <div class="chart-bar bar-1" data-width="20%">$14-32B</div>
-                            </div>
-                        </div>
-                        
-                        <div class="chart-row">
-                            <span class="chart-label">2025</span>
-                            <div class="chart-bar-wrapper">
-                                <div class="chart-bar bar-2" data-width="35%">$17-46B</div>
-                            </div>
-                        </div>
-                        
-                        <div class="chart-row">
-                            <span class="chart-label">2030</span>
-                            <div class="chart-bar-wrapper">
-                                <div class="chart-bar bar-3" data-width="70%">$105-208B</div>
-                            </div>
-                        </div>
-                        
-                        <div class="chart-row">
-                            <span class="chart-label">2034</span>
-                            <div class="chart-bar-wrapper">
-                                <div class="chart-bar bar-4" data-width="100%">$600B-1T</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="market-stats-grid animate-on-scroll">
-                    <div class="market-stat-card">
-                        <div class="year">2025</div>
-                        <div class="value">$17-46B</div>
-                        <div class="desc">Accelerating adoption across healthcare systems</div>
-                    </div>
-                    
-                    <div class="market-stat-card">
-                        <div class="year">2030</div>
-                        <div class="value">$105-208B</div>
-                        <div class="desc">Mainstream AI integration in diagnostics</div>
-                    </div>
-                    
-                    <div class="market-stat-card">
-                        <div class="year">2034</div>
-                        <div class="value">$600B-1T</div>
-                        <div class="desc">Generative AI and autonomous systems driving growth</div>
-                    </div>
-                    
-                    <div class="market-stat-card">
-                        <div class="year">Data Volume</div>
-                        <div class="value">10 ZB</div>
-                        <div class="desc">Expected healthcare data by 2025, driving AI demand</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Product Section -->
-    <section id="product">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">How It Works</div>
-                <h2 class="section-title">Product Overview</h2>
-                <p class="section-desc">The platform integrates seamlessly into existing hospital workflows, providing a frictionless experience for healthcare professionals.</p>
-            </div>
-            
-            <div class="product-flow">
-                <div class="flow-step animate-on-scroll">
-                    <div class="flow-step-number">1</div>
-                    <h4>Data Collection</h4>
-                    <p>Patient medical data and diagnostic images are securely collected and encrypted.</p>
-                </div>
-                
-                <div class="flow-arrow">→</div>
-                
-                <div class="flow-step animate-on-scroll">
-                    <div class="flow-step-number">2</div>
-                    <h4>AI Processing</h4>
-                    <p>Our AI model processes the data using trained algorithms and deep learning.</p>
-                </div>
-                
-                <div class="flow-arrow">→</div>
-                
-                <div class="flow-step animate-on-scroll">
-                    <div class="flow-step-number">3</div>
-                    <h4>Risk Scoring</h4>
-                    <p>The system generates risk scores and detailed clinical insights instantly.</p>
-                </div>
-                
-                <div class="flow-arrow">→</div>
-                
-                <div class="flow-step animate-on-scroll">
-                    <div class="flow-step-number">4</div>
-                    <h4>Clinical Action</h4>
-                    <p>Doctors review results and take timely, informed medical action.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Funding Section -->
-    <section id="funding">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">Investment</div>
-                <h2 class="section-title">Funding Ask</h2>
-                <p class="section-desc">Seeking seed funding to accelerate development, validate clinically, and expand market reach.</p>
-            </div>
-            
-            <div class="funding-content">
-                <div class="funding-card animate-on-scroll">
-                    <div class="funding-label">Capital Required</div>
-                    <div class="funding-amount">Seed Funding</div>
-                    <p style="color: var(--text-secondary); margin-top: 1rem;">
-                        Open to strategic investors who share our vision for transforming cancer detection globally.
-                    </p>
-                </div>
-                
-                <div class="funding-uses">
-                    <div class="use-item animate-on-scroll">
-                        <div class="use-icon">🧠</div>
-                        <div>
-                            <h4>AI Model Training</h4>
-                            <p>Continuous training and refinement of detection algorithms</p>
-                        </div>
-                    </div>
-                    
-                    <div class="use-item animate-on-scroll">
-                        <div class="use-icon">🔬</div>
-                        <div>
-                            <h4>Clinical Validation</h4>
-                            <p>Rigorous clinical trials and validation studies</p>
-                        </div>
-                    </div>
-                    
-                    <div class="use-item animate-on-scroll">
-                        <div class="use-icon">📋</div>
-                        <div>
-                            <h4>Regulatory Approvals</h4>
-                            <p>Securing necessary medical device and health certifications</p>
-                        </div>
-                    </div>
-                    
-                    <div class="use-item animate-on-scroll">
-                        <div class="use-icon">🚀</div>
-                        <div>
-                            <h4>Product Development</h4>
-                            <p>Market expansion and product feature development</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section id="team">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">Leadership</div>
-                <h2 class="section-title">Team Members</h2>
-                <p class="section-desc">A passionate team combining medical expertise, technical innovation, and business acumen.</p>
-            </div>
-            
-            <div class="team-grid">
-                <div class="team-card animate-on-scroll">
-                    <div class="team-avatar">SE</div>
-                    <h3>Simisola Elvis</h3>
-                    <div class="team-role">Founder</div>
-                    <p>
-                        Graduate of Accounting and Masters in Accounting & Finance. Certification holder in Technology Skills and Development. 
-                        Born in Nigeria with a massive passion for technology and innovation.
-                    </p>
-                </div>
-                
-                <div class="team-card animate-on-scroll">
-                    <div class="team-avatar">DY</div>
-                    <h3>Dr. Yakuba Yunusa</h3>
-                    <div class="team-role">Medical Adviser</div>
-                    <p>
-                        Medical doctor with over 15 years of experience in the medical space. Vast experience working in private and government 
-                        hospitals across Nigeria. Serving as the Medical Practitioner and Health Advisor.
-                    </p>
-                </div>
-                
-                <div class="team-card animate-on-scroll">
-                    <div class="team-avatar">CD</div>
-                    <h3>Chukwuebuka Divine</h3>
-                    <div class="team-role">Technical Lead & Designer</div>
-                    <p>
-                        Vast experience and potential in the technical and design space. Leads technical and design departments at Feldor Technology Ltd. 
-                        Has worked on numerous projects for different clients.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Users Section -->
-    <section id="users">
-        <div class="container">
-            <div class="section-header animate-on-scroll">
-                <div class="section-tag">Value Proposition</div>
-                <h2 class="section-title">Target Users</h2>
-                <p class="section-desc">Our platform delivers value across the entire healthcare ecosystem — from patients to governments.</p>
-            </div>
-            
-            <div class="users-grid">
-                <div class="user-card animate-on-scroll">
-                    <div class="user-card-header">
-                        <div class="user-icon">👤</div>
-                        <h3>Patients</h3>
-                    </div>
-                    <ul class="user-benefits">
-                        <li>Earlier diagnosis and peace of mind</li>
-                        <li>Reduced treatment costs through early detection</li>
-                        <li>Improved survival rates and quality of life</li>
-                    </ul>
-                </div>
-                
-                <div class="user-card animate-on-scroll">
-                    <div class="user-card-header">
-                        <div class="user-icon">🏥</div>
-                        <h3>Hospitals & Clinics</h3>
-                    </div>
-                    <ul class="user-benefits">
-                        <li>Faster and more accurate screening processes</li>
-                        <li>Reduced workload on overburdened specialists</li>
-                        <li>Improved operational efficiency and throughput</li>
-                    </ul>
-                </div>
-                
-                <div class="user-card animate-on-scroll">
-                    <div class="user-card-header">
-                        <div class="user-icon">👨‍⚕️</div>
-                        <h3>Doctors</h3>
-                    </div>
-                    <ul class="user-benefits">
-                        <li>AI-assisted clinical decision support</li>
-                        <li>Reduced diagnostic errors and false negatives</li>
-                        <li>Confidence in early-stage detection capabilities</li>
-                    </ul>
-                </div>
-                
-                <div class="user-card animate-on-scroll">
-                    <div class="user-card-header">
-                        <div class="user-icon">🏛️</div>
-                        <h3>Government & Agencies</h3>
-                    </div>
-                    <ul class="user-benefits">
-                        <li>Population-wide cancer screening programs</li>
-                        <li>Data-driven public health planning</li>
-                        <li>Reduced national healthcare burden</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact-section" id="contact">
-        <div class="container">
-            <div class="contact-content">
-                <div class="contact-info animate-on-scroll">
-                    <h2>Get In Touch</h2>
-                    <p>Interested in investing or learning more about Feldor Health? We would love to hear from you.</p>
-                    
-                    <div class="contact-details">
-                        <a href="tel:09158272790" class="contact-item">
-                            <div class="contact-item-icon">📞</div>
-                            <div class="contact-item-info">
-                                <h4>Phone</h4>
-                                <p>09158272790</p>
-                            </div>
-                        </a>
-                        
-                        <a href="mailto:ayibiowusimisola@gmail.com" class="contact-item">
-                            <div class="contact-item-icon">✉️</div>
-                            <div class="contact-item-info">
-                                <h4>Email</h4>
-                                <p>ayibiowusimisola@gmail.com</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="contact-form animate-on-scroll">
-                    <form onsubmit="handleSubmit(event)" novalidate>
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" placeholder="Enter your name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" placeholder="Enter your email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" placeholder="Investment Inquiry / Partnership" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" placeholder="Tell us about your interest..." required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Feldor Technology Ltd. All rights reserved. | AI-Powered Cancer Detection Platform</p>
-    </footer>
+    <!-- FOOTER NAVIGATION -->
+    <div class="footer-nav">
+        <button class="nav-item active" onclick="navigateTo('home')">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" onclick="navigateTo('problems')">
+            <span class="nav-icon">⚠️</span>
+            <span class="nav-label">Problems</span>
+        </button>
+        <button class="nav-item" onclick="navigateTo('solution')">
+            <span class="nav-icon">✨</span>
+            <span class="nav-label">Solution</span>
+        </button>
+        <button class="nav-item" onclick="navigateTo('detector')">
+            <span class="nav-icon">🤖</span>
+            <span class="nav-label">AI Detector</span>
+        </button>
+        <button class="nav-item" onclick="navigateTo('team')">
+            <span class="nav-icon">👥</span>
+            <span class="nav-label">Team</span>
+        </button>
+        <button class="nav-item" onclick="navigateTo('profile')">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Profile</span>
+        </button>
+    </div>
 
     <script>
-        // ==================== Scroll Progress Bar ====================
-        window.addEventListener('scroll', () => {
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (scrollTop / scrollHeight) * 100;
-            document.getElementById('scrollProgress').style.width = scrolled + '%';
-        });
-
-        // ==================== Navbar Scroll Effect ====================
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // ==================== Intersection Observer for Animations ====================
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+        const carouselState = {
+            problems: 0,
+            solution: 0
         };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    
-                    // Animate chart bars
-                    const bars = entry.target.querySelectorAll('.chart-bar');
-                    bars.forEach(bar => {
-                        const width = bar.getAttribute('data-width');
-                        if (width) {
-                            bar.style.width = width;
-                        }
-                    });
-                }
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
             });
-        }, observerOptions);
 
-        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
 
-        // ==================== Mobile Menu Toggle ====================
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            const btn = document.getElementById('mobileMenuBtn');
-            const isOpen = menu.style.display === 'block';
-            
-            menu.style.display = isOpen ? 'none' : 'block';
-            btn.setAttribute('aria-expanded', !isOpen);
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.nav-item').classList.add('active');
+
+            // Scroll to top
+            document.querySelector('.page.active .page-content').scrollTop = 0;
         }
 
-        // ==================== Form Submission ====================
-        function handleSubmit(e) {
-            e.preventDefault();
-            
-            const form = e.target;
-            const name = form.querySelector('#name').value;
-            
-            if (name.trim()) {
-                alert('Thank you for your message! We will get back to you shortly.');
-                form.reset();
+        function nextCarousel(type) {
+            const track = document.getElementById(type + 'Track');
+            const items = track.querySelectorAll('.carousel-item').length;
+            carouselState[type] = (carouselState[type] + 1) % items;
+            updateCarousel(type);
+        }
+
+        function previousCarousel(type) {
+            const track = document.getElementById(type + 'Track');
+            const items = track.querySelectorAll('.carousel-item').length;
+            carouselState[type] = (carouselState[type] - 1 + items) % items;
+            updateCarousel(type);
+        }
+
+        function goToSlide(type, index) {
+            carouselState[type] = index;
+            updateCarousel(type);
+        }
+
+        function updateCarousel(type) {
+            const track = document.getElementById(type + 'Track');
+            const offset = carouselState[type] * -100;
+            track.style.transform = `translateX(${offset}%)`;
+
+            // Update indicators
+            const indicators = document.getElementById(type + 'Indicators').querySelectorAll('.indicator');
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === carouselState[type]);
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                const activePage = document.querySelector('.page.active').id;
+                if (activePage === 'problems') previousCarousel('problems');
+                if (activePage === 'solution') previousCarousel('solution');
             }
-        }
-
-        // ==================== Smooth Scroll for Anchor Links ====================
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // ==================== Keyboard Navigation ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            // Logo keyboard navigation
-            const logo = document.querySelector('.logo');
-            if (logo) {
-                logo.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        window.location.hash = '#hero';
-                    }
-                });
+            if (e.key === 'ArrowRight') {
+                const activePage = document.querySelector('.page.active').id;
+                if (activePage === 'problems') nextCarousel('problems');
+                if (activePage === 'solution') nextCarousel('solution');
             }
         });
 
-        // ==================== Prevent Memory Leaks ====================
-        window.addEventListener('beforeunload', () => {
-            observer.disconnect();
+        // Set first nav item as active on load
+        window.addEventListener('load', () => {
+            document.querySelector('.nav-item').classList.add('active');
         });
     </script>
 </body>
