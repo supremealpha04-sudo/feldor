@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team - Feldor Health</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; }
+        .theme-transition { transition: all 0.3s ease; }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        [data-theme="dark"] .glass-nav {
+            background: rgba(10, 22, 40, 0.85);
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            border-radius: 10px;
+        }
+        .team-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(14, 165, 233, 0.15);
+        }
+        .social-link {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .social-link:hover {
+            transform: translateY(-4px) scale(1.05);
+        }
+        .floating-symbol {
+            position: fixed;
+            font-size: 3rem;
+            opacity: 0.04;
+            animation: floatSymbol 25s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+            color: #0ea5e9;
+        }
+        @keyframes floatSymbol {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(30px, -40px) rotate(10deg) scale(1.1); }
+            50% { transform: translate(-20px, 30px) rotate(-5deg) scale(0.9); }
+            75% { transform: translate(40px, 20px) rotate(15deg) scale(1.05); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-[#0a1628] text-gray-900 dark:text-gray-100 theme-transition">
+    <!-- Floating Symbols -->
+    <div class="floating-symbol" style="top:10%;left:5%;animation-delay:0s;"><i class="fas fa-stethoscope"></i></div>
+    <div class="floating-symbol" style="top:20%;right:8%;animation-delay:2s;"><i class="fas fa-hospital"></i></div>
+    <div class="floating-symbol" style="top:50%;left:3%;animation-delay:4s;"><i class="fas fa-syringe"></i></div>
+    <div class="floating-symbol" style="bottom:25%;right:5%;animation-delay:1.5s;"><i class="fas fa-heartbeat"></i></div>
+    <div class="floating-symbol" style="top:65%;left:8%;animation-delay:3.5s;"><i class="fas fa-dna"></i></div>
+    <div class="floating-symbol" style="bottom:10%;left:15%;animation-delay:5s;"><i class="fas fa-microscope"></i></div>
+
+    <!-- Theme Toggle -->
+    <button onclick="toggleTheme()" class="fixed top-4 right-4 z-50 w-12 h-12 rounded-full bg-white dark:bg-[#1a2744] shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center text-2xl hover:scale-110 transition-transform">
+        <span id="themeIcon"><i class="fas fa-moon"></i></span>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 z-40 glass-nav rounded-full shadow-2xl border border-gray-200/50 dark:border-gray-700/50 px-4 py-3 flex items-center gap-1 mb-4 w-auto min-w-[320px] max-w-[95%]">
+        <a href="index.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+            <span class="text-xl"><i class="fas fa-home"></i></span>
+            <span class="text-[10px] uppercase tracking-wider">Home</span>
+        </a>
+        <a href="detector.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+            <span class="text-xl"><i class="fas fa-robot"></i></span>
+            <span class="text-[10px] uppercase tracking-wider">AI Detector</span>
+        </a>
+        <a href="team.html" class="nav-item active flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+            <span class="text-xl"><i class="fas fa-users"></i></span>
+            <span class="text-[10px] uppercase tracking-wider">Team</span>
+        </a>
+        <a href="profile.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
+            <span class="text-xl"><i class="fas fa-user"></i></span>
+            <span class="text-[10px] uppercase tracking-wider">Profile</span>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-32">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white mb-4"><i class="fas fa-users text-blue-500 mr-3"></i>Our Team</h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400">Passionate Leaders Transforming Healthcare</p>
+        </div>
+
+        <!-- Team Grid -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="team-card bg-white dark:bg-[#1a2744] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-6xl text-white font-bold">SE</div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Simisola Elvis</h3>
+                    <p class="text-blue-500 font-semibold text-sm"><i class="fas fa-crown mr-1"></i>Founder &amp; CEO</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">Masters in Accounting &amp; Finance with passion for technology innovation.</p>
+                </div>
+            </div>
+
+            <div class="team-card bg-white dark:bg-[#1a2744] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-6xl text-white font-bold">DY</div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Dr. Yakuba Yunusa</h3>
+                    <p class="text-blue-500 font-semibold text-sm"><i class="fas fa-user-md mr-1"></i>Medical Adviser</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">15+ years medical experience across Nigerian hospitals.</p>
+                </div>
+            </div>
+
+            <div class="team-card bg-white dark:bg-[#1a2744] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-6xl text-white font-bold">CD</div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Chukwuebuka Divine</h3>
+                    <p class="text-blue-500 font-semibold text-sm"><i class="fas fa-code mr-1"></i>Technical Lead</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">Expert in technical architecture and product design.</p>
+                </div>
+            </div>
+
+            <div class="team-card bg-white dark:bg-[#1a2744] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <div class="h-48 bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-6xl text-white"><i class="fas fa-chart-line"></i></div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Data Science Team</h3>
+                    <p class="text-blue-500 font-semibold text-sm"><i class="fas fa-brain mr-1"></i>AI &amp; Machine Learning</p>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">Specialists in deep learning and medical image analysis.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="bg-white dark:bg-[#1a2744] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white text-center mb-8"><i class="fas fa-share-alt text-blue-500 mr-3"></i>Connect With Us</h2>
+            <div class="grid grid-cols-4 sm:grid-cols-8 gap-3 max-w-3xl mx-auto">
+                <a href="#" class="social-link flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] hover:bg-[#25D366] hover:text-white transition-all">
+                    <span class="text-3xl"><i class="fab fa-whatsapp"></i></span>
+                    <span class="text-xs mt-1 font-medium">WhatsApp</span>
+                </a>
+                <a href="#" class="social-link flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] hover:bg-[#E4405F] hover:text-white transition-all">
+                    <span class="text-3xl"><i class="fab fa-instagram"></i></span>
+                    <span class="text-xs mt-1 font-medium">Instagram</span>
+                </a>
+                <a href="#" class="social-link flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] hover:bg-[#1DA1F2] hover:text-white transition-all">
+                    <span class="text-3xl"><i class="fab fa-twitter"></i></span>
+                    <span class="text-xs mt-1 font-medium">Twitter</span>
+                </a>
+                <a href="#" class="social-link flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] hover:bg-[#1877F2] hover:text-white transition-all">
+                    <span class="text-3xl"><i class="fab fa-facebook"></i></span>
+                    <span class="text-xs mt-1 font-medium">Facebook</span>
+                </a>
+                <a href="#" class="social-link flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] hover:bg-[#0A66C2] hover:text-white transition-all">
+                    <span class="text-3xl"><i class="fab fa-linkedin"></i></span>
+                    <span class="text-xs mt-1 font-medium">LinkedIn</span>
+                </a>
+                <a href="#" class="social-link flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] hover:bg-[#000000] hover:text-white transition-all">
+                    <span class="text-3xl"><i class="fab fa-tiktok"></i></span>
+                    <span class="text-xs mt-1 font-medium">TikTok</span>
+                </a>
+                <a href="#" class="social-link flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] hover:bg-[#EA4335] hover:text-white transition-all">
+                    <span class="text-3xl"><i class="fas fa-envelope"></i></span>
+                    <span class="text-xs mt-1 font-medium">Email</span>
+                </a>
+                <a href="#" class="social-link flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628] hover:bg-[#34A853] hover:text-white transition-all">
+                    <span class="text-3xl"><i class="fas fa-phone"></i></span>
+                    <span class="text-xs mt-1 font-medium">Phone</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            document.getElementById('themeIcon').innerHTML = next === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+            localStorage.setItem('theme', next);
+        }
+
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            document.getElementById('themeIcon').innerHTML = saved === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        }
+    </script>
+</body>
+</html>
