@@ -1,218 +1,1075 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Feldor Health</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>About Us | Feldor Technology Ltd - AI Cancer Detection</title>
+    <meta name="description" content="Learn about Feldor Technology Ltd's mission, team, business model, and our AI-powered cancer detection platform.">
+    <meta name="theme-color" content="#1a3a8f">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; }
-        .theme-transition { transition: all 0.3s ease; }
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        :root {
+            --primary: #1a3a8f;
+            --primary-light: #2a4fb8;
+            --primary-dark: #0f2a6d;
+            --secondary: #ff6b00;
+            --secondary-light: #ff8c3a;
+            --secondary-dark: #e55e00;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-light));
+            --gradient-secondary: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            --gradient-dark: linear-gradient(135deg, var(--dark), var(--dark-light));
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
         }
-        [data-theme="dark"] .glass-nav {
-            background: rgba(10, 22, 40, 0.85);
+
+        [data-theme="dark"] {
+            --light: #0f172a;
+            --dark: #f8fafc;
+            --dark-light: #e2e8f0;
+            --gray: #94a3b8;
+            --gray-light: #334155;
         }
-        .nav-item {
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 70px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .theme-toggle-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        .theme-toggle-btn:hover { transform: scale(1.1); }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 999;
             transition: all 0.3s ease;
-            position: relative;
         }
-        .nav-item.active::after {
+        [data-theme="dark"] header { background-color: rgba(15, 23, 42, 0.95); }
+        header.scrolled {
+            padding: 3px 0;
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] header.scrolled { background-color: rgba(15, 23, 42, 0.98); }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            transition: all 0.3s ease;
+        }
+        header.scrolled .navbar { padding: 8px 0; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .logo-icon {
+            width: 36px; height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: white;
+            font-weight: 700; font-size: 16px;
+        }
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links li { margin-left: 25px; position: relative; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .nav-links a:after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            width: 0; height: 2px;
+            bottom: -5px; left: 0;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover:after { width: 100%; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links a.active { color: var(--primary); }
+        .nav-links a.active:after { width: 100%; }
+
+        .cta-button {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+        }
+        .cta-button.outline {
+            background: transparent;
+            border: 2px solid white;
+            box-shadow: none;
+        }
+        .cta-button.outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .about-hero {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 140px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-hero:before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 600px; height: 600px;
+            background: rgba(255, 107, 0, 0.1);
+            border-radius: 50%;
+        }
+        .about-hero:after {
+            content: '';
+            position: absolute;
+            bottom: -30%; left: -10%;
+            width: 400px; height: 400px;
+            background: rgba(0, 212, 255, 0.08);
+            border-radius: 50%;
+        }
+        .about-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        .about-hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        .about-hero-content p {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            line-height: 1.7;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-title h2 {
+            font-size: 2.4rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+        .section-title.light h2, .section-title.light p { color: white; }
+
+        .content-section { padding: 80px 0; }
+        .content-section.alt { background: rgba(26, 58, 143, 0.03); }
+        [data-theme="dark"] .content-section.alt { background: rgba(26, 58, 143, 0.1); }
+
+        .two-col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .content-image {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .content-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+        .content-text h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        .content-text p {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        .content-text ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+        .content-text ul li {
+            padding: 10px 0;
+            color: var(--gray);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+        .content-text ul li i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] .card { background: var(--dark-light); border-color: rgba(255,255,255,0.05); }
+        .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .card-icon {
+            width: 60px; height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .team-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        [data-theme="dark"] .team-card { background: var(--dark-light); border-color: rgba(255,255,255,0.05); }
+        .team-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .team-photo {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+        .team-card h4 {
+            font-size: 1.2rem;
+            margin: 20px 0 5px;
+            color: var(--dark);
+            padding: 0 20px;
+        }
+        .team-role {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            padding: 0 20px;
+        }
+        .team-bio {
+            color: var(--gray);
+            padding: 0 25px 25px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .timeline:before {
+            content: '';
+            position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 3px;
-            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
-            border-radius: 10px;
+            width: 3px;
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 3px;
         }
-        .profile-nav-btn {
-            transition: all 0.3s ease;
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 50px;
         }
-        .profile-nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.2);
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
         }
-        .feature-item {
-            transition: all 0.3s ease;
+        .timeline-content {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            max-width: 350px;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        .feature-item:hover {
-            transform: translateX(8px);
-            background: #f0f9ff;
+        [data-theme="dark"] .timeline-content { background: var(--dark-light); border-color: rgba(255,255,255,0.05); }
+        .timeline-content:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 15px; height: 15px;
+            background: var(--secondary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--secondary);
         }
-        [data-theme="dark"] .feature-item:hover {
-            background: rgba(14, 165, 233, 0.1);
+        .timeline-item:nth-child(odd) .timeline-content:before { right: -42px; }
+        .timeline-item:nth-child(even) .timeline-content:before { left: -42px; }
+        .timeline-year {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
-        .floating-symbol {
+        .timeline-content h4 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .timeline-content p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .gradient-section {
+            padding: 80px 0;
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+        }
+        .gradient-section h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        .gradient-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .market-stat {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        [data-theme="dark"] .market-stat { background: var(--dark-light); }
+        .market-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        .market-stat-label {
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .contact-bar {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .contact-bar h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .contact-bar a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .contact-bar a:hover { text-decoration: underline; }
+
+        .bottom-nav {
             position: fixed;
-            font-size: 3rem;
-            opacity: 0.04;
-            animation: floatSymbol 25s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-            color: #0ea5e9;
+            bottom: 0; left: 0; right: 0;
+            background: white;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.08);
+            z-index: 998;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            border-top: 1px solid var(--gray-light);
         }
-        @keyframes floatSymbol {
-            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            25% { transform: translate(30px, -40px) rotate(10deg) scale(1.1); }
-            50% { transform: translate(-20px, 30px) rotate(-5deg) scale(0.9); }
-            75% { transform: translate(40px, 20px) rotate(15deg) scale(1.05); }
+        [data-theme="dark"] .bottom-nav { background: var(--dark-light); }
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            padding: 6px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: 'Inter', sans-serif;
         }
-        .profile-card {
+        .bottom-nav-item i { font-size: 1.3rem; margin-bottom: 4px; }
+        .bottom-nav-item span { font-size: 0.75rem; font-weight: 600; }
+        .bottom-nav-item:hover, .bottom-nav-item.active { color: var(--primary); }
+        .bottom-nav-item.active { background: rgba(26, 58, 143, 0.1); }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 90px;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .footer-column h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            padding-bottom: 8px;
+        }
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 35px; height: 2px;
+            background: var(--secondary);
+        }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a {
+            color: #b0b7c3;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .footer-links a i { margin-right: 8px; font-size: 0.75rem; }
+        .footer-links a:hover { color: white; transform: translateX(5px); }
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .social-icon {
+            width: 36px; height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
         }
-        .profile-card:hover {
-            box-shadow: 0 20px 60px rgba(14, 165, 233, 0.1);
+        .social-icon:hover {
+            background-color: var(--secondary);
+            transform: translateY(-5px);
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b0b7c3;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 992px) {
+            .about-hero-content h1 { font-size: 2.8rem; }
+            .two-col-grid { grid-template-columns: 1fr; gap: 40px; }
+            .timeline:before { left: 20px; }
+            .timeline-item, .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-right: 0;
+                padding-left: 60px;
+            }
+            .timeline-content:before { left: -42px !important; right: auto !important; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                border-radius: 0 0 10px 10px;
+            }
+            [data-theme="dark"] .nav-links { background: var(--dark-light); }
+            .nav-links.active { display: flex; }
+            .nav-links li { margin: 8px 0; }
+            .mobile-menu { display: block; }
+            .about-hero-content h1 { font-size: 2.2rem; }
+            .about-hero { padding: 120px 0 60px; }
+            .section-title h2 { font-size: 2rem; }
+            .gradient-section h2 { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 576px) {
+            .bottom-nav-item { padding: 4px 12px; }
+            .bottom-nav-item span { font-size: 0.7rem; }
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-[#0a1628] text-gray-900 dark:text-gray-100 theme-transition">
-    <!-- Floating Symbols -->
-    <div class="floating-symbol" style="top:10%;left:5%;animation-delay:0s;"><i class="fas fa-stethoscope"></i></div>
-    <div class="floating-symbol" style="top:20%;right:8%;animation-delay:2s;"><i class="fas fa-hospital"></i></div>
-    <div class="floating-symbol" style="top:50%;left:3%;animation-delay:4s;"><i class="fas fa-syringe"></i></div>
-    <div class="floating-symbol" style="bottom:25%;right:5%;animation-delay:1.5s;"><i class="fas fa-heartbeat"></i></div>
-    <div class="floating-symbol" style="top:65%;left:8%;animation-delay:3.5s;"><i class="fas fa-dna"></i></div>
-    <div class="floating-symbol" style="bottom:10%;left:15%;animation-delay:5s;"><i class="fas fa-microscope"></i></div>
-
+<body>
     <!-- Theme Toggle -->
-    <button onclick="toggleTheme()" class="fixed top-4 right-4 z-50 w-12 h-12 rounded-full bg-white dark:bg-[#1a2744] shadow-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center text-2xl hover:scale-110 transition-transform">
-        <span id="themeIcon"><i class="fas fa-moon"></i></span>
+    <button class="theme-toggle-btn" id="themeToggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
     </button>
 
-    <!-- Navigation -->
-    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 z-40 glass-nav rounded-full shadow-2xl border border-gray-200/50 dark:border-gray-700/50 px-4 py-3 flex items-center gap-1 mb-4 w-auto min-w-[320px] max-w-[95%]">
-        <a href="index.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
-            <span class="text-xl"><i class="fas fa-home"></i></span>
-            <span class="text-[10px] uppercase tracking-wider">Home</span>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="feldor_health.html" class="logo">
+                    <div class="logo-icon">FT</div>
+                    <div class="logo-text">Feldor Technology</div>
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="feldor_health.html">Home</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="feldor_health.html#detector">Detector</a></li>
+                    <li><a href="feldor_health.html#contact">Contact</a></li>
+                </ul>
+                <div class="mobile-menu" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- About Hero -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="about-hero-content">
+                <h1>About Feldor Technology Ltd</h1>
+                <p>We are a HealthTech company revolutionizing early cancer detection through advanced artificial intelligence. Our mission is to make world-class diagnostic capabilities accessible to every patient, everywhere.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Overview -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Product Overview</h2>
+                <p>How our AI-powered cancer detection platform works</p>
+            </div>
+            <div class="two-col-grid">
+                <div class="content-image">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop" alt="AI Medical Platform">
+                </div>
+                <div class="content-text">
+                    <h2>AI-Driven Diagnostic Workflow</h2>
+                    <p>Our platform integrates seamlessly into existing hospital workflows, transforming how cancer is detected and diagnosed.</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Patient medical data and diagnostic images are securely collected</li>
+                        <li><i class="fas fa-check-circle"></i> Our AI model processes the data using trained algorithms</li>
+                        <li><i class="fas fa-check-circle"></i> The system generates risk scores and clinical insights</li>
+                        <li><i class="fas fa-check-circle"></i> Doctors review results and take timely medical action</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model -->
+    <section class="content-section alt">
+        <div class="container">
+            <div class="section-title">
+                <h2>Business Model</h2>
+                <p>A scalable HealthTech revenue model designed for sustainable growth</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-hospital"></i></div>
+                    <h3>Subscription (SaaS)</h3>
+                    <p>Recurring subscription fees from hospitals and clinics for platform access, including AI analysis, dashboard tools, and reporting features.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-file-contract"></i></div>
+                    <h3>Licensing Agreements</h3>
+                    <p>Enterprise licensing with governments and large health systems for nationwide or regional deployment of our AI diagnostic technology.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-microscope"></i></div>
+                    <h3>Pay-Per-Scan</h3>
+                    <p>Flexible pay-per-scan or pay-per-patient pricing for smaller clinics and diagnostic centers with variable patient volumes.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Strategic Partnerships</h3>
+                    <p>Revenue-sharing partnerships with diagnostic and imaging centers, integrating our AI into their existing service offerings.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>App Downloads</h3>
+                    <p>Monetization through major app store platforms worldwide, offering tiered access to premium features for individual users.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>User Engagement</h3>
+                    <p>Revenue generated from time spent on platform and in-app activity, including premium insights and advanced analytics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Users & Value Proposition -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Target Users & Value Proposition</h2>
+                <p>Designed to serve every stakeholder in the healthcare ecosystem</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-injured"></i></div>
+                    <h3>Patients</h3>
+                    <p><strong>Earlier diagnosis</strong> leads to better outcomes. <strong>Reduced treatment costs</strong> through early intervention. <strong>Improved survival and quality of life</strong> with timely medical action.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-hospital-alt"></i></div>
+                    <h3>Hospitals & Clinics</h3>
+                    <p><strong>Faster and more accurate screening</strong> reduces backlogs. <strong>Reduced workload on specialists</strong> through AI assistance. <strong>Improved operational efficiency</strong> and patient throughput.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-user-md"></i></div>
+                    <h3>Doctors</h3>
+                    <p><strong>AI-assisted clinical decision support</strong> enhances accuracy. <strong>Reduced diagnostic errors</strong> through pattern recognition. <strong>Confidence in early-stage detection</strong> with data-backed insights.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-landmark"></i></div>
+                    <h3>Government & Public Health</h3>
+                    <p><strong>Population-wide cancer screening</strong> capabilities. <strong>Data-driven public health planning</strong> with real-time analytics. <strong>Reduced national healthcare burden</strong> through prevention.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Opportunity -->
+    <section class="content-section alt">
+        <div class="container">
+            <div class="section-title">
+                <h2>Market Opportunity</h2>
+                <p>The global AI in healthtech market is experiencing explosive growth</p>
+            </div>
+            <div class="content-text" style="text-align:center;max-width:900px;margin:0 auto 40px;">
+                <p>The global Artificial Intelligence (AI) in healthtech market is transforming from a roughly <strong>$14–$32 billion sector in 2024</strong> to a projected valuation exceeding <strong>$100 billion to $200 billion by 2030</strong>. This rapid adoption is driven by the need for increased operational efficiency, better patient outcomes, and the management of massive, complex healthcare datasets (over 10 zettabytes expected by 2025).</p>
+            </div>
+            <div class="market-stats">
+                <div class="market-stat">
+                    <div class="market-stat-number">$17–46B</div>
+                    <div class="market-stat-label">2025 Market Size</div>
+                </div>
+                <div class="market-stat">
+                    <div class="market-stat-number">$105–208B</div>
+                    <div class="market-stat-label">2030 Projections</div>
+                </div>
+                <div class="market-stat">
+                    <div class="market-stat-number">$600B–1T</div>
+                    <div class="market-stat-label">2034 Forecast</div>
+                </div>
+                <div class="market-stat">
+                    <div class="market-stat-number">10 ZB</div>
+                    <div class="market-stat-label">Healthcare Data by 2025</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competitive Landscape -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Competitive Landscape</h2>
+                <p>What sets Feldor Technology apart from existing alternatives</p>
+            </div>
+            <div class="two-col-grid">
+                <div class="content-text">
+                    <h2 style="font-size:1.5rem;margin-bottom:15px;"><i class="fas fa-times-circle" style="color:var(--error);margin-right:10px;"></i>Existing Alternatives</h2>
+                    <ul>
+                        <li><i class="fas fa-stethoscope" style="color:var(--gray);"></i> Manual diagnosis by specialists — limited by human availability and prone to oversight</li>
+                        <li><i class="fas fa-x-ray" style="color:var(--gray);"></i> Traditional screening tools — expensive, time-consuming, and resource-intensive</li>
+                        <li><i class="fas fa-robot" style="color:var(--gray);"></i> Early-stage AI healthcare solutions — limited accuracy and narrow scope</li>
+                    </ul>
+                </div>
+                <div class="content-text">
+                    <h2 style="font-size:1.5rem;margin-bottom:15px;"><i class="fas fa-check-circle" style="color:var(--success);margin-right:10px;"></i>Our Competitive Edge</h2>
+                    <ul>
+                        <li><i class="fas fa-bullseye" style="color:var(--success);"></i> <strong>Earlier detection capability</strong> — catching cancer at Stage I-II when treatment success is highest</li>
+                        <li><i class="fas fa-dollar-sign" style="color:var(--success);"></i> <strong>Cost efficiency</strong> — reducing diagnostic costs by up to 70% compared to traditional methods</li>
+                        <li><i class="fas fa-expand-arrows-alt" style="color:var(--success);"></i> <strong>Scalable and adaptable AI model</strong> — trained on diverse populations and cancer types</li>
+                        <li><i class="fas fa-globe-africa" style="color:var(--success);"></i> <strong>Designed for both advanced and low-resource settings</strong> — works offline and with minimal infrastructure</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Traction & Validation -->
+    <section class="content-section alt">
+        <div class="container">
+            <div class="section-title">
+                <h2>Traction & Validation</h2>
+                <p>Our milestone-driven growth strategy focused on credibility and trust</p>
+            </div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-code"></i></div>
+                    <h3>MVP / Prototype</h3>
+                    <p>Currently under active development with core AI detection algorithms trained on over 50,000 medical images across multiple cancer types.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-hospital"></i></div>
+                    <h3>Pilot Programs</h3>
+                    <p>Planned pilot programs with hospitals in Nigeria and partner institutions to validate real-world clinical performance and workflow integration.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3>Clinical Validation Roadmap</h3>
+                    <p>Structured pathway for clinical trials, regulatory approvals (FDA, CE Mark, NAFDAC), and peer-reviewed publication of results.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-database"></i></div>
+                    <h3>Data Partnerships</h3>
+                    <p>Active research collaborations with medical institutions for dataset expansion, model refinement, and continuous learning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Revenue & Financial Projections -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Revenue Generation & Financial Projections</h2>
+                <p>Our path to sustainable growth and profitability</p>
+            </div>
+            <div class="two-col-grid">
+                <div class="content-text">
+                    <h2>Financial Projections</h2>
+                    <p>We project strong revenue growth driven by multi-channel monetization and expanding market adoption.</p>
+                    <ul>
+                        <li><i class="fas fa-chart-line"></i> <strong>1–2 year revenue forecast</strong> with conservative and optimistic scenarios</li>
+                        <li><i class="fas fa-users"></i> <strong>Key assumptions on adoption</strong> — hospital partnerships, scan volume, and user growth</li>
+                        <li><i class="fas fa-calculator"></i> <strong>Core metrics:</strong> CAC (Customer Acquisition Cost), LTV (Lifetime Value), gross margins</li>
+                        <li><i class="fas fa-flag-checkered"></i> <strong>Clear path to profitability</strong> within 24–36 months of seed funding</li>
+                    </ul>
+                </div>
+                <div class="content-text">
+                    <h2>Funding Ask / Seed Funding</h2>
+                    <p>We are seeking seed funding to accelerate development and bring our platform to market.</p>
+                    <ul>
+                        <li><i class="fas fa-brain"></i> <strong>AI model training and refinement</strong> — expanding dataset and improving accuracy</li>
+                        <li><i class="fas fa-flask"></i> <strong>Clinical validation and trials</strong> — regulatory-grade testing and peer review</li>
+                        <li><i class="fas fa-certificate"></i> <strong>Regulatory approvals</strong> — FDA, CE Mark, NAFDAC, and local certifications</li>
+                        <li><i class="fas fa-rocket"></i> <strong>Product development and market expansion</strong> — scaling team and geographic reach</li>
+                    </ul>
+                    <a href="mailto:ayibiowusimisola@gmail.com" class="cta-button" style="margin-top:15px;">Investor Inquiries</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Members -->
+    <section class="content-section alt">
+        <div class="container">
+            <div class="section-title">
+                <h2>Meet Our Team</h2>
+                <p>The passionate experts behind Feldor Technology Ltd</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="team1.png" alt="Simisola Elvis" class="team-photo" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop'">
+                    <h4>Simisola Elvis</h4>
+                    <div class="team-role">Founder & CEO</div>
+                    <div class="team-bio">Born in Nigeria, a graduate of Accounting with a Master's in Accounting and Finance. Also a certification holder of Technology Skills and Development, with a massive passion for technology and healthcare innovation.</div>
+                </div>
+                <div class="team-card">
+                    <img src="team2.png" alt="Dr. Yakuba Yunusa" class="team-photo" onerror="this.src='https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop'">
+                    <h4>Dr. Yakuba Yunusa</h4>
+                    <div class="team-role">Medical Adviser</div>
+                    <div class="team-bio">A medical doctor in the medical space for more than 15 years with vast experience. He gained experience working as a practicing doctor in private and government hospitals in Nigeria. Serves as the Medical Practitioner Adviser to Feldor Technology Ltd.</div>
+                </div>
+                <div class="team-card">
+                    <img src="team3.jpg" alt="Chukwuebuka Divine" class="team-photo" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop'">
+                    <h4>Chukwuebuka Divine</h4>
+                    <div class="team-role">Technical Lead & Designer</div>
+                    <div class="team-bio">The Technical Lead Team and Designer Specialist with vast experience and a lot of potential in the technical and designing space. He leads the technical and design departments in Feldor Technology Ltd. He has worked on numerous projects for different companies and individuals.</div>
+                </div>
+                <div class="team-card">
+                    <img src="team4.png" alt="Feldor Technology Team" class="team-photo" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=400&fit=crop'">
+                    <h4>Emmanuel Ejike okafor</h4>
+                    <div class="team-role">Engineering & web development</div>
+                    <div class="team-bio">Our growing team of engineers, web developer, and healthcare professionals are dedicated to building the future of AI-powered cancer detection. We are always looking for passionate talent to join our mission.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-section">
+        <div class="container">
+            <h2>Join the Mission</h2>
+            <p>Whether you are a healthcare provider, investor, or patient advocate — there is a place for you in our mission to make early cancer detection universal. Partner with us to save lives through technology.</p>
+            <a href="mailto:ayibiowusimisola@gmail.com" class="cta-button outline" style="font-size:1rem;padding:14px 32px;">Partner With Us</a>
+        </div>
+    </section>
+
+    <!-- Contact Bar -->
+    <section class="contact-bar">
+        <div class="container">
+            <h3><i class="fas fa-envelope" style="margin-right:10px;"></i>Get In Touch</h3>
+            <p style="margin-bottom:8px;"><i class="fas fa-phone" style="margin-right:8px;"></i> <a href="tel:09158272790">+2349158272790</a></p>
+            <p><i class="fas fa-envelope" style="margin-right:8px;"></i> <a href="mailto:ayibiowusimisola@gmail.com">ayibiowusimisola@gmail.com</a></p>
+        </div>
+    </section>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
         </a>
-        <a href="detector.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
-            <span class="text-xl"><i class="fas fa-robot"></i></span>
-            <span class="text-[10px] uppercase tracking-wider">AI Detector</span>
+        <a href="about.html" class="bottom-nav-item active">
+            <i class="fas fa-info-circle"></i>
+            <span>About</span>
         </a>
-        <a href="team.html" class="nav-item flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
-            <span class="text-xl"><i class="fas fa-users"></i></span>
-            <span class="text-[10px] uppercase tracking-wider">Team</span>
+        <a href="index.html#detector" class="bottom-nav-item">
+            <i class="fas fa-robot"></i>
+            <span>Detector</span>
         </a>
-        <a href="profile.html" class="nav-item active flex flex-col items-center px-4 py-1 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400">
-            <span class="text-xl"><i class="fas fa-user"></i></span>
-            <span class="text-[10px] uppercase tracking-wider">Profile</span>
+        <a href="index.html#contact" class="bottom-nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
         </a>
     </nav>
 
-    <!-- Main Content -->
-    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-32">
-        <div class="bg-white dark:bg-[#1a2744] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8 profile-card">
-            <!-- User Profile -->
-            <div class="text-center pb-8 border-b border-gray-200 dark:border-gray-700">
-                <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-emerald-500 mx-auto flex items-center justify-center text-5xl text-white shadow-lg border-4 border-blue-500">
-                    <i class="fas fa-user"></i>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Feldor Technology Ltd</h3>
+                    <p>Revolutionizing early cancer detection with advanced AI technology. Your trusted partner in healthcare innovation.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-4">John Doe</h2>
-                <p class="text-blue-500 font-semibold"><i class="fas fa-user-md mr-1"></i>Patient</p>
-                <p class="text-gray-500 dark:text-gray-400 text-sm"><i class="fas fa-envelope mr-1"></i>john.doe@email.com</p>
-            </div>
-
-            <!-- Features -->
-            <div class="mt-8">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4"><i class="fas fa-star text-yellow-500 mr-2"></i>Available Features</h3>
-                <div class="space-y-2">
-                    <div class="feature-item flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628]">
-                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white text-xl"><i class="fas fa-calendar-alt"></i></div>
-                        <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white">Booking &amp; Scheduling</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Schedule appointments with specialists</p>
-                        </div>
-                    </div>
-                    <div class="feature-item flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628]">
-                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white text-xl"><i class="fas fa-microscope"></i></div>
-                        <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white">AI Analysis Results</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">View detailed diagnostic reports</p>
-                        </div>
-                    </div>
-                    <div class="feature-item flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628]">
-                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white text-xl"><i class="fas fa-user-md"></i></div>
-                        <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white">Doctor Consultation</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Schedule with your healthcare provider</p>
-                        </div>
-                    </div>
-                    <div class="feature-item flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628]">
-                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white text-xl"><i class="fas fa-chart-line"></i></div>
-                        <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white">Medical History</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Track your health records</p>
-                        </div>
-                    </div>
-                    <div class="feature-item flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-[#0a1628]">
-                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center text-white text-xl"><i class="fas fa-bell"></i></div>
-                        <div>
-                            <h4 class="font-semibold text-gray-900 dark:text-white">Notifications</h4>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Get important health reminders</p>
-                        </div>
-                    </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li>
+                        <li><a href="index.html#detector"><i class="fas fa-chevron-right"></i> AI Detector</a></li>
+                        <li><a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="how.html"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Clinical Studies</a></li>
+                        <li><a href="privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                        <li><a href="terms.html"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="tel:09158272790"><i class="fas fa-phone"></i> 09158272790</a></li>
+                        <li><a href="mailto:ayibiowusimisola@gmail.com"><i class="fas fa-envelope"></i> ayibiowusimisola@gmail.com</a></li>
+                    </ul>
                 </div>
             </div>
-
-            <!-- Profile Navigation -->
-            <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-                <div class="flex flex-wrap gap-3">
-                    <a href="terms.html" class="profile-nav-btn px-6 py-3 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all">
-                        <i class="fas fa-file-contract mr-2"></i>Terms & Privacy
-                    </a>
-                    <a href="about.html" class="profile-nav-btn px-6 py-3 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all">
-                        <i class="fas fa-info-circle mr-2"></i>About
-                    </a>
-                    <a href="team.html" class="profile-nav-btn px-6 py-3 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all">
-                        <i class="fas fa-users mr-2"></i>Team
-                    </a>
-                    <a href="settings.html" class="profile-nav-btn px-6 py-3 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all">
-                        <i class="fas fa-cog mr-2"></i>Settings
-                    </a>
-                    <a href="help.html" class="profile-nav-btn px-6 py-3 rounded-xl bg-gray-50 dark:bg-[#0a1628] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all">
-                        <i class="fas fa-question-circle mr-2"></i>Help
-                    </a>
-                </div>
+            <div class="copyright">
+                <p>&copy; 2026 Feldor Technology Ltd. All Rights Reserved.</p>
             </div>
         </div>
-
-        <!-- Coming Soon Features -->
-        <div class="mt-8 bg-white dark:bg-[#1a2744] rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-12 text-center profile-card">
-            <div class="text-6xl text-blue-500 mb-4"><i class="fas fa-rocket"></i></div>
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">More Features Coming Soon</h3>
-            <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto mb-6">Telemedicine consultations, prescription management, and more health tools are on the way</p>
-            <span class="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-emerald-500 text-white font-semibold text-sm">
-                <i class="fas fa-clock mr-2"></i>In Development
-            </span>
-        </div>
-    </div>
+    </footer>
 
     <script>
         function toggleTheme() {
-            const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            const next = current === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', next);
-            document.getElementById('themeIcon').innerHTML = next === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-            localStorage.setItem('theme', next);
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const themeToggleBtn = document.getElementById('themeToggle');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
         }
 
-        const saved = localStorage.getItem('theme');
-        if (saved) {
-            document.documentElement.setAttribute('data-theme', saved);
-            document.getElementById('themeIcon').innerHTML = saved === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggleBtn = document.getElementById('themeToggle');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            }
         }
+
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        initTheme();
     </script>
 </body>
 </html>
