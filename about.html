@@ -40,6 +40,32 @@
             --gray-light: #334155;
         }
 
+        [data-theme="dark"] body { color: #e2e8f0; }
+        [data-theme="dark"] h1, [data-theme="dark"] h2 { color: #f8fafc !important; }
+        [data-theme="dark"] h3, [data-theme="dark"] h4 { color: #60a5fa !important; }
+        [data-theme="dark"] p, [data-theme="dark"] li { color: #e2e8f0 !important; }
+        [data-theme="dark"] a { color: #60a5fa; }
+        [data-theme="dark"] .card { background: #1e293b; border-color: #334155; }
+        [data-theme="dark"] .team-card { background: #1e293b; border-color: #334155; }
+        [data-theme="dark"] .timeline-content { background: #1e293b; border-color: #334155; }
+        [data-theme="dark"] .market-stat { background: #1e293b; }
+        [data-theme="dark"] .content-text h2 { color: #60a5fa !important; }
+        [data-theme="dark"] .team-role { color: #4ade80 !important; }
+        [data-theme="dark"] .team-bio { color: #e2e8f0 !important; }
+        [data-theme="dark"] .card p { color: #e2e8f0 !important; }
+        [data-theme="dark"] .market-stat-label { color: #94a3b8; }
+        [data-theme="dark"] .footer-links a { color: #94a3b8 !important; }
+        [data-theme="dark"] .footer-links a:hover { color: #60a5fa !important; }
+        [data-theme="dark"] .footer-column h3 { color: #f8fafc !important; }
+        [data-theme="dark"] .copyright p { color: #94a3b8 !important; }
+        [data-theme="dark"] .bottom-nav { background: #1e293b; }
+        [data-theme="dark"] .bottom-nav-item { color: #94a3b8; }
+        [data-theme="dark"] .bottom-nav-item.active { color: #60a5fa; background: rgba(96, 165, 250, 0.1); }
+        [data-theme="dark"] .nav-links { background: #1e293b; }
+        [data-theme="dark"] .nav-links a { color: #e2e8f0 !important; }
+        [data-theme="dark"] .nav-links a:hover { color: #60a5fa !important; }
+        [data-theme="dark"] .mobile-menu { color: #e2e8f0; }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         html { scroll-behavior: smooth; }
         body {
@@ -668,9 +694,9 @@
                 </a>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="feldor_health.html">Home</a></li>
-                    <li><a href="about.html" class="active">About</a></li>
-                    <li><a href="feldor_health.html#detector">Detector</a></li>
+                    <li><a href="AI.html">AI Detector</a></li>
                     <li><a href="feldor_health.html#contact">Contact</a></li>
+                    <li><a href="feldor_health.html#profile">Profile</a></li>
                 </ul>
                 <div class="mobile-menu" onclick="toggleMobileMenu()">
                     <i class="fas fa-bars"></i>
@@ -907,7 +933,7 @@
                         <li><i class="fas fa-certificate"></i> <strong>Regulatory approvals</strong> — FDA, CE Mark, NAFDAC, and local certifications</li>
                         <li><i class="fas fa-rocket"></i> <strong>Product development and market expansion</strong> — scaling team and geographic reach</li>
                     </ul>
-                    <a href="mailto:ayibiowusimisola@gmail.com" class="cta-button" style="margin-top:15px;">Investor Inquiries</a>
+                    <a href="mailto:feldorhealthtech@gmail.com" class="cta-button" style="margin-top:15px;">Investor Inquiries</a>
                 </div>
             </div>
         </div>
@@ -954,7 +980,7 @@
         <div class="container">
             <h2>Join the Mission</h2>
             <p>Whether you are a healthcare provider, investor, or patient advocate — there is a place for you in our mission to make early cancer detection universal. Partner with us to save lives through technology.</p>
-            <a href="mailto:ayibiowusimisola@gmail.com" class="cta-button outline" style="font-size:1rem;padding:14px 32px;">Partner With Us</a>
+            <a href="mailto:feldorhealthtech@gmail.com" class="cta-button outline" style="font-size:1rem;padding:14px 32px;">Partner With Us</a>
         </div>
     </section>
 
@@ -962,28 +988,24 @@
     <section class="contact-bar">
         <div class="container">
             <h3><i class="fas fa-envelope" style="margin-right:10px;"></i>Get In Touch</h3>
-            <p style="margin-bottom:8px;"><i class="fas fa-phone" style="margin-right:8px;"></i> <a href="tel:09158272790">+2349158272790</a></p>
-            <p><i class="fas fa-envelope" style="margin-right:8px;"></i> <a href="mailto:ayibiowusimisola@gmail.com">ayibiowusimisola@gmail.com</a></p>
+            <p style="margin-bottom:8px;"><i class="fas fa-phone" style="margin-right:8px;"></i> <a href="tel:+2349158272790">+2349158272790</a></p>
+            <p><i class="fas fa-envelope" style="margin-right:8px;"></i> <a href="mailto:feldorhealthtech@gmail.com">feldorhealthtech@gmail.com</a></p>
         </div>
     </section>
 
     <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
-        <a href="index.html" class="bottom-nav-item">
+        <a href="feldor_health.html" class="bottom-nav-item">
             <i class="fas fa-home"></i>
             <span>Home</span>
         </a>
-        <a href="about.html" class="bottom-nav-item active">
-            <i class="fas fa-info-circle"></i>
-            <span>About</span>
-        </a>
-        <a href="index.html#detector" class="bottom-nav-item">
+        <a href="AI.html" class="bottom-nav-item">
             <i class="fas fa-robot"></i>
-            <span>Detector</span>
+            <span>AI</span>
         </a>
-        <a href="index.html#contact" class="bottom-nav-item">
-            <i class="fas fa-envelope"></i>
-            <span>Contact</span>
+        <a href="feldor_health.html#profile" class="bottom-nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
         </a>
     </nav>
 
@@ -1004,10 +1026,10 @@
                 <div class="footer-column">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="feldor_health.html"><i class="fas fa-chevron-right"></i> Home</a></li>
                         <li><a href="about.html"><i class="fas fa-chevron-right"></i> About</a></li>
-                        <li><a href="index.html#detector"><i class="fas fa-chevron-right"></i> AI Detector</a></li>
-                        <li><a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="AI.html"><i class="fas fa-chevron-right"></i> AI Detector</a></li>
+                        <li><a href="feldor_health.html#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -1022,8 +1044,8 @@
                 <div class="footer-column">
                     <h3>Contact Us</h3>
                     <ul class="footer-links">
-                        <li><a href="tel:09158272790"><i class="fas fa-phone"></i> 09158272790</a></li>
-                        <li><a href="mailto:ayibiowusimisola@gmail.com"><i class="fas fa-envelope"></i> ayibiowusimisola@gmail.com</a></li>
+                        <li><a href="tel:+2349158272790"><i class="fas fa-phone"></i> +2349158272790</a></li>
+                        <li><a href="mailto:feldorhealthtech@gmail.com"><i class="fas fa-envelope"></i> feldorhealthtech@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
