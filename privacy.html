@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Feldor Health</title>
+    <meta name="description" content="Privacy Policy for Feldor Health - AI-Powered Cancer Detection Platform">
+    <meta name="theme-color" content="#1a3a8f">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a8f;
+            --primary-light: #2a4fb8;
+            --primary-dark: #0f2a6d;
+            --secondary: #ff6b00;
+            --secondary-light: #ff8c3a;
+            --secondary-dark: #e55e00;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-light));
+            --gradient-secondary: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --light: #0f172a;
+            --dark: #f8fafc;
+            --dark-light: #e2e8f0;
+            --gray: #94a3b8;
+            --gray-light: #334155;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        [data-theme="dark"] body { color: #e2e8f0; }
+        [data-theme="dark"] h1, [data-theme="dark"] h2 { color: #f8fafc !important; }
+        [data-theme="dark"] h3 { color: #60a5fa !important; }
+        [data-theme="dark"] p, [data-theme="dark"] li { color: #e2e8f0 !important; }
+        [data-theme="dark"] a { color: #60a5fa; }
+        [data-theme="dark"] .privacy-card { background: #1e293b; border-color: #334155; }
+        [data-theme="dark"] .privacy-section { border-bottom-color: #334155; }
+        [data-theme="dark"] .back-btn { background: #1e293b; color: #e2e8f0; border-color: #475569; }
+        [data-theme="dark"] .back-btn:hover { background: #334155; }
+        [data-theme="dark"] .data-table th { background: #0f172a; color: #60a5fa; }
+        [data-theme="dark"] .data-table td { border-color: #334155; color: #e2e8f0; }
+        [data-theme="dark"] .data-table tr:nth-child(even) { background: #1e293b; }
+        [data-theme="dark"] .data-table tr:nth-child(odd) { background: #0f172a; }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.15;
+        }
+
+        header .container { position: relative; z-index: 2; }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 40px; height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .last-updated {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        main {
+            padding: 50px 0 80px;
+        }
+
+        .privacy-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .privacy-section {
+            margin-bottom: 35px;
+            padding-bottom: 35px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .privacy-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .privacy-section h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .privacy-section h2 i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .privacy-section h3 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin: 20px 0 10px;
+        }
+
+        .privacy-section p {
+            color: var(--gray);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .privacy-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .privacy-section li {
+            color: var(--gray);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background: rgba(26, 58, 143, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .success-box {
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 4px solid var(--success);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .success-box p {
+            margin: 0;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            background: var(--primary);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--gray-light);
+            color: var(--gray);
+        }
+
+        .data-table tr:nth-child(even) {
+            background: rgba(26, 58, 143, 0.02);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 2px solid var(--gray-light);
+            color: var(--dark);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: #b0b7c3;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--secondary-light);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.6rem; }
+            .privacy-card { padding: 25px; }
+            .privacy-section h2 { font-size: 1.2rem; }
+            .data-table { font-size: 0.8rem; }
+            .data-table th, .data-table td { padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="feldor_health.html" class="logo">
+                <div class="logo-icon">FH</div>
+                <div class="logo-text">Feldor Health</div>
+            </a>
+            <h1>Privacy Policy</h1>
+            <p>Your privacy and data security are our top priorities at Feldor Technology Ltd.</p>
+            <div class="last-updated"><i class="fas fa-calendar-alt"></i> Last Updated: June 24, 2026</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="feldor_health.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Platform</a>
+
+            <div class="privacy-card">
+                <div class="privacy-section">
+                    <h2><i class="fas fa-shield-alt"></i> 1. Introduction</h2>
+                    <p>Feldor Technology Ltd ("Feldor Health," "we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, store, share, and protect your personal information when you use our cancer detection platform, website, and related services (collectively, the "Services").</p>
+                    <p>By using our Services, you consent to the practices described in this Privacy Policy. If you do not agree with this policy, please do not use our Services.</p>
+                    <div class="success-box">
+                        <p><i class="fas fa-lock"></i> <strong>Our Commitment:</strong> We do not sell, rent, or trade your personal information to third parties for marketing purposes.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-database"></i> 2. Information We Collect</h2>
+                    <p>We collect different types of information to provide and improve our Services:</p>
+
+                    <h3>2.1 Personal Information</h3>
+                    <ul>
+                        <li><strong>Account Information:</strong> Name, email address, phone number, and password when you register.</li>
+                        <li><strong>Profile Information:</strong> Age, gender, location, and medical history (if voluntarily provided).</li>
+                        <li><strong>Contact Information:</strong> Details you provide when contacting our support team.</li>
+                    </ul>
+
+                    <h3>2.2 Medical & Health Data</h3>
+                    <ul>
+                        <li><strong>Medical Images:</strong> CT scans, MRI images, X-rays, and other diagnostic images you upload for analysis.</li>
+                        <li><strong>Scan Metadata:</strong> Date of scan, type of imaging, and associated clinical notes.</li>
+                        <li><strong>Analysis Results:</strong> Reports and findings generated by our platform.</li>
+                    </ul>
+
+                    <h3>2.3 Usage & Technical Data</h3>
+                    <ul>
+                        <li><strong>Device Information:</strong> IP address, browser type, operating system, and device identifiers.</li>
+                        <li><strong>Usage Data:</strong> Pages visited, features used, time spent on the platform, and click patterns.</li>
+                        <li><strong>Cookies & Tracking:</strong> We use cookies to enhance user experience and analyze platform performance.</li>
+                    </ul>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data Type</th>
+                                <th>Purpose</th>
+                                <th>Retention</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Account Info</td>
+                                <td>Authentication & communication</td>
+                                <td>Until account deletion</td>
+                            </tr>
+                            <tr>
+                                <td>Medical Images</td>
+                                <td>AI analysis & report generation</td>
+                                <td>7 years (medical records)</td>
+                            </tr>
+                            <tr>
+                                <td>Usage Data</td>
+                                <td>Platform improvement & security</td>
+                                <td>2 years</td>
+                            </tr>
+                            <tr>
+                                <td>Cookies</td>
+                                <td>Session management & preferences</td>
+                                <td>30 days - 1 year</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-bullseye"></i> 3. How We Use Your Information</h2>
+                    <p>We use the collected information for the following purposes:</p>
+                    <ul>
+                        <li><strong>Service Provision:</strong> To process medical scans, generate analysis reports, and provide cancer detection screening.</li>
+                        <li><strong>Platform Improvement:</strong> To train and improve our AI models, enhance accuracy, and develop new features.</li>
+                        <li><strong>Communication:</strong> To send you account notifications, analysis results, security alerts, and platform updates.</li>
+                        <li><strong>Security:</strong> To detect and prevent fraud, unauthorized access, and other security threats.</li>
+                        <li><strong>Legal Compliance:</strong> To comply with applicable laws, regulations, and legal processes.</li>
+                        <li><strong>Research:</strong> Anonymized and aggregated data may be used for medical research to improve cancer detection globally.</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p><i class="fas fa-info-circle"></i> <strong>Anonymization:</strong> Any data used for research is fully anonymized and cannot be traced back to individual users.</p>
+                    </div>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-user-lock"></i> 4. Data Security</h2>
+                    <p>We implement industry-leading security measures to protect your data:</p>
+                    <ul>
+                        <li><strong>Encryption:</strong> All data is encrypted in transit using TLS 1.3 and at rest using AES-256 encryption.</li>
+                        <li><strong>HIPAA Compliance:</strong> Our platform adheres to HIPAA standards for handling protected health information (PHI).</li>
+                        <li><strong>Access Controls:</strong> Role-based access controls ensure only authorized personnel can access sensitive data.</li>
+                        <li><strong>Regular Audits:</strong> We conduct regular security audits and penetration testing.</li>
+                        <li><strong>Secure Infrastructure:</strong> Our servers are hosted in SOC 2 Type II certified data centers.</li>
+                        <li><strong>Data Minimization:</strong> We only collect data necessary for the intended purpose.</li>
+                    </ul>
+                    <p>While we take every reasonable precaution, no internet-based system is 100% secure. We encourage users to use strong passwords and enable two-factor authentication where available.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-share-alt"></i> 5. Data Sharing & Third Parties</h2>
+                    <p>We do not sell your personal information. We may share data only in the following limited circumstances:</p>
+                    <ul>
+                        <li><strong>Service Providers:</strong> Trusted third-party vendors who assist in hosting, analytics, and customer support, bound by strict confidentiality agreements.</li>
+                        <li><strong>Medical Professionals:</strong> Only with your explicit consent, we may share results with your designated healthcare provider.</li>
+                        <li><strong>Legal Requirements:</strong> When required by law, court order, or government request.</li>
+                        <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or asset sale, with prior notice to users.</li>
+                        <li><strong>Research Partners:</strong> Anonymized, aggregated data shared with academic and medical research institutions.</li>
+                    </ul>
+                    <p>All third-party partners are contractually obligated to maintain the confidentiality and security of your data.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-globe-africa"></i> 6. International Data Transfers</h2>
+                    <p>Feldor Technology Ltd is based in Nigeria. Your data may be processed and stored in Nigeria and other countries where our service providers operate. By using our Services, you consent to the transfer of your information to these locations.</p>
+                    <p>We ensure that any international data transfers comply with applicable data protection laws, including the Nigeria Data Protection Regulation (NDPR) and GDPR where applicable.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-user-check"></i> 7. Your Rights & Choices</h2>
+                    <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+                    <ul>
+                        <li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
+                        <li><strong>Correction:</strong> Request that we correct inaccurate or incomplete information.</li>
+                        <li><strong>Deletion:</strong> Request deletion of your personal data, subject to legal retention requirements.</li>
+                        <li><strong>Portability:</strong> Request your data in a structured, machine-readable format.</li>
+                        <li><strong>Restriction:</strong> Request that we limit the processing of your data.</li>
+                        <li><strong>Objection:</strong> Object to the processing of your data for specific purposes.</li>
+                        <li><strong>Withdraw Consent:</strong> Withdraw consent for data processing where consent is the legal basis.</li>
+                    </ul>
+                    <p>To exercise these rights, please contact us at <strong>privacy@feldorhealth.com</strong>. We will respond within 30 days.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-child"></i> 8. Children's Privacy</h2>
+                    <p>Our Services are not intended for individuals under the age of 18. We do not knowingly collect personal information from children. If we discover that a child has provided us with personal information, we will delete such information immediately.</p>
+                    <p>If you believe a child has provided us with personal information, please contact us immediately.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-cookie-bite"></i> 9. Cookies & Tracking Technologies</h2>
+                    <p>We use cookies and similar technologies to:</p>
+                    <ul>
+                        <li>Keep you signed in and remember your preferences.</li>
+                        <li>Understand how you interact with our platform.</li>
+                        <li>Improve platform performance and user experience.</li>
+                        <li>Detect and prevent security threats.</li>
+                    </ul>
+                    <p>You can manage cookie preferences through your browser settings. Note that disabling cookies may affect platform functionality.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-clock"></i> 10. Data Retention</h2>
+                    <p>We retain your personal data only for as long as necessary to fulfill the purposes outlined in this policy:</p>
+                    <ul>
+                        <li><strong>Account Data:</strong> Retained until you delete your account or request deletion.</li>
+                        <li><strong>Medical Images:</strong> Retained for 7 years in compliance with medical record regulations, then securely deleted.</li>
+                        <li><strong>Usage Data:</strong> Retained for 2 years for analytics and security purposes.</li>
+                        <li><strong>Deleted Data:</strong> Permanently removed from active systems within 30 days of deletion request. Backup copies may persist for up to 90 days.</li>
+                    </ul>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-sync-alt"></i> 11. Changes to This Policy</h2>
+                    <p>We may update this Privacy Policy from time to time. Material changes will be communicated via email or platform notification at least 30 days before taking effect. The "Last Updated" date at the top of this page reflects the most recent revision.</p>
+                    <p>We encourage you to review this policy periodically to stay informed about how we protect your information.</p>
+                </div>
+
+                <div class="privacy-section">
+                    <h2><i class="fas fa-envelope"></i> 12. Contact Us</h2>
+                    <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact our Data Protection Officer:</p>
+                    <ul>
+                        <li><strong>Email:</strong> privacy@feldorhealth.com</li>
+                        <li><strong>Address:</strong> Feldor Technology Ltd, Data Protection Office, Lagos, Nigeria</li>
+                        <li><strong>Phone:</strong> +234 (0) 800-FELDOR</li>
+                        <li><strong>Response Time:</strong> We aim to respond within 48 business hours.</li>
+                    </ul>
+                    <p>For complaints, you may also contact the <strong>Nigeria Data Protection Bureau (NDPB)</strong> if you believe your rights have been violated.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Feldor Technology Ltd. All Rights Reserved. | <a href="terms.html">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle support
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+</body>
+</html>
