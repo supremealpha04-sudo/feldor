@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | Feldor Health</title>
+    <meta name="description" content="Terms of Service for Feldor Health - AI-Powered Cancer Detection Platform">
+    <meta name="theme-color" content="#1a3a8f">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a8f;
+            --primary-light: #2a4fb8;
+            --primary-dark: #0f2a6d;
+            --secondary: #ff6b00;
+            --secondary-light: #ff8c3a;
+            --secondary-dark: #e55e00;
+            --accent: #00d4ff;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #cbd5e1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-light));
+            --gradient-secondary: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --light: #0f172a;
+            --dark: #f8fafc;
+            --dark-light: #e2e8f0;
+            --gray: #94a3b8;
+            --gray-light: #334155;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        [data-theme="dark"] body { color: #e2e8f0; }
+        [data-theme="dark"] h1, [data-theme="dark"] h2 { color: #f8fafc !important; }
+        [data-theme="dark"] h3 { color: #60a5fa !important; }
+        [data-theme="dark"] p, [data-theme="dark"] li { color: #e2e8f0 !important; }
+        [data-theme="dark"] a { color: #60a5fa; }
+        [data-theme="dark"] .terms-card { background: #1e293b; border-color: #334155; }
+        [data-theme="dark"] .terms-section { border-bottom-color: #334155; }
+        [data-theme="dark"] .back-btn { background: #1e293b; color: #e2e8f0; border-color: #475569; }
+        [data-theme="dark"] .back-btn:hover { background: #334155; }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.15;
+        }
+
+        header .container { position: relative; z-index: 2; }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 40px; height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .last-updated {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        main {
+            padding: 50px 0 80px;
+        }
+
+        .terms-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .terms-section {
+            margin-bottom: 35px;
+            padding-bottom: 35px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .terms-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .terms-section h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .terms-section h2 i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .terms-section h3 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin: 20px 0 10px;
+        }
+
+        .terms-section p {
+            color: var(--gray);
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .terms-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .terms-section li {
+            color: var(--gray);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .highlight-box {
+            background: rgba(26, 58, 143, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 4px solid var(--error);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .warning-box p {
+            margin: 0;
+            color: var(--error);
+            font-weight: 500;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 2px solid var(--gray-light);
+            color: var(--dark);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer p {
+            color: #b0b7c3;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--secondary-light);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.6rem; }
+            .terms-card { padding: 25px; }
+            .terms-section h2 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="feldor_health.html" class="logo">
+                <div class="logo-icon">FH</div>
+                <div class="logo-text">Feldor Health</div>
+            </a>
+            <h1>Terms of Service</h1>
+            <p>Please read these terms carefully before using the Feldor Health platform.</p>
+            <div class="last-updated"><i class="fas fa-calendar-alt"></i> Last Updated: June 24, 2026</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="feldor_health.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Platform</a>
+
+            <div class="terms-card">
+                <div class="terms-section">
+                    <h2><i class="fas fa-handshake"></i> 1. Acceptance of Terms</h2>
+                    <p>Welcome to Feldor Health, operated by <strong>Feldor Technology Ltd</strong>. By accessing or using our platform, website, mobile application, or any related services (collectively, the "Services"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use the Services.</p>
+                    <p>These Terms constitute a legally binding agreement between you and Feldor Technology Ltd, a company registered in Nigeria. By using our Services, you represent that you are at least 18 years of age or have obtained parental/guardian consent.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-stethoscope"></i> 2. Medical Disclaimer</h2>
+                    <div class="warning-box">
+                        <p><i class="fas fa-exclamation-triangle"></i> <strong>IMPORTANT:</strong> Feldor Health is an informational and screening tool only. It does not provide medical diagnosis, treatment recommendations, or replace professional medical advice.</p>
+                    </div>
+                    <p>The Services are designed to assist in early cancer detection screening by analyzing medical images and data. However:</p>
+                    <ul>
+                        <li>Results generated by the platform are for informational purposes only and should not be considered a definitive medical diagnosis.</li>
+                        <li>Always consult a qualified healthcare provider, physician, or oncologist for proper diagnosis, treatment, and medical advice.</li>
+                        <li>Never disregard professional medical advice or delay seeking it because of information obtained from this platform.</li>
+                        <li>In case of a medical emergency, call your local emergency services immediately.</li>
+                    </ul>
+                    <p>Feldor Technology Ltd, its founders, employees, medical advisers, and affiliates are not liable for any medical decisions made based on the platform's output.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-user-shield"></i> 3. User Accounts & Eligibility</h2>
+                    <p>To access certain features of the Services, you may need to create an account. You agree to:</p>
+                    <ul>
+                        <li>Provide accurate, current, and complete information during registration.</li>
+                        <li>Maintain the security of your account credentials and not share them with third parties.</li>
+                        <li>Notify us immediately of any unauthorized access or security breach.</li>
+                        <li>Be solely responsible for all activities that occur under your account.</li>
+                    </ul>
+                    <p>We reserve the right to suspend or terminate accounts that violate these Terms or engage in fraudulent, abusive, or illegal activities.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-cloud-upload-alt"></i> 4. User Content & Data</h2>
+                    <p>By uploading medical scans, images, or any other content ("User Content") to the platform, you:</p>
+                    <ul>
+                        <li>Grant Feldor Technology Ltd a limited license to process, analyze, and store your content solely for the purpose of providing the Services.</li>
+                        <li>Represent that you have the legal right to upload such content and that it does not violate any third-party rights.</li>
+                        <li>Understand that while we employ industry-standard encryption and security measures, no system is 100% secure.</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p><i class="fas fa-lock"></i> <strong>Data Security:</strong> All medical data is encrypted using 256-bit encryption and handled in compliance with HIPAA standards. We do not sell your personal data to third parties.</p>
+                    </div>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-ban"></i> 5. Prohibited Activities</h2>
+                    <p>You agree not to engage in any of the following prohibited activities:</p>
+                    <ul>
+                        <li>Using the Services for any illegal, fraudulent, or unauthorized purpose.</li>
+                        <li>Attempting to interfere with, disrupt, or gain unauthorized access to the platform's systems or networks.</li>
+                        <li>Uploading malicious software, viruses, or harmful code.</li>
+                        <li>Impersonating any person or entity, or falsely stating your affiliation with any person or entity.</li>
+                        <li>Reverse engineering, decompiling, or disassembling any part of the Services.</li>
+                        <li>Using automated systems (bots, scrapers) to access the platform without permission.</li>
+                        <li>Uploading content that infringes on intellectual property rights or contains hate speech, harassment, or discrimination.</li>
+                    </ul>
+                    <p>Violation of these prohibitions may result in immediate account termination and legal action.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-shield-alt"></i> 6. Intellectual Property</h2>
+                    <p>All content, software, algorithms, designs, logos, trademarks, and materials on the Feldor Health platform are the exclusive property of Feldor Technology Ltd or its licensors and are protected by copyright, trademark, and other intellectual property laws.</p>
+                    <p>You may not:</p>
+                    <ul>
+                        <li>Copy, modify, distribute, or create derivative works from any platform content without written permission.</li>
+                        <li>Use the Feldor Health name, logo, or branding without prior authorization.</li>
+                        <li>Remove or alter any copyright, trademark, or proprietary notices.</li>
+                    </ul>
+                    <p>The platform's AI algorithms, machine learning models, and analytical frameworks are trade secrets of Feldor Technology Ltd.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-exclamation-circle"></i> 7. Limitation of Liability</h2>
+                    <p>To the maximum extent permitted by applicable law, Feldor Technology Ltd and its affiliates, officers, employees, agents, and medical advisers shall not be liable for:</p>
+                    <ul>
+                        <li>Any indirect, incidental, special, consequential, or punitive damages.</li>
+                        <li>Loss of profits, revenue, data, or goodwill arising from your use of the Services.</li>
+                        <li>Any medical outcomes, misdiagnoses, or treatment decisions based on platform results.</li>
+                        <li>Service interruptions, data loss, or technical failures beyond our reasonable control.</li>
+                    </ul>
+                    <p>Our total liability for any claim arising from these Terms shall not exceed the amount you paid to use the Services in the 12 months preceding the claim, or $100 USD, whichever is greater.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-gavel"></i> 8. Indemnification</h2>
+                    <p>You agree to indemnify, defend, and hold harmless Feldor Technology Ltd, its affiliates, officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses (including reasonable legal fees) arising out of or in connection with:</p>
+                    <ul>
+                        <li>Your use of the Services.</li>
+                        <li>Your violation of these Terms.</li>
+                        <li>Your violation of any third-party rights, including intellectual property or privacy rights.</li>
+                        <li>Any medical decisions or actions taken based on platform results.</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-globe"></i> 9. Governing Law & Dispute Resolution</h2>
+                    <p>These Terms shall be governed by and construed in accordance with the laws of the <strong>Federal Republic of Nigeria</strong>, without regard to its conflict of law provisions.</p>
+                    <p>Any dispute arising from these Terms shall first be attempted to be resolved through good-faith negotiation. If unresolved, disputes shall be submitted to binding arbitration in Lagos, Nigeria, in accordance with the Arbitration and Conciliation Act of Nigeria.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-sync-alt"></i> 10. Changes to Terms</h2>
+                    <p>We reserve the right to modify or update these Terms at any time. Material changes will be notified via email or platform notification at least 30 days before taking effect. Your continued use of the Services after changes constitutes acceptance of the revised Terms.</p>
+                    <p>It is your responsibility to review these Terms periodically. The "Last Updated" date at the top of this page indicates when the Terms were last revised.</p>
+                </div>
+
+                <div class="terms-section">
+                    <h2><i class="fas fa-envelope"></i> 11. Contact Us</h2>
+                    <p>If you have any questions, concerns, or feedback regarding these Terms, please contact us:</p>
+                    <ul>
+                        <li><strong>Email:</strong> legal@feldorhealth.com</li>
+                        <li><strong>Address:</strong> Feldor Technology Ltd, Lagos, Nigeria</li>
+                        <li><strong>Phone:</strong> +234 (0) 800-FELDOR</li>
+                    </ul>
+                    <p>We aim to respond to all inquiries within 48 business hours.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Feldor Technology Ltd. All Rights Reserved. | <a href="privacy.html">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle support
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+</body>
+</html>
