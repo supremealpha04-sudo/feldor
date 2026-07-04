@@ -9,8 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -59,6 +57,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Glass morphism */
         .glass {
             background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(20px) saturate(180%);
@@ -72,6 +71,7 @@
             border: 1px solid rgba(148, 163, 184, 0.1);
         }
 
+        /* Animated gradient border */
         .gradient-border {
             position: relative;
             background: rgba(15, 23, 42, 0.6);
@@ -91,26 +91,36 @@
             pointer-events: none;
         }
 
+        /* Glow effects */
         .glow-blue { box-shadow: 0 0 40px rgba(14, 165, 233, 0.08), 0 0 80px rgba(14, 165, 233, 0.04); }
         .glow-rose { box-shadow: 0 0 40px rgba(244, 63, 94, 0.08), 0 0 80px rgba(244, 63, 94, 0.04); }
         .glow-emerald { box-shadow: 0 0 40px rgba(16, 185, 129, 0.08), 0 0 80px rgba(16, 185, 129, 0.04); }
 
+        /* Animations */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
         @keyframes slideRight {
             from { opacity: 0; transform: translateX(-20px); }
             to { opacity: 1; transform: translateX(0); }
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
         @keyframes shimmer {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
         @keyframes scan-line {
             0% { top: 0; opacity: 0; }
@@ -121,35 +131,45 @@
 
         .animate-fade-up { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .animate-fade-in { animation: fadeIn 0.4s ease forwards; }
+        .animate-scale-in { animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-slide-right { animation: slideRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
         .animate-float { animation: float 3s ease-in-out infinite; }
 
         .delay-100 { animation-delay: 0.1s; opacity: 0; }
         .delay-200 { animation-delay: 0.2s; opacity: 0; }
         .delay-300 { animation-delay: 0.3s; opacity: 0; }
         .delay-400 { animation-delay: 0.4s; opacity: 0; }
+        .delay-500 { animation-delay: 0.5s; opacity: 0; }
 
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.2); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.3); }
 
+        /* Custom selection */
         ::selection { background: rgba(14, 165, 233, 0.3); color: #f0f9ff; }
 
+        /* Button hover lift */
         .btn-lift { transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .btn-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
         .btn-lift:active { transform: translateY(0); }
 
+        /* Card hover */
         .card-hover { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         .card-hover:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.08);
         }
 
+        /* Nav active indicator */
         .nav-active {
             background: linear-gradient(90deg, rgba(14, 165, 233, 0.1) 0%, transparent 100%);
             border-left: 2.5px solid #0ea5e9;
         }
 
+        /* Upload zone */
         .upload-zone {
             background: linear-gradient(135deg, rgba(15,23,42,0.8) 0%, rgba(26,34,52,0.6) 100%);
             border: 2px dashed rgba(148,163,184,0.15);
@@ -160,6 +180,14 @@
             background: linear-gradient(135deg, rgba(14,165,233,0.05) 0%, rgba(26,34,52,0.6) 100%);
         }
 
+        /* Progress ring */
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.5s ease;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Status pills */
         .pill {
             display: inline-flex;
             align-items: center;
@@ -171,17 +199,29 @@
             letter-spacing: 0.01em;
         }
 
+        /* Image viewer */
         .image-viewer { background: #0a0f1a; border-radius: 12px; overflow: hidden; }
         .image-viewer img { display: block; width: 100%; height: auto; }
 
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(148,163,184,0.08) 25%, rgba(148,163,184,0.15) 50%, rgba(148,163,184,0.08) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        /* Toast */
         .toast-enter { animation: slideRight 0.3s ease forwards; }
         .toast-exit { animation: fadeIn 0.2s ease reverse forwards; }
 
+        /* Modal overlay */
         .modal-overlay {
             background: rgba(7, 11, 20, 0.8);
             backdrop-filter: blur(8px);
         }
 
+        /* Scan animation overlay */
         .scan-overlay::after {
             content: '';
             position: absolute;
@@ -193,52 +233,16 @@
             animation: scan-line 2s linear infinite;
         }
 
+        /* Responsive sidebar */
         @media (max-width: 1024px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
-        }
-
-        /* Auth page styles */
-        .auth-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(ellipse at center, #0f172a 0%, #070b14 100%);
-        }
-        .auth-card {
-            width: 100%;
-            max-width: 420px;
-            padding: 40px;
-        }
-        .auth-input {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(148, 163, 184, 0.15);
-            transition: all 0.3s ease;
-        }
-        .auth-input:focus {
-            border-color: rgba(14, 165, 233, 0.4);
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-            outline: none;
-        }
-        .auth-input::placeholder {
-            color: rgba(148, 163, 184, 0.4);
         }
     </style>
 </head>
 <body>
     <div id="app"></div>
     <script>
-        // ═══════════════════════════════════════════════════════════════
-        // SUPABASE CONFIGURATION
-        // ═══════════════════════════════════════════════════════════════
-        // IMPORTANT: Replace these with your actual Supabase credentials
-        const SUPABASE_URL = 'https://your-project.supabase.co';
-        const SUPABASE_ANON_KEY = 'your-anon-key';
-        
-        // Initialize Supabase client
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
         // ═══════════════════════════════════════════════════════════════
         // CONFIGURATION
         // ═══════════════════════════════════════════════════════════════
@@ -255,10 +259,8 @@
             stats: {},
             loading: false,
             sidebarOpen: false,
-            isAuthenticated: false,
-            user: null,
-            authLoading: true,
-            authMode: 'login' // 'login' or 'signup'
+            toastQueue: [],
+            dragOver: false,
         };
 
         // ═══════════════════════════════════════════════════════════════
@@ -268,11 +270,11 @@
         const $$ = s => document.querySelectorAll(s);
         const fmtDate = d => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
         const fmtNum = n => new Intl.NumberFormat('en-US').format(n);
+        const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 
         const riskColor = lvl => ({ high: 'text-rose-400', medium: 'text-amber-400', low: 'text-emerald-400' }[lvl] || 'text-slate-400');
         const riskBg = lvl => ({ high: 'bg-rose-500/10 border-rose-500/20', medium: 'bg-amber-500/10 border-amber-500/20', low: 'bg-emerald-500/10 border-emerald-500/20' }[lvl] || 'bg-slate-500/10 border-slate-500/20');
         const riskIcon = lvl => ({ high: 'fa-triangle-exclamation', medium: 'fa-circle-exclamation', low: 'fa-check-circle' }[lvl] || 'fa-minus-circle');
-        
         const statusPill = st => {
             const map = {
                 pending:   { cls: 'bg-amber-500/10 text-amber-400 border-amber-500/20', icon: 'fa-clock' },
@@ -284,22 +286,13 @@
             return `<span class="pill ${m.cls} border"><i class="fas ${m.icon} text-[10px]"></i>${st}</span>`;
         };
 
+        // Toast system
         const toast = (msg, type = 'info') => {
-            const colors = { 
-                info: 'border-medical-500/30 bg-medical-500/10 text-medical-300', 
-                success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300', 
-                warning: 'border-amber-500/30 bg-amber-500/10 text-amber-300', 
-                error: 'border-rose-500/30 bg-rose-500/10 text-rose-300' 
-            };
-            const icons = { 
-                info: 'fa-info-circle', 
-                success: 'fa-check-circle', 
-                warning: 'fa-exclamation-circle', 
-                error: 'fa-circle-xmark' 
-            };
+            const colors = { info: 'border-medical-500/30 bg-medical-500/10 text-medical-300', success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300', warning: 'border-amber-500/30 bg-amber-500/10 text-amber-300', error: 'border-rose-500/30 bg-rose-500/10 text-rose-300' };
+            const icons = { info: 'fa-info-circle', success: 'fa-check-circle', warning: 'fa-exclamation-circle', error: 'fa-circle-xmark' };
             const el = document.createElement('div');
-            el.className = `fixed top-5 right-5 z-[100] px-5 py-3.5 rounded-xl border toast-enter glass-strong flex items-center gap-3 min-w-[320px] max-w-md ${colors[type] || colors.info}`;
-            el.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i><span class="text-sm font-medium">${msg}</span>`;
+            el.className = `fixed top-5 right-5 z-[100] px-5 py-3.5 rounded-xl border toast-enter glass-strong flex items-center gap-3 min-w-[320px] max-w-md ${colors[type]}`;
+            el.innerHTML = `<i class="fas ${icons[type]}"></i><span class="text-sm font-medium">${msg}</span>`;
             document.body.appendChild(el);
             setTimeout(() => { el.classList.add('toast-exit'); setTimeout(() => el.remove(), 200); }, 4000);
         };
@@ -311,130 +304,16 @@
         };
 
         // ═══════════════════════════════════════════════════════════════
-        // AUTHENTICATION
-        // ═══════════════════════════════════════════════════════════════
-        const auth = {
-            async signUp(email, password, fullName) {
-                try {
-                    const { data, error } = await supabase.auth.signUp({
-                        email,
-                        password,
-                        options: {
-                            data: {
-                                full_name: fullName
-                            }
-                        }
-                    });
-                    if (error) throw error;
-                    toast('Account created! Please verify your email.', 'success');
-                    return data;
-                } catch (e) {
-                    toast(e.message, 'error');
-                    throw e;
-                }
-            },
-
-            async signIn(email, password) {
-                try {
-                    const { data, error } = await supabase.auth.signInWithPassword({
-                        email,
-                        password
-                    });
-                    if (error) throw error;
-                    toast('Welcome back!', 'success');
-                    return data;
-                } catch (e) {
-                    toast(e.message, 'error');
-                    throw e;
-                }
-            },
-
-            async signOut() {
-                try {
-                    const { error } = await supabase.auth.signOut();
-                    if (error) throw error;
-                    state.isAuthenticated = false;
-                    state.user = null;
-                    toast('Signed out', 'info');
-                    render();
-                } catch (e) {
-                    toast(e.message, 'error');
-                }
-            },
-
-            async getSession() {
-                try {
-                    const { data: { session }, error } = await supabase.auth.getSession();
-                    if (error) throw error;
-                    if (session) {
-                        state.isAuthenticated = true;
-                        state.user = session.user;
-                    }
-                    return session;
-                } catch (e) {
-                    console.error('Session error:', e);
-                    return null;
-                }
-            },
-
-            // Listen for auth changes
-            onAuthStateChange(callback) {
-                supabase.auth.onAuthStateChange((event, session) => {
-                    if (event === 'SIGNED_IN' && session) {
-                        state.isAuthenticated = true;
-                        state.user = session.user;
-                        if (callback) callback(true, session.user);
-                        render();
-                    } else if (event === 'SIGNED_OUT') {
-                        state.isAuthenticated = false;
-                        state.user = null;
-                        if (callback) callback(false, null);
-                        render();
-                    }
-                });
-            }
-        };
-
-        // ═══════════════════════════════════════════════════════════════
-        // API with better error handling & CORS
+        // API
         // ═══════════════════════════════════════════════════════════════
         const api = {
             async req(method, path, body = null, isForm = false) {
-                try {
-                    const opts = { 
-                        method,
-                        headers: {}
-                    };
-                    
-                    if (!isForm && body) {
-                        opts.headers['Content-Type'] = 'application/json';
-                        opts.body = JSON.stringify(body);
-                    }
-                    if (isForm && body) {
-                        opts.body = body;
-                    }
-                    
-                    console.log(`[API] ${method} ${path}`);
-                    
-                    const res = await fetch(`${API_BASE}${path}`, opts);
-                    
-                    if (!res.ok) {
-                        const text = await res.text();
-                        console.error(`[API Error] ${res.status}: ${text}`);
-                        throw new Error(`HTTP ${res.status}: ${text.substring(0, 100)}`);
-                    }
-                    
-                    const data = await res.json();
-                    console.log(`[API Response] ${path}`, data);
-                    return data;
-                } catch (e) {
-                    console.error(`[API Exception] ${method} ${path}`, e);
-                    // Check if it's a network error
-                    if (e.message.includes('Failed to fetch') || e.message.includes('NetworkError')) {
-                        throw new Error('Cannot connect to server. Please check your internet connection or try again later.');
-                    }
-                    throw e;
-                }
+                const opts = { method };
+                if (!isForm && body) { opts.headers = { 'Content-Type': 'application/json' }; opts.body = JSON.stringify(body); }
+                if (isForm && body) opts.body = body;
+                const res = await fetch(`${API_BASE}${path}`, opts);
+                if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.detail || `HTTP ${res.status}`); }
+                return res.json();
             },
             get: p => api.req('GET', p),
             post: (p, d) => api.req('POST', p, d),
@@ -445,10 +324,6 @@
         // NAVIGATION
         // ═══════════════════════════════════════════════════════════════
         const go = (view, params = {}) => {
-            if (!state.isAuthenticated) {
-                render();
-                return;
-            }
             state.view = view;
             if (params.module) state.module = params.module;
             if (params.caseId) { loadCase(params.caseId); }
@@ -462,10 +337,7 @@
         // ═══════════════════════════════════════════════════════════════
         const loadStats = async () => {
             try {
-                const [b, c] = await Promise.all([
-                    api.get('/api/breast/dashboard').catch(() => ({})),
-                    api.get('/api/cervical/dashboard').catch(() => ({}))
-                ]);
+                const [b, c] = await Promise.all([api.get('/api/breast/dashboard').catch(() => ({})), api.get('/api/cervical/dashboard').catch(() => ({}))]);
                 state.stats = {
                     total: (b.total_cases || 0) + (c.total_cases || 0),
                     pending: (b.pending_review || 0) + (c.pending_review || 0),
@@ -475,24 +347,14 @@
                     breast: b.total_cases || 0,
                     cervical: c.total_cases || 0,
                 };
-            } catch (e) { 
-                console.error('Stats error:', e);
-                // Keep existing stats
-            }
+            } catch (e) { console.error(e); }
         };
 
         const loadCases = async () => {
             try {
-                const [b, c] = await Promise.all([
-                    api.get('/api/breast/cases?limit=100').catch(() => ({ cases: [] })),
-                    api.get('/api/cervical/cases?limit=100').catch(() => ({ cases: [] }))
-                ]);
-                state.cases = [...(b.cases || []), ...(c.cases || [])]
-                    .sort((a, b) => new Date(b.upload_date) - new Date(a.upload_date));
-            } catch (e) { 
-                console.error('Cases error:', e);
-                state.cases = [];
-            }
+                const [b, c] = await Promise.all([api.get('/api/breast/cases?limit=100').catch(() => ({ cases: [] })), api.get('/api/cervical/cases?limit=100').catch(() => ({ cases: [] }))]);
+                state.cases = [...(b.cases || []), ...(c.cases || [])].sort((a, b) => new Date(b.upload_date) - new Date(a.upload_date));
+            } catch (e) { console.error(e); }
         };
 
         const loadCase = async id => {
@@ -500,79 +362,13 @@
                 let d = await api.get(`/api/breast/cases/${id}`).catch(() => null);
                 if (!d) d = await api.get(`/api/cervical/cases/${id}`).catch(() => null);
                 state.caseDetail = d;
-            } catch (e) { 
-                console.error('Case detail error:', e);
-                state.caseDetail = null;
-            }
+            } catch (e) { console.error(e); }
         };
 
         // ═══════════════════════════════════════════════════════════════
-        // AUTH VIEWS
+        // COMPONENTS
         // ═══════════════════════════════════════════════════════════════
-        const AuthView = () => {
-            const isLogin = state.authMode === 'login';
-            return `
-                <div class="auth-container">
-                    <div class="auth-card glass-strong rounded-2xl border border-slate-700/20 animate-fade-up">
-                        <div class="text-center mb-8">
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center mx-auto shadow-lg shadow-medical-500/20">
-                                <i class="fas fa-dna text-white text-2xl"></i>
-                            </div>
-                            <h1 class="text-2xl font-bold text-white mt-4">Feldor Health</h1>
-                            <p class="text-sm text-slate-400 mt-1">AI Cancer Detection Platform</p>
-                        </div>
 
-                        <form id="auth-form" onsubmit="handleAuth(event)" class="space-y-4">
-                            ${!isLogin ? `
-                            <div>
-                                <label class="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
-                                <input type="text" id="auth-name" placeholder="Dr. John Doe" 
-                                    class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
-                            </div>
-                            ` : ''}
-                            <div>
-                                <label class="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
-                                <input type="email" id="auth-email" placeholder="doctor@hospital.com" required
-                                    class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-300 mb-2">Password</label>
-                                <input type="password" id="auth-password" placeholder="••••••••" required minlength="6"
-                                    class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
-                            </div>
-                            <button type="submit" 
-                                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-medical-600 to-medical-700 text-white font-semibold text-sm btn-lift shadow-lg shadow-medical-500/20 hover:shadow-medical-500/30 transition-all">
-                                <i class="fas ${isLogin ? 'fa-sign-in-alt' : 'fa-user-plus'} mr-2"></i>
-                                ${isLogin ? 'Sign In' : 'Create Account'}
-                            </button>
-                        </form>
-
-                        <div class="mt-6 text-center">
-                            <p class="text-sm text-slate-400">
-                                ${isLogin ? "Don't have an account? " : "Already have an account? "}
-                                <button onclick="toggleAuthMode()" class="text-medical-400 hover:text-medical-300 font-medium transition-colors">
-                                    ${isLogin ? 'Sign Up' : 'Sign In'}
-                                </button>
-                            </p>
-                        </div>
-
-                        <div class="mt-6 pt-6 border-t border-slate-700/20">
-                            <p class="text-xs text-slate-500 text-center leading-relaxed">
-                                <i class="fas fa-shield-halved mr-1"></i>
-                                Secure authentication powered by Supabase
-                            </p>
-                            <p class="text-xs text-slate-600 text-center mt-1">
-                                Demo: Use any email/password (6+ chars)
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        };
-
-        // ═══════════════════════════════════════════════════════════════
-        // MAIN APP COMPONENTS
-        // ═══════════════════════════════════════════════════════════════
         const Sidebar = () => {
             const items = [
                 { id: 'dashboard', icon: 'fa-chart-pie', label: 'Dashboard' },
@@ -609,7 +405,7 @@
                         </button>
                     `).join('')}
                 </nav>
-                <div class="p-4 border-t border-slate-700/20 space-y-3">
+                <div class="p-4 border-t border-slate-700/20">
                     <div class="gradient-border p-4 rounded-xl">
                         <div class="flex items-center gap-2 mb-1.5">
                             <span class="relative flex h-2 w-2">
@@ -620,20 +416,6 @@
                         </div>
                         <p class="text-[11px] text-slate-500">AI inference ready</p>
                     </div>
-                    ${state.user ? `
-                    <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-slate-800/30">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center text-white text-xs font-bold">
-                            ${state.user.email?.charAt(0).toUpperCase() || 'U'}
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-xs font-medium text-white truncate">${state.user.email}</p>
-                            <p class="text-[10px] text-slate-500">${state.user.user_metadata?.full_name || 'Clinician'}</p>
-                        </div>
-                        <button onclick="handleSignOut()" class="p-1.5 rounded-lg hover:bg-slate-700/50 text-slate-500 hover:text-rose-400 transition-colors">
-                            <i class="fas fa-sign-out-alt text-xs"></i>
-                        </button>
-                    </div>
-                    ` : ''}
                 </div>
             </aside>
             <div class="lg:hidden fixed inset-0 z-30 bg-black/50 backdrop-blur-sm transition-opacity ${state.sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}" onclick="toggleSidebar()"></div>
@@ -657,12 +439,10 @@
                         ${state.stats.urgent ? `<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full"></span>` : ''}
                     </button>
                     <div class="flex items-center gap-3 pl-4 border-l border-slate-700/30">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-medical-500/20">
-                            ${state.user?.email?.charAt(0).toUpperCase() || 'DR'}
-                        </div>
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-medical-500/20">DR</div>
                         <div class="hidden sm:block">
-                            <p class="text-sm font-semibold text-white">${state.user?.user_metadata?.full_name || 'Dr. Smith'}</p>
-                            <p class="text-[11px] text-slate-500">${state.user?.email || 'Pathologist'}</p>
+                            <p class="text-sm font-semibold text-white">Dr. Smith</p>
+                            <p class="text-[11px] text-slate-500">Pathologist</p>
                         </div>
                     </div>
                 </div>
@@ -704,6 +484,7 @@
         // ═══════════════════════════════════════════════════════════════
         // VIEWS
         // ═══════════════════════════════════════════════════════════════
+
         const DashboardView = () => `
             <div class="space-y-8 animate-fade-in">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -726,7 +507,7 @@
                             <button onclick="go('cases')" class="text-xs font-medium text-medical-400 hover:text-medical-300 transition-colors">View all</button>
                         </div>
                         <div class="divide-y divide-slate-700/10">
-                            ${state.cases.length > 0 ? state.cases.slice(0, 6).map(c => `
+                            ${state.cases.slice(0, 6).map(c => `
                                 <div onclick="go('report',{caseId:'${c.case_id}'})" class="p-4 flex items-center gap-3 hover:bg-slate-800/30 cursor-pointer transition-colors group">
                                     <div class="w-9 h-9 rounded-lg ${c.module === 'breast' ? 'bg-rose-500/10' : 'bg-violet-500/10'} flex items-center justify-center flex-shrink-0">
                                         <i class="fas ${c.module === 'breast' ? 'fa-ribbon text-rose-400' : 'fa-microscope text-violet-400'} text-xs"></i>
@@ -740,7 +521,7 @@
                                         <p class="text-[11px] text-slate-600 mt-1">${fmtDate(c.upload_date)}</p>
                                     </div>
                                 </div>
-                            `).join('') : '<p class="text-slate-500 text-sm text-center py-12">No cases found. Upload a scan to get started.</p>'}
+                            `).join('') || '<p class="text-slate-500 text-sm text-center py-12">No activity yet</p>'}
                         </div>
                     </div>
                 </div>
@@ -816,10 +597,7 @@
 
         const ReportView = () => {
             const c = state.caseDetail;
-            if (!c) return `<div class="flex flex-col items-center justify-center h-96 text-center">
-                <div class="w-16 h-16 border-3 border-medical-500/30 border-t-medical-400 rounded-full animate-spin mb-4"></div>
-                <p class="text-slate-400">Loading case details...</p>
-            </div>`;
+            if (!c) return `<div class="flex items-center justify-center h-96"><div class="w-10 h-10 border-2 border-medical-500/30 border-t-medical-400 rounded-full animate-spin"></div></div>`;
             const isBreast = c.module === 'breast';
             const riskPct = Math.round((c.risk_score || 0) * 100);
             const confPct = Math.round((c.confidence || 0) * 100);
@@ -849,7 +627,7 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-2 space-y-6">
-                        ${c.images && (c.images.original || c.images.preprocessed || c.images.heatmap || c.images.annotated) ? `
+                        ${c.images ? `
                         <div class="glass rounded-2xl p-6 border border-slate-700/20">
                             <h3 class="font-semibold text-white mb-4 flex items-center gap-2"><i class="fas fa-images text-slate-500 text-sm"></i> Scan Analysis</h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -870,11 +648,11 @@
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-center justify-between gap-2">
-                                            <h4 class="font-medium text-white">${f.type || 'Finding'}</h4>
-                                            <span class="text-xs text-slate-400 font-mono">${((f.confidence || 0) * 100).toFixed(1)}%</span>
+                                            <h4 class="font-medium text-white">${f.type}</h4>
+                                            <span class="text-xs text-slate-400 font-mono">${(f.confidence * 100).toFixed(1)}%</span>
                                         </div>
                                         ${f.location ? `<p class="text-sm text-slate-400 mt-1"><i class="fas fa-location-dot text-slate-600 mr-1 text-xs"></i>${f.location}</p>` : ''}
-                                        ${f.cell_id ? `<p class="text-xs text-slate-600 mt-1 font-mono">Cell #${f.cell_id} · Abnormality: ${((f.abnormality_score || 0) * 100).toFixed(1)}%</p>` : ''}
+                                        ${f.cell_id ? `<p class="text-xs text-slate-600 mt-1 font-mono">Cell #${f.cell_id} · Abnormality: ${(f.abnormality_score * 100).toFixed(1)}%</p>` : ''}
                                     </div>
                                 </div>
                             `).join('')}</div>` : '<p class="text-slate-500 text-sm text-center py-8">No specific findings detected</p>'}
@@ -886,8 +664,8 @@
                             <div class="inline-flex items-center justify-center w-24 h-24 rounded-full ${riskBg(c.risk_level)} mb-4">
                                 <i class="fas ${riskIcon(c.risk_level)} ${riskColor(c.risk_level)} text-3xl"></i>
                             </div>
-                            <h4 class="text-xl font-bold text-white">${c.prediction || 'Pending'}</h4>
-                            <p class="text-sm text-slate-500 mt-1">${c.model_version || 'v1'}</p>
+                            <h4 class="text-xl font-bold text-white">${c.prediction}</h4>
+                            <p class="text-sm text-slate-500 mt-1">${c.model_version}</p>
 
                             <div class="space-y-4 mt-6">
                                 <div>
@@ -916,7 +694,7 @@
                             <div class="space-y-3 text-sm">
                                 <div class="flex justify-between py-2 border-b border-slate-700/20">
                                     <span class="text-slate-400">Processing</span>
-                                    <span class="text-white font-mono">${c.processing_time_ms || 0}ms</span>
+                                    <span class="text-white font-mono">${c.processing_time_ms}ms</span>
                                 </div>
                                 ${c.total_cells !== undefined ? `
                                 <div class="flex justify-between py-2 border-b border-slate-700/20">
@@ -934,7 +712,7 @@
                                 </div>
                                 <div class="flex justify-between py-2">
                                     <span class="text-slate-400">Format</span>
-                                    <span class="text-white font-mono uppercase text-xs">${c.file_type || 'image'}</span>
+                                    <span class="text-white font-mono uppercase text-xs">${c.file_type}</span>
                                 </div>
                             </div>
                         </div>
@@ -998,7 +776,6 @@
                 </div>
 
                 <div class="glass rounded-2xl border border-slate-700/20 overflow-hidden">
-                    ${state.cases.length > 0 ? `
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
                             <thead>
@@ -1027,9 +804,9 @@
                                         <td class="px-6 py-4">
                                             <div class="flex items-center gap-2.5">
                                                 <div class="w-14 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                                                    <div class="h-full bg-medical-500 rounded-full" style="width:${Math.min((c.confidence || 0) * 100, 100)}%"></div>
+                                                    <div class="h-full bg-medical-500 rounded-full" style="width:${(c.confidence * 100).toFixed(0)}%"></div>
                                                 </div>
-                                                <span class="text-xs text-slate-400 font-mono">${Math.min((c.confidence || 0) * 100, 100).toFixed(0)}%</span>
+                                                <span class="text-xs text-slate-400 font-mono">${(c.confidence * 100).toFixed(0)}%</span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4">${statusPill(c.status)}</td>
@@ -1040,17 +817,10 @@
                                             </button>
                                         </td>
                                     </tr>
-                                `).join('')}
+                                `).join('') || '<tr><td colspan="8" class="text-center py-16 text-slate-500 text-sm">No cases found</td></tr>'}
                             </tbody>
                         </table>
                     </div>
-                    ` : `
-                    <div class="text-center py-16">
-                        <i class="fas fa-folder-open text-4xl text-slate-700 mb-4"></i>
-                        <p class="text-slate-500 text-sm">No cases found</p>
-                        <p class="text-slate-600 text-xs mt-1">Upload a scan to get started</p>
-                    </div>
-                    `}
                 </div>
             </div>
         `;
@@ -1068,7 +838,6 @@
                     <div class="p-5 border-b border-slate-700/20">
                         <h3 class="font-semibold text-white">Cases Requiring Review</h3>
                     </div>
-                    ${state.cases.filter(c => c.status === 'pending' && c.review_required).length > 0 ? `
                     <div class="divide-y divide-slate-700/10">
                         ${state.cases.filter(c => c.status === 'pending' && c.review_required).map(c => `
                             <div onclick="go('report',{caseId:'${c.case_id}'})" class="p-5 flex items-center gap-4 hover:bg-slate-800/30 cursor-pointer transition-colors">
@@ -1080,22 +849,15 @@
                                         <h4 class="font-semibold text-white">${c.patient_id}</h4>
                                         <span class="px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400 text-[10px] font-bold border border-rose-500/20">URGENT</span>
                                     </div>
-                                    <p class="text-sm text-slate-400">${c.prediction || 'Pending'} · ${((c.confidence || 0) * 100).toFixed(1)}% confidence</p>
+                                    <p class="text-sm text-slate-400">${c.prediction || 'Pending'} · ${(c.confidence * 100).toFixed(1)}% confidence</p>
                                 </div>
                                 <div class="text-right flex-shrink-0">
                                     <p class="text-xs text-slate-500">${fmtDate(c.upload_date)}</p>
                                     <button class="mt-2 px-4 py-1.5 rounded-lg bg-medical-500 text-white text-xs font-semibold hover:bg-medical-600 transition-colors">Review</button>
                                 </div>
                             </div>
-                        `).join('')}
+                        `).join('') || '<div class="text-center py-16 text-slate-500 text-sm">No cases pending review</div>'}
                     </div>
-                    ` : `
-                    <div class="text-center py-16">
-                        <i class="fas fa-check-circle text-4xl text-emerald-500/30 mb-4"></i>
-                        <p class="text-slate-500 text-sm">No cases pending review</p>
-                        <p class="text-slate-600 text-xs mt-1">All caught up!</p>
-                    </div>
-                    `}
                 </div>
             </div>
         `;
@@ -1209,11 +971,8 @@
                 toast('Analysis complete!', 'success');
                 state.caseDetail = r;
                 go('report');
-                await Promise.all([loadStats(), loadCases()]);
-            } catch (e) {
-                console.error('Analysis error:', e);
-                toast(e.message || 'Analysis failed. Please try again.', 'error');
-            }
+                loadStats(); loadCases();
+            } catch (e) { toast(e.message, 'error'); }
             finally { setLoading(false); }
         };
 
@@ -1223,15 +982,13 @@
                 const ep = state.caseDetail.module === 'breast' ? `/api/breast/cases/${id}/review` : `/api/cervical/cases/${id}/review`;
                 await api.post(ep, { status: st, notes, reviewer_id: 'dr_smith' });
                 toast(`Case ${st}`, 'success');
-                await Promise.all([loadCase(id), loadCases(), loadStats()]);
-                render();
-            } catch (e) {
-                console.error('Review error:', e);
-                toast(e.message || 'Review failed', 'error');
-            }
+                loadCase(id); loadCases();
+            } catch (e) { toast(e.message, 'error'); }
         };
 
         const filterCases = () => {
+            const mod = $('#f-module').value, st = $('#f-status').value;
+            // Client-side filter for demo; in production use API params
             loadCases();
         };
 
@@ -1241,55 +998,9 @@
         };
 
         // ═══════════════════════════════════════════════════════════════
-        // AUTH HANDLERS
-        // ═══════════════════════════════════════════════════════════════
-        const handleAuth = async (e) => {
-            e.preventDefault();
-            const email = $('#auth-email').value;
-            const password = $('#auth-password').value;
-            
-            if (!email || !password) {
-                toast('Please fill in all fields', 'warning');
-                return;
-            }
-
-            setLoading(true);
-            try {
-                if (state.authMode === 'login') {
-                    await auth.signIn(email, password);
-                } else {
-                    const name = $('#auth-name').value;
-                    await auth.signUp(email, password, name);
-                }
-                // After successful auth, load data and render
-                await Promise.all([loadStats(), loadCases()]);
-                render();
-            } catch (e) {
-                console.error('Auth error:', e);
-            }
-            setLoading(false);
-        };
-
-        const toggleAuthMode = () => {
-            state.authMode = state.authMode === 'login' ? 'signup' : 'login';
-            render();
-        };
-
-        const handleSignOut = async () => {
-            await auth.signOut();
-            render();
-        };
-
-        // ═══════════════════════════════════════════════════════════════
         // RENDER
         // ═══════════════════════════════════════════════════════════════
         const render = () => {
-            // Show auth page if not authenticated
-            if (!state.isAuthenticated) {
-                $('#app').innerHTML = AuthView();
-                return;
-            }
-
             const views = { dashboard: DashboardView, upload: UploadView, report: ReportView, cases: CasesView, review: ReviewView, models: ModelsView };
             const content = (views[state.view] || DashboardView)();
             $('#app').innerHTML = `
@@ -1305,8 +1016,8 @@
                                         <div class="absolute inset-0 border-2 border-medical-500 border-t-transparent rounded-full animate-spin"></div>
                                     </div>
                                     <div class="text-center">
-                                        <p class="text-white font-semibold">Processing...</p>
-                                        <p class="text-sm text-slate-500 mt-1">Please wait</p>
+                                        <p class="text-white font-semibold">Analyzing scan...</p>
+                                        <p class="text-sm text-slate-500 mt-1">AI processing in progress</p>
                                     </div>
                                 </div>
                             </div>
@@ -1334,57 +1045,12 @@
         // INIT
         // ═══════════════════════════════════════════════════════════════
         const init = async () => {
-            console.log('Initializing app...');
-            console.log('API Base:', API_BASE);
-            
-            // Check for existing session
-            const session = await auth.getSession();
-            state.isAuthenticated = !!session;
-            if (session) {
-                state.user = session.user;
-            }
-            
-            // Set up auth state listener
-            auth.onAuthStateChange((authenticated, user) => {
-                state.isAuthenticated = authenticated;
-                state.user = user;
-                if (authenticated) {
-                    loadStats();
-                    loadCases();
-                }
-                render();
-            });
-
-            // Load data if authenticated
-            if (state.isAuthenticated) {
-                setLoading(true);
-                try {
-                    await Promise.all([loadStats(), loadCases()]);
-                } catch (e) {
-                    console.error('Init data error:', e);
-                }
-                setLoading(false);
-            }
-            
+            await Promise.all([loadStats(), loadCases()]);
             render();
         };
-
-        // Make functions globally accessible
-        window.go = go;
-        window.handleFile = handleFile;
-        window.clearFile = clearFile;
-        window.analyze = analyze;
-        window.review = review;
-        window.filterCases = filterCases;
-        window.toggleSidebar = toggleSidebar;
-        window.handleAuth = handleAuth;
-        window.toggleAuthMode = toggleAuthMode;
-        window.handleSignOut = handleSignOut;
-        window.loadStats = loadStats;
-        window.loadCases = loadCases;
-        window.loadCase = loadCase;
 
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
+
