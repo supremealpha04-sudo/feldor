@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feldor Health — AI Cancer Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#1a2234',
+                            900: '#0f172a',
+                            950: '#070b14',
+                        },
+                        medical: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        rose: {
+                            450: '#f43f5e',
+                        },
+                        emerald: {
+                            450: '#10b981',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            background: #070b14;
+            color: #e2e8f0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(148, 163, 184, 0.08);
+        }
+        .glass-strong {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 16px;
+        }
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(244, 63, 94, 0.15), rgba(16, 185, 129, 0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .glow-blue { box-shadow: 0 0 40px rgba(14, 165, 233, 0.08), 0 0 80px rgba(14, 165, 233, 0.04); }
+        .glow-rose { box-shadow: 0 0 40px rgba(244, 63, 94, 0.08), 0 0 80px rgba(244, 63, 94, 0.04); }
+        .glow-emerald { box-shadow: 0 0 40px rgba(16, 185, 129, 0.08), 0 0 80px rgba(16, 185, 129, 0.04); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideRight {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes scan-line {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .animate-fade-up { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fade-in { animation: fadeIn 0.4s ease forwards; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+
+        .delay-100 { animation-delay: 0.1s; opacity: 0; }
+        .delay-200 { animation-delay: 0.2s; opacity: 0; }
+        .delay-300 { animation-delay: 0.3s; opacity: 0; }
+        .delay-400 { animation-delay: 0.4s; opacity: 0; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.2); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.3); }
+
+        ::selection { background: rgba(14, 165, 233, 0.3); color: #f0f9ff; }
+
+        .btn-lift { transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .btn-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        .btn-lift:active { transform: translateY(0); }
+
+        .card-hover { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(148,163,184,0.08);
+        }
+
+        .nav-active {
+            background: linear-gradient(90deg, rgba(14, 165, 233, 0.1) 0%, transparent 100%);
+            border-left: 2.5px solid #0ea5e9;
+        }
+
+        .upload-zone {
+            background: linear-gradient(135deg, rgba(15,23,42,0.8) 0%, rgba(26,34,52,0.6) 100%);
+            border: 2px dashed rgba(148,163,184,0.15);
+            transition: all 0.3s ease;
+        }
+        .upload-zone:hover, .upload-zone.drag-over {
+            border-color: rgba(14, 165, 233, 0.4);
+            background: linear-gradient(135deg, rgba(14,165,233,0.05) 0%, rgba(26,34,52,0.6) 100%);
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
+        .image-viewer { background: #0a0f1a; border-radius: 12px; overflow: hidden; }
+        .image-viewer img { display: block; width: 100%; height: auto; }
+
+        .toast-enter { animation: slideRight 0.3s ease forwards; }
+        .toast-exit { animation: fadeIn 0.2s ease reverse forwards; }
+
+        .modal-overlay {
+            background: rgba(7, 11, 20, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .scan-overlay::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+            box-shadow: 0 0 20px #0ea5e9;
+            animation: scan-line 2s linear infinite;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+        }
+
+        /* Auth page styles */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at center, #0f172a 0%, #070b14 100%);
+        }
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+        }
+        .auth-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            transition: all 0.3s ease;
+        }
+        .auth-input:focus {
+            border-color: rgba(14, 165, 233, 0.4);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+            outline: none;
+        }
+        .auth-input::placeholder {
+            color: rgba(148, 163, 184, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        // ═══════════════════════════════════════════════════════════════
+        // SUPABASE CONFIGURATION
+        // ═══════════════════════════════════════════════════════════════
+        // IMPORTANT: Replace these with your actual Supabase credentials
+        const SUPABASE_URL = 'https://your-project.supabase.co';
+        const SUPABASE_ANON_KEY = 'your-anon-key';
+        
+        // Initialize Supabase client
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ═══════════════════════════════════════════════════════════════
+        // CONFIGURATION
+        // ═══════════════════════════════════════════════════════════════
+        const API_BASE = 'https://backend2-1hgm.onrender.com';
+
+        // ═══════════════════════════════════════════════════════════════
+        // STATE
+        // ═══════════════════════════════════════════════════════════════
+        const state = {
+            view: 'dashboard',
+            module: null,
+            cases: [],
+            caseDetail: null,
+            stats: {},
+            loading: false,
+            sidebarOpen: false,
+            isAuthenticated: false,
+            user: null,
+            authLoading: true,
+            authMode: 'login' // 'login' or 'signup'
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // UTILITIES
+        // ═══════════════════════════════════════════════════════════════
+        const $ = s => document.querySelector(s);
+        const $$ = s => document.querySelectorAll(s);
+        const fmtDate = d => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+        const fmtNum = n => new Intl.NumberFormat('en-US').format(n);
+
+        const riskColor = lvl => ({ high: 'text-rose-400', medium: 'text-amber-400', low: 'text-emerald-400' }[lvl] || 'text-slate-400');
+        const riskBg = lvl => ({ high: 'bg-rose-500/10 border-rose-500/20', medium: 'bg-amber-500/10 border-amber-500/20', low: 'bg-emerald-500/10 border-emerald-500/20' }[lvl] || 'bg-slate-500/10 border-slate-500/20');
+        const riskIcon = lvl => ({ high: 'fa-triangle-exclamation', medium: 'fa-circle-exclamation', low: 'fa-check-circle' }[lvl] || 'fa-minus-circle');
+        
+        const statusPill = st => {
+            const map = {
+                pending:   { cls: 'bg-amber-500/10 text-amber-400 border-amber-500/20', icon: 'fa-clock' },
+                reviewed:  { cls: 'bg-medical-500/10 text-medical-400 border-medical-500/20', icon: 'fa-eye' },
+                approved:  { cls: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20', icon: 'fa-check' },
+                rejected:  { cls: 'bg-rose-500/10 text-rose-400 border-rose-500/20', icon: 'fa-xmark' },
+            };
+            const m = map[st] || map.pending;
+            return `<span class="pill ${m.cls} border"><i class="fas ${m.icon} text-[10px]"></i>${st}</span>`;
+        };
+
+        const toast = (msg, type = 'info') => {
+            const colors = { 
+                info: 'border-medical-500/30 bg-medical-500/10 text-medical-300', 
+                success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300', 
+                warning: 'border-amber-500/30 bg-amber-500/10 text-amber-300', 
+                error: 'border-rose-500/30 bg-rose-500/10 text-rose-300' 
+            };
+            const icons = { 
+                info: 'fa-info-circle', 
+                success: 'fa-check-circle', 
+                warning: 'fa-exclamation-circle', 
+                error: 'fa-circle-xmark' 
+            };
+            const el = document.createElement('div');
+            el.className = `fixed top-5 right-5 z-[100] px-5 py-3.5 rounded-xl border toast-enter glass-strong flex items-center gap-3 min-w-[320px] max-w-md ${colors[type] || colors.info}`;
+            el.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i><span class="text-sm font-medium">${msg}</span>`;
+            document.body.appendChild(el);
+            setTimeout(() => { el.classList.add('toast-exit'); setTimeout(() => el.remove(), 200); }, 4000);
+        };
+
+        const setLoading = v => {
+            state.loading = v;
+            const ov = $('#loading-overlay');
+            if (ov) ov.style.display = v ? 'flex' : 'none';
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // AUTHENTICATION
+        // ═══════════════════════════════════════════════════════════════
+        const auth = {
+            async signUp(email, password, fullName) {
+                try {
+                    const { data, error } = await supabase.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: {
+                                full_name: fullName
+                            }
+                        }
+                    });
+                    if (error) throw error;
+                    toast('Account created! Please verify your email.', 'success');
+                    return data;
+                } catch (e) {
+                    toast(e.message, 'error');
+                    throw e;
+                }
+            },
+
+            async signIn(email, password) {
+                try {
+                    const { data, error } = await supabase.auth.signInWithPassword({
+                        email,
+                        password
+                    });
+                    if (error) throw error;
+                    toast('Welcome back!', 'success');
+                    return data;
+                } catch (e) {
+                    toast(e.message, 'error');
+                    throw e;
+                }
+            },
+
+            async signOut() {
+                try {
+                    const { error } = await supabase.auth.signOut();
+                    if (error) throw error;
+                    state.isAuthenticated = false;
+                    state.user = null;
+                    toast('Signed out', 'info');
+                    render();
+                } catch (e) {
+                    toast(e.message, 'error');
+                }
+            },
+
+            async getSession() {
+                try {
+                    const { data: { session }, error } = await supabase.auth.getSession();
+                    if (error) throw error;
+                    if (session) {
+                        state.isAuthenticated = true;
+                        state.user = session.user;
+                    }
+                    return session;
+                } catch (e) {
+                    console.error('Session error:', e);
+                    return null;
+                }
+            },
+
+            // Listen for auth changes
+            onAuthStateChange(callback) {
+                supabase.auth.onAuthStateChange((event, session) => {
+                    if (event === 'SIGNED_IN' && session) {
+                        state.isAuthenticated = true;
+                        state.user = session.user;
+                        if (callback) callback(true, session.user);
+                        render();
+                    } else if (event === 'SIGNED_OUT') {
+                        state.isAuthenticated = false;
+                        state.user = null;
+                        if (callback) callback(false, null);
+                        render();
+                    }
+                });
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // API with better error handling & CORS
+        // ═══════════════════════════════════════════════════════════════
+        const api = {
+            async req(method, path, body = null, isForm = false) {
+                try {
+                    const opts = { 
+                        method,
+                        headers: {}
+                    };
+                    
+                    if (!isForm && body) {
+                        opts.headers['Content-Type'] = 'application/json';
+                        opts.body = JSON.stringify(body);
+                    }
+                    if (isForm && body) {
+                        opts.body = body;
+                    }
+                    
+                    console.log(`[API] ${method} ${path}`);
+                    
+                    const res = await fetch(`${API_BASE}${path}`, opts);
+                    
+                    if (!res.ok) {
+                        const text = await res.text();
+                        console.error(`[API Error] ${res.status}: ${text}`);
+                        throw new Error(`HTTP ${res.status}: ${text.substring(0, 100)}`);
+                    }
+                    
+                    const data = await res.json();
+                    console.log(`[API Response] ${path}`, data);
+                    return data;
+                } catch (e) {
+                    console.error(`[API Exception] ${method} ${path}`, e);
+                    // Check if it's a network error
+                    if (e.message.includes('Failed to fetch') || e.message.includes('NetworkError')) {
+                        throw new Error('Cannot connect to server. Please check your internet connection or try again later.');
+                    }
+                    throw e;
+                }
+            },
+            get: p => api.req('GET', p),
+            post: (p, d) => api.req('POST', p, d),
+            upload: (p, fd) => api.req('POST', p, fd, true),
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // NAVIGATION
+        // ═══════════════════════════════════════════════════════════════
+        const go = (view, params = {}) => {
+            if (!state.isAuthenticated) {
+                render();
+                return;
+            }
+            state.view = view;
+            if (params.module) state.module = params.module;
+            if (params.caseId) { loadCase(params.caseId); }
+            render();
+            window.scrollTo(0, 0);
+            state.sidebarOpen = false;
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA LOADING
+        // ═══════════════════════════════════════════════════════════════
+        const loadStats = async () => {
+            try {
+                const [b, c] = await Promise.all([
+                    api.get('/api/breast/dashboard').catch(() => ({})),
+                    api.get('/api/cervical/dashboard').catch(() => ({}))
+                ]);
+                state.stats = {
+                    total: (b.total_cases || 0) + (c.total_cases || 0),
+                    pending: (b.pending_review || 0) + (c.pending_review || 0),
+                    urgent: (b.urgent_review || 0) + (c.urgent_review || 0),
+                    reviewed: (b.reviewed || 0) + (c.reviewed || 0),
+                    avgConf: (((b.average_confidence || 0) + (c.average_confidence || 0)) / 2 * 100).toFixed(1),
+                    breast: b.total_cases || 0,
+                    cervical: c.total_cases || 0,
+                };
+            } catch (e) { 
+                console.error('Stats error:', e);
+                // Keep existing stats
+            }
+        };
+
+        const loadCases = async () => {
+            try {
+                const [b, c] = await Promise.all([
+                    api.get('/api/breast/cases?limit=100').catch(() => ({ cases: [] })),
+                    api.get('/api/cervical/cases?limit=100').catch(() => ({ cases: [] }))
+                ]);
+                state.cases = [...(b.cases || []), ...(c.cases || [])]
+                    .sort((a, b) => new Date(b.upload_date) - new Date(a.upload_date));
+            } catch (e) { 
+                console.error('Cases error:', e);
+                state.cases = [];
+            }
+        };
+
+        const loadCase = async id => {
+            try {
+                let d = await api.get(`/api/breast/cases/${id}`).catch(() => null);
+                if (!d) d = await api.get(`/api/cervical/cases/${id}`).catch(() => null);
+                state.caseDetail = d;
+            } catch (e) { 
+                console.error('Case detail error:', e);
+                state.caseDetail = null;
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // AUTH VIEWS
+        // ═══════════════════════════════════════════════════════════════
+        const AuthView = () => {
+            const isLogin = state.authMode === 'login';
+            return `
+                <div class="auth-container">
+                    <div class="auth-card glass-strong rounded-2xl border border-slate-700/20 animate-fade-up">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center mx-auto shadow-lg shadow-medical-500/20">
+                                <i class="fas fa-dna text-white text-2xl"></i>
+                            </div>
+                            <h1 class="text-2xl font-bold text-white mt-4">Feldor Health</h1>
+                            <p class="text-sm text-slate-400 mt-1">AI Cancer Detection Platform</p>
+                        </div>
+
+                        <form id="auth-form" onsubmit="handleAuth(event)" class="space-y-4">
+                            ${!isLogin ? `
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
+                                <input type="text" id="auth-name" placeholder="Dr. John Doe" 
+                                    class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
+                            </div>
+                            ` : ''}
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+                                <input type="email" id="auth-email" placeholder="doctor@hospital.com" required
+                                    class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-2">Password</label>
+                                <input type="password" id="auth-password" placeholder="••••••••" required minlength="6"
+                                    class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
+                            </div>
+                            <button type="submit" 
+                                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-medical-600 to-medical-700 text-white font-semibold text-sm btn-lift shadow-lg shadow-medical-500/20 hover:shadow-medical-500/30 transition-all">
+                                <i class="fas ${isLogin ? 'fa-sign-in-alt' : 'fa-user-plus'} mr-2"></i>
+                                ${isLogin ? 'Sign In' : 'Create Account'}
+                            </button>
+                        </form>
+
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-slate-400">
+                                ${isLogin ? "Don't have an account? " : "Already have an account? "}
+                                <button onclick="toggleAuthMode()" class="text-medical-400 hover:text-medical-300 font-medium transition-colors">
+                                    ${isLogin ? 'Sign Up' : 'Sign In'}
+                                </button>
+                            </p>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-slate-700/20">
+                            <p class="text-xs text-slate-500 text-center leading-relaxed">
+                                <i class="fas fa-shield-halved mr-1"></i>
+                                Secure authentication powered by Supabase
+                            </p>
+                            <p class="text-xs text-slate-600 text-center mt-1">
+                                Demo: Use any email/password (6+ chars)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // MAIN APP COMPONENTS
+        // ═══════════════════════════════════════════════════════════════
+        const Sidebar = () => {
+            const items = [
+                { id: 'dashboard', icon: 'fa-chart-pie', label: 'Dashboard' },
+                { id: 'sep1', sep: true, label: 'Modules' },
+                { id: 'breast', icon: 'fa-ribbon', label: 'Breast Cancer', module: 'breast', color: 'text-rose-400' },
+                { id: 'cervical', icon: 'fa-microscope', label: 'Cervical Cancer', module: 'cervical', color: 'text-violet-400' },
+                { id: 'sep2', sep: true, label: 'Management' },
+                { id: 'cases', icon: 'fa-folder-open', label: 'Case History', badge: state.stats.urgent },
+                { id: 'review', icon: 'fa-user-md', label: 'Review Queue' },
+                { id: 'models', icon: 'fa-brain', label: 'AI Models' },
+            ];
+            return `
+            <aside class="sidebar fixed lg:static inset-y-0 left-0 z-40 w-64 glass-strong border-r border-slate-700/30 flex flex-col transition-transform duration-300 ${state.sidebarOpen ? 'open' : ''} lg:translate-x-0">
+                <div class="p-6 flex items-center gap-3 border-b border-slate-700/20">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center shadow-lg shadow-medical-500/20">
+                        <i class="fas fa-dna text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg tracking-tight text-white">Feldor</h1>
+                        <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Health AI</p>
+                    </div>
+                </div>
+                <nav class="flex-1 py-4 px-3 space-y-0.5 overflow-y-auto">
+                    ${items.map(item => item.sep ? `
+                        <div class="pt-4 pb-2 px-3">
+                            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">${item.label}</p>
+                        </div>
+                    ` : `
+                        <button onclick="${item.module ? `go('upload',{module:'${item.module}'})` : `go('${item.id}')`}" 
+                            class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left text-sm font-medium transition-all duration-200 group ${state.view === (item.module ? 'upload' : item.id) && (item.module ? state.module === item.module : true) ? 'nav-active text-medical-300' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'}">
+                            <i class="fas ${item.icon} w-5 text-center ${item.color || ''} ${!item.color && state.view !== (item.module ? 'upload' : item.id) ? 'group-hover:text-medical-400' : ''} transition-colors"></i>
+                            <span>${item.label}</span>
+                            ${item.badge ? `<span class="ml-auto bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">${item.badge}</span>` : ''}
+                        </button>
+                    `).join('')}
+                </nav>
+                <div class="p-4 border-t border-slate-700/20 space-y-3">
+                    <div class="gradient-border p-4 rounded-xl">
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            <span class="text-xs font-medium text-slate-300">System Online</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500">AI inference ready</p>
+                    </div>
+                    ${state.user ? `
+                    <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-slate-800/30">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center text-white text-xs font-bold">
+                            ${state.user.email?.charAt(0).toUpperCase() || 'U'}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-xs font-medium text-white truncate">${state.user.email}</p>
+                            <p class="text-[10px] text-slate-500">${state.user.user_metadata?.full_name || 'Clinician'}</p>
+                        </div>
+                        <button onclick="handleSignOut()" class="p-1.5 rounded-lg hover:bg-slate-700/50 text-slate-500 hover:text-rose-400 transition-colors">
+                            <i class="fas fa-sign-out-alt text-xs"></i>
+                        </button>
+                    </div>
+                    ` : ''}
+                </div>
+            </aside>
+            <div class="lg:hidden fixed inset-0 z-30 bg-black/50 backdrop-blur-sm transition-opacity ${state.sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}" onclick="toggleSidebar()"></div>
+            `;
+        };
+
+        const Header = () => `
+            <header class="h-16 glass border-b border-slate-700/20 flex items-center justify-between px-6 sticky top-0 z-20">
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-slate-800/50 text-slate-400">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h2 class="text-lg font-semibold text-white capitalize">${state.view.replace('-', ' ')}</h2>
+                        ${state.module ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${state.module === 'breast' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-violet-500/10 text-violet-400 border border-violet-500/20'}">${state.module}</span>` : ''}
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="relative p-2 rounded-lg hover:bg-slate-800/50 text-slate-400 transition-colors">
+                        <i class="fas fa-bell"></i>
+                        ${state.stats.urgent ? `<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full"></span>` : ''}
+                    </button>
+                    <div class="flex items-center gap-3 pl-4 border-l border-slate-700/30">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-medical-500/20">
+                            ${state.user?.email?.charAt(0).toUpperCase() || 'DR'}
+                        </div>
+                        <div class="hidden sm:block">
+                            <p class="text-sm font-semibold text-white">${state.user?.user_metadata?.full_name || 'Dr. Smith'}</p>
+                            <p class="text-[11px] text-slate-500">${state.user?.email || 'Pathologist'}</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        `;
+
+        const StatCard = ({ icon, iconBg, label, value, sub, delay, glow }) => `
+            <div class="glass rounded-2xl p-6 card-hover animate-fade-up ${delay} ${glow || ''} border border-slate-700/20">
+                <div class="flex items-center justify-between mb-5">
+                    <div class="w-11 h-11 rounded-xl ${iconBg} flex items-center justify-center">
+                        <i class="fas ${icon} text-white text-sm"></i>
+                    </div>
+                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">${label}</span>
+                </div>
+                <h3 class="text-3xl font-bold text-white tracking-tight">${value}</h3>
+                <p class="text-sm text-slate-500 mt-1">${sub}</p>
+            </div>
+        `;
+
+        const ModuleCard = ({ title, desc, icon, iconBg, color, cases, onClick, delay }) => `
+            <div onclick="${onClick}" class="gradient-border p-5 rounded-2xl cursor-pointer card-hover animate-fade-up ${delay}">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl ${iconBg} flex items-center justify-center flex-shrink-0">
+                        <i class="fas ${icon} ${color} text-2xl"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-semibold text-white text-base">${title}</h4>
+                        <p class="text-sm text-slate-400 mt-0.5">${desc}</p>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <div class="text-2xl font-bold text-white">${cases}</div>
+                        <div class="text-[11px] text-slate-500 font-medium">cases</div>
+                    </div>
+                    <i class="fas fa-chevron-right text-slate-600 text-sm"></i>
+                </div>
+            </div>
+        `;
+
+        // ═══════════════════════════════════════════════════════════════
+        // VIEWS
+        // ═══════════════════════════════════════════════════════════════
+        const DashboardView = () => `
+            <div class="space-y-8 animate-fade-in">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    ${StatCard({ icon: 'fa-microscope', iconBg: 'bg-gradient-to-br from-medical-500 to-medical-700', label: 'Total Cases', value: fmtNum(state.stats.total || 0), sub: 'All time analyses', delay: 'delay-100' })}
+                    ${StatCard({ icon: 'fa-clock', iconBg: 'bg-gradient-to-br from-amber-500 to-amber-700', label: 'Pending', value: fmtNum(state.stats.pending || 0), sub: 'Awaiting review', delay: 'delay-200' })}
+                    ${StatCard({ icon: 'fa-triangle-exclamation', iconBg: 'bg-gradient-to-br from-rose-500 to-rose-700', label: 'Urgent', value: fmtNum(state.stats.urgent || 0), sub: 'High priority', delay: 'delay-300', glow: 'glow-rose' })}
+                    ${StatCard({ icon: 'fa-chart-line', iconBg: 'bg-gradient-to-br from-emerald-500 to-emerald-700', label: 'Confidence', value: `${state.stats.avgConf || 0}%`, sub: 'Average accuracy', delay: 'delay-400' })}
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 space-y-5">
+                        <h3 class="text-lg font-semibold text-white">Detection Modules</h3>
+                        ${ModuleCard({ title: 'Breast Cancer Detection', desc: 'Mammography analysis with lesion localization', icon: 'fa-ribbon', iconBg: 'bg-rose-500/10', color: 'text-rose-400', cases: state.stats.breast || 0, onClick: "go('upload',{module:'breast'})", delay: 'delay-100' })}
+                        ${ModuleCard({ title: 'Cervical Cancer Detection', desc: 'Pap smear cytology with cell-level analysis', icon: 'fa-microscope', iconBg: 'bg-violet-500/10', color: 'text-violet-400', cases: state.stats.cervical || 0, onClick: "go('upload',{module:'cervical'})", delay: 'delay-200' })}
+                    </div>
+
+                    <div class="glass rounded-2xl border border-slate-700/20 overflow-hidden animate-fade-up delay-300">
+                        <div class="p-5 border-b border-slate-700/20 flex items-center justify-between">
+                            <h3 class="font-semibold text-white">Recent Activity</h3>
+                            <button onclick="go('cases')" class="text-xs font-medium text-medical-400 hover:text-medical-300 transition-colors">View all</button>
+                        </div>
+                        <div class="divide-y divide-slate-700/10">
+                            ${state.cases.length > 0 ? state.cases.slice(0, 6).map(c => `
+                                <div onclick="go('report',{caseId:'${c.case_id}'})" class="p-4 flex items-center gap-3 hover:bg-slate-800/30 cursor-pointer transition-colors group">
+                                    <div class="w-9 h-9 rounded-lg ${c.module === 'breast' ? 'bg-rose-500/10' : 'bg-violet-500/10'} flex items-center justify-center flex-shrink-0">
+                                        <i class="fas ${c.module === 'breast' ? 'fa-ribbon text-rose-400' : 'fa-microscope text-violet-400'} text-xs"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-white truncate">${c.patient_id}</p>
+                                        <p class="text-xs text-slate-500 truncate">${c.prediction || 'Pending analysis'}</p>
+                                    </div>
+                                    <div class="text-right flex-shrink-0">
+                                        ${statusPill(c.status)}
+                                        <p class="text-[11px] text-slate-600 mt-1">${fmtDate(c.upload_date)}</p>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-slate-500 text-sm text-center py-12">No cases found. Upload a scan to get started.</p>'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const UploadView = () => {
+            const isBreast = state.module === 'breast';
+            return `
+            <div class="max-w-3xl mx-auto animate-fade-in">
+                <div class="glass rounded-2xl border border-slate-700/20 overflow-hidden">
+                    <div class="p-6 border-b border-slate-700/20">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl ${isBreast ? 'bg-rose-500/10' : 'bg-violet-500/10'} flex items-center justify-center">
+                                <i class="fas ${isBreast ? 'fa-ribbon text-rose-400' : 'fa-microscope text-violet-400'} text-xl"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-bold text-white">${isBreast ? 'Breast Cancer' : 'Cervical Cancer'} Detection</h2>
+                                <p class="text-sm text-slate-400">Upload medical scan for AI analysis</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">AI Model</label>
+                            <select id="model-version" class="w-full bg-slate-800/50 border border-slate-700/30 rounded-xl px-4 py-3 text-white text-sm focus:border-medical-500/50 focus:outline-none focus:ring-1 focus:ring-medical-500/20 transition-all appearance-none">
+                                ${isBreast ? '<option value="breast_v1">Breast AI v1 (Production)</option><option value="breast_v2">Breast AI v2 (Beta)</option>' : '<option value="cervical_v1">Cervical AI v1 (Production)</option>'}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Patient ID</label>
+                            <input type="text" id="patient-id" placeholder="e.g. PAT-2024-001" class="w-full bg-slate-800/50 border border-slate-700/30 rounded-xl px-4 py-3 text-white text-sm placeholder-slate-600 focus:border-medical-500/50 focus:outline-none focus:ring-1 focus:ring-medical-500/20 transition-all">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Medical Scan</label>
+                            <div id="drop-zone" class="upload-zone rounded-2xl p-12 text-center relative overflow-hidden cursor-pointer" onclick="document.getElementById('file-input').click()">
+                                <input type="file" id="file-input" class="hidden" accept="${isBreast ? '.dcm,.png,.jpg,.jpeg,.tiff' : '.png,.jpg,.jpeg,.tiff'}" onchange="handleFile(event)">
+                                <div id="upload-placeholder" class="animate-float">
+                                    <div class="w-16 h-16 rounded-2xl bg-medical-500/10 border border-medical-500/20 flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-cloud-arrow-up text-medical-400 text-2xl"></i>
+                                    </div>
+                                    <p class="text-base font-semibold text-white mb-1">Drop scan here or click to browse</p>
+                                    <p class="text-sm text-slate-500">${isBreast ? 'DICOM, PNG, JPG, TIFF up to 50MB' : 'PNG, JPG, TIFF microscopy images'}</p>
+                                </div>
+                                <div id="upload-preview" class="hidden">
+                                    <img id="preview-img" class="max-h-56 mx-auto rounded-xl shadow-2xl">
+                                    <p id="file-name" class="mt-4 text-sm text-slate-300 font-medium"></p>
+                                    <button onclick="event.stopPropagation(); clearFile()" class="mt-2 text-xs text-rose-400 hover:text-rose-300 font-medium">Remove file</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3 p-4 rounded-xl bg-amber-500/5 border border-amber-500/10">
+                            <i class="fas fa-shield-halved text-amber-400 mt-0.5 text-sm"></i>
+                            <div>
+                                <p class="text-sm font-medium text-amber-300">Clinical Decision Support</p>
+                                <p class="text-xs text-slate-500 mt-1 leading-relaxed">AI results assist clinicians but do not replace professional diagnosis. Always verify findings with qualified medical personnel.</p>
+                            </div>
+                        </div>
+
+                        <button id="analyze-btn" onclick="analyze()" disabled class="w-full py-4 rounded-xl bg-gradient-to-r from-medical-600 to-medical-700 text-white font-semibold text-sm btn-lift disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2 shadow-lg shadow-medical-500/10">
+                            <i class="fas fa-brain"></i>
+                            Run AI Analysis
+                        </button>
+                    </div>
+                </div>
+            </div>
+            `;
+        };
+
+        const ReportView = () => {
+            const c = state.caseDetail;
+            if (!c) return `<div class="flex flex-col items-center justify-center h-96 text-center">
+                <div class="w-16 h-16 border-3 border-medical-500/30 border-t-medical-400 rounded-full animate-spin mb-4"></div>
+                <p class="text-slate-400">Loading case details...</p>
+            </div>`;
+            const isBreast = c.module === 'breast';
+            const riskPct = Math.round((c.risk_score || 0) * 100);
+            const confPct = Math.round((c.confidence || 0) * 100);
+
+            return `
+            <div class="max-w-7xl mx-auto animate-fade-in space-y-6">
+                <div class="glass rounded-2xl p-6 border border-slate-700/20">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider ${isBreast ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-violet-500/10 text-violet-400 border border-violet-500/20'}">${c.module}</span>
+                                ${statusPill(c.status)}
+                            </div>
+                            <h2 class="text-2xl font-bold text-white">Case ${c.case_id?.slice(0, 8)}</h2>
+                            <p class="text-sm text-slate-400 mt-1">Patient: <span class="text-slate-300 font-mono">${c.patient_id}</span> · ${fmtDate(c.upload_date)}</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="window.print()" class="px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700/30 text-slate-300 text-sm font-medium hover:bg-slate-800 transition-colors flex items-center gap-2">
+                                <i class="fas fa-print text-xs"></i> Print
+                            </button>
+                            <button onclick="go('cases')" class="px-4 py-2.5 rounded-xl bg-slate-800/50 border border-slate-700/30 text-slate-300 text-sm font-medium hover:bg-slate-800 transition-colors flex items-center gap-2">
+                                <i class="fas fa-arrow-left text-xs"></i> Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 space-y-6">
+                        ${c.images && (c.images.original || c.images.preprocessed || c.images.heatmap || c.images.annotated) ? `
+                        <div class="glass rounded-2xl p-6 border border-slate-700/20">
+                            <h3 class="font-semibold text-white mb-4 flex items-center gap-2"><i class="fas fa-images text-slate-500 text-sm"></i> Scan Analysis</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                ${c.images.original ? `<div class="image-viewer"><p class="text-xs text-slate-500 px-3 py-2 bg-slate-900/50">Original</p><img src="data:image/png;base64,${c.images.original}" class="max-h-64 object-contain mx-auto"></div>` : ''}
+                                ${c.images.preprocessed ? `<div class="image-viewer"><p class="text-xs text-slate-500 px-3 py-2 bg-slate-900/50">Preprocessed</p><img src="data:image/png;base64,${c.images.preprocessed}" class="max-h-64 object-contain mx-auto"></div>` : ''}
+                                ${c.images.heatmap ? `<div class="image-viewer relative scan-overlay"><p class="text-xs text-slate-500 px-3 py-2 bg-slate-900/50">AI Heatmap</p><img src="data:image/png;base64,${c.images.heatmap}" class="max-h-64 object-contain mx-auto"></div>` : ''}
+                                ${c.images.annotated ? `<div class="image-viewer"><p class="text-xs text-slate-500 px-3 py-2 bg-slate-900/50">Cell Detection</p><img src="data:image/png;base64,${c.images.annotated}" class="max-h-64 object-contain mx-auto"></div>` : ''}
+                            </div>
+                        </div>
+                        ` : ''}
+
+                        <div class="glass rounded-2xl p-6 border border-slate-700/20">
+                            <h3 class="font-semibold text-white mb-4 flex items-center gap-2"><i class="fas fa-list-check text-slate-500 text-sm"></i> AI Findings</h3>
+                            ${c.findings?.length ? `<div class="space-y-3">${c.findings.map((f, i) => `
+                                <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-800/30 border border-slate-700/20">
+                                    <div class="w-8 h-8 rounded-lg bg-medical-500/10 flex items-center justify-center flex-shrink-0">
+                                        <span class="text-medical-400 font-bold text-sm">${i + 1}</span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <h4 class="font-medium text-white">${f.type || 'Finding'}</h4>
+                                            <span class="text-xs text-slate-400 font-mono">${((f.confidence || 0) * 100).toFixed(1)}%</span>
+                                        </div>
+                                        ${f.location ? `<p class="text-sm text-slate-400 mt-1"><i class="fas fa-location-dot text-slate-600 mr-1 text-xs"></i>${f.location}</p>` : ''}
+                                        ${f.cell_id ? `<p class="text-xs text-slate-600 mt-1 font-mono">Cell #${f.cell_id} · Abnormality: ${((f.abnormality_score || 0) * 100).toFixed(1)}%</p>` : ''}
+                                    </div>
+                                </div>
+                            `).join('')}</div>` : '<p class="text-slate-500 text-sm text-center py-8">No specific findings detected</p>'}
+                        </div>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div class="glass rounded-2xl p-6 border border-slate-700/20 text-center">
+                            <div class="inline-flex items-center justify-center w-24 h-24 rounded-full ${riskBg(c.risk_level)} mb-4">
+                                <i class="fas ${riskIcon(c.risk_level)} ${riskColor(c.risk_level)} text-3xl"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-white">${c.prediction || 'Pending'}</h4>
+                            <p class="text-sm text-slate-500 mt-1">${c.model_version || 'v1'}</p>
+
+                            <div class="space-y-4 mt-6">
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1.5">
+                                        <span class="text-slate-400">Confidence</span>
+                                        <span class="font-semibold text-white">${confPct}%</span>
+                                    </div>
+                                    <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-r from-medical-500 to-medical-400 rounded-full transition-all duration-700" style="width:${confPct}%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-sm mb-1.5">
+                                        <span class="text-slate-400">Risk Score</span>
+                                        <span class="font-semibold ${riskColor(c.risk_level)}">${riskPct}%</span>
+                                    </div>
+                                    <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                        <div class="h-full ${c.risk_level === 'high' ? 'bg-gradient-to-r from-rose-500 to-rose-400' : c.risk_level === 'medium' ? 'bg-gradient-to-r from-amber-500 to-amber-400' : 'bg-gradient-to-r from-emerald-500 to-emerald-400'} rounded-full transition-all duration-700" style="width:${riskPct}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass rounded-2xl p-6 border border-slate-700/20">
+                            <h3 class="font-semibold text-white mb-4 text-sm">Analysis Details</h3>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between py-2 border-b border-slate-700/20">
+                                    <span class="text-slate-400">Processing</span>
+                                    <span class="text-white font-mono">${c.processing_time_ms || 0}ms</span>
+                                </div>
+                                ${c.total_cells !== undefined ? `
+                                <div class="flex justify-between py-2 border-b border-slate-700/20">
+                                    <span class="text-slate-400">Total Cells</span>
+                                    <span class="text-white font-mono">${fmtNum(c.total_cells)}</span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-slate-700/20">
+                                    <span class="text-slate-400">Suspicious</span>
+                                    <span class="${c.suspicious_cells > 0 ? 'text-rose-400' : 'text-emerald-400'} font-mono">${fmtNum(c.suspicious_cells)}</span>
+                                </div>
+                                ` : ''}
+                                <div class="flex justify-between py-2 border-b border-slate-700/20">
+                                    <span class="text-slate-400">Review Required</span>
+                                    <span class="${c.review_required ? 'text-amber-400' : 'text-emerald-400'}">${c.review_required ? 'Yes' : 'No'}</span>
+                                </div>
+                                <div class="flex justify-between py-2">
+                                    <span class="text-slate-400">Format</span>
+                                    <span class="text-white font-mono uppercase text-xs">${c.file_type || 'image'}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        ${c.status === 'pending' ? `
+                        <div class="glass rounded-2xl p-6 border border-slate-700/20">
+                            <h3 class="font-semibold text-white mb-4 text-sm">Clinician Review</h3>
+                            <textarea id="review-notes" placeholder="Enter clinical notes..." class="w-full bg-slate-800/50 border border-slate-700/30 rounded-xl px-4 py-3 text-white text-sm placeholder-slate-600 focus:border-medical-500/50 focus:outline-none focus:ring-1 focus:ring-medical-500/20 transition-all resize-none h-24 mb-3"></textarea>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="review('${c.case_id}','approved')" class="py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-semibold hover:bg-emerald-500/20 transition-colors flex items-center justify-center gap-2">
+                                    <i class="fas fa-check text-xs"></i> Approve
+                                </button>
+                                <button onclick="review('${c.case_id}','rejected')" class="py-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-semibold hover:bg-rose-500/20 transition-colors flex items-center justify-center gap-2">
+                                    <i class="fas fa-xmark text-xs"></i> Reject
+                                </button>
+                            </div>
+                            <button onclick="review('${c.case_id}','reviewed')" class="w-full mt-2 py-2.5 rounded-xl bg-medical-500/10 border border-medical-500/20 text-medical-400 text-sm font-semibold hover:bg-medical-500/20 transition-colors">
+                                Mark Reviewed
+                            </button>
+                        </div>
+                        ` : `
+                        <div class="glass rounded-2xl p-6 border border-slate-700/20">
+                            <h3 class="font-semibold text-white mb-3 text-sm">Review Status</h3>
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fas fa-user-doctor text-slate-500 text-sm"></i>
+                                <span class="text-sm text-slate-300">${c.reviewer_id || 'Unknown'}</span>
+                            </div>
+                            <p class="text-sm text-slate-500">${c.review_notes || 'No notes provided'}</p>
+                            <p class="text-xs text-slate-600 mt-2">${fmtDate(c.review_date)}</p>
+                        </div>
+                        `}
+
+                        <div class="flex items-start gap-3 p-4 rounded-xl bg-amber-500/5 border border-amber-500/10">
+                            <i class="fas fa-circle-info text-amber-400 mt-0.5 text-sm"></i>
+                            <p class="text-xs text-slate-500 leading-relaxed">${c.disclaimer || 'AI results assist clinicians and require professional interpretation.'}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+        };
+
+        const CasesView = () => `
+            <div class="animate-fade-in space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <h2 class="text-2xl font-bold text-white">Case History</h2>
+                    <div class="flex gap-2">
+                        <select id="f-module" onchange="filterCases()" class="bg-slate-800/50 border border-slate-700/30 rounded-xl px-4 py-2.5 text-sm text-white focus:border-medical-500/50 focus:outline-none appearance-none">
+                            <option value="">All Modules</option>
+                            <option value="breast">Breast</option>
+                            <option value="cervical">Cervical</option>
+                        </select>
+                        <select id="f-status" onchange="filterCases()" class="bg-slate-800/50 border border-slate-700/30 rounded-xl px-4 py-2.5 text-sm text-white focus:border-medical-500/50 focus:outline-none appearance-none">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="reviewed">Reviewed</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="glass rounded-2xl border border-slate-700/20 overflow-hidden">
+                    ${state.cases.length > 0 ? `
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="border-b border-slate-700/20">
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Case</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Module</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Patient</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Prediction</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Confidence</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-700/10">
+                                ${state.cases.map(c => `
+                                    <tr onclick="go('report',{caseId:'${c.case_id}'})" class="hover:bg-slate-800/30 cursor-pointer transition-colors group">
+                                        <td class="px-6 py-4 font-mono text-sm text-slate-300">${c.case_id?.slice(0, 8)}…</td>
+                                        <td class="px-6 py-4">
+                                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold ${c.module === 'breast' ? 'bg-rose-500/10 text-rose-400' : 'bg-violet-500/10 text-violet-400'}">
+                                                <i class="fas ${c.module === 'breast' ? 'fa-ribbon' : 'fa-microscope'} text-[9px]"></i>${c.module}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-white">${c.patient_id}</td>
+                                        <td class="px-6 py-4 text-sm text-slate-300">${c.prediction || '—'}</td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-2.5">
+                                                <div class="w-14 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                                    <div class="h-full bg-medical-500 rounded-full" style="width:${Math.min((c.confidence || 0) * 100, 100)}%"></div>
+                                                </div>
+                                                <span class="text-xs text-slate-400 font-mono">${Math.min((c.confidence || 0) * 100, 100).toFixed(0)}%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">${statusPill(c.status)}</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">${fmtDate(c.upload_date)}</td>
+                                        <td class="px-6 py-4">
+                                            <button onclick="event.stopPropagation(); go('report',{caseId:'${c.case_id}'})" class="p-2 rounded-lg hover:bg-slate-700/50 text-slate-500 hover:text-medical-400 transition-colors">
+                                                <i class="fas fa-arrow-right text-xs"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    ` : `
+                    <div class="text-center py-16">
+                        <i class="fas fa-folder-open text-4xl text-slate-700 mb-4"></i>
+                        <p class="text-slate-500 text-sm">No cases found</p>
+                        <p class="text-slate-600 text-xs mt-1">Upload a scan to get started</p>
+                    </div>
+                    `}
+                </div>
+            </div>
+        `;
+
+        const ReviewView = () => `
+            <div class="animate-fade-in space-y-6">
+                <h2 class="text-2xl font-bold text-white">Review Queue</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    ${StatCard({ icon: 'fa-clock', iconBg: 'bg-gradient-to-br from-amber-500 to-amber-700', label: 'Pending', value: fmtNum(state.stats.pending || 0), sub: 'Awaiting review', delay: '' })}
+                    ${StatCard({ icon: 'fa-triangle-exclamation', iconBg: 'bg-gradient-to-br from-rose-500 to-rose-700', label: 'Urgent', value: fmtNum(state.stats.urgent || 0), sub: 'High priority', delay: '', glow: 'glow-rose' })}
+                    ${StatCard({ icon: 'fa-check-double', iconBg: 'bg-gradient-to-br from-emerald-500 to-emerald-700', label: 'Reviewed', value: fmtNum(state.stats.reviewed || 0), sub: 'Completed', delay: '' })}
+                </div>
+
+                <div class="glass rounded-2xl border border-slate-700/20 overflow-hidden">
+                    <div class="p-5 border-b border-slate-700/20">
+                        <h3 class="font-semibold text-white">Cases Requiring Review</h3>
+                    </div>
+                    ${state.cases.filter(c => c.status === 'pending' && c.review_required).length > 0 ? `
+                    <div class="divide-y divide-slate-700/10">
+                        ${state.cases.filter(c => c.status === 'pending' && c.review_required).map(c => `
+                            <div onclick="go('report',{caseId:'${c.case_id}'})" class="p-5 flex items-center gap-4 hover:bg-slate-800/30 cursor-pointer transition-colors">
+                                <div class="w-12 h-12 rounded-xl ${c.module === 'breast' ? 'bg-rose-500/10' : 'bg-violet-500/10'} flex items-center justify-center flex-shrink-0">
+                                    <i class="fas ${c.module === 'breast' ? 'fa-ribbon text-rose-400' : 'fa-microscope text-violet-400'}"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center gap-2">
+                                        <h4 class="font-semibold text-white">${c.patient_id}</h4>
+                                        <span class="px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400 text-[10px] font-bold border border-rose-500/20">URGENT</span>
+                                    </div>
+                                    <p class="text-sm text-slate-400">${c.prediction || 'Pending'} · ${((c.confidence || 0) * 100).toFixed(1)}% confidence</p>
+                                </div>
+                                <div class="text-right flex-shrink-0">
+                                    <p class="text-xs text-slate-500">${fmtDate(c.upload_date)}</p>
+                                    <button class="mt-2 px-4 py-1.5 rounded-lg bg-medical-500 text-white text-xs font-semibold hover:bg-medical-600 transition-colors">Review</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ` : `
+                    <div class="text-center py-16">
+                        <i class="fas fa-check-circle text-4xl text-emerald-500/30 mb-4"></i>
+                        <p class="text-slate-500 text-sm">No cases pending review</p>
+                        <p class="text-slate-600 text-xs mt-1">All caught up!</p>
+                    </div>
+                    `}
+                </div>
+            </div>
+        `;
+
+        const ModelsView = () => `
+            <div class="animate-fade-in space-y-6">
+                <h2 class="text-2xl font-bold text-white">AI Models</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass rounded-2xl p-6 border border-slate-700/20">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center">
+                                <i class="fas fa-ribbon text-rose-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-white">Breast Cancer Models</h3>
+                                <p class="text-sm text-slate-400">Mammography detection</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-4 rounded-xl bg-slate-800/40 border border-medical-500/20">
+                                <div>
+                                    <p class="font-medium text-white">Breast AI v1</p>
+                                    <p class="text-xs text-slate-500">Production · Active</p>
+                                </div>
+                                <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">Active</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 rounded-xl bg-slate-800/20 border border-slate-700/20">
+                                <div>
+                                    <p class="font-medium text-white">Breast AI v2</p>
+                                    <p class="text-xs text-slate-500">Enhanced architecture</p>
+                                </div>
+                                <span class="px-3 py-1 rounded-full bg-slate-700/50 text-slate-400 text-xs font-bold">Standby</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-2xl p-6 border border-slate-700/20">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center">
+                                <i class="fas fa-microscope text-violet-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-white">Cervical Cancer Models</h3>
+                                <p class="text-sm text-slate-400">Cytology analysis</p>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-4 rounded-xl bg-slate-800/40 border border-medical-500/20">
+                                <div>
+                                    <p class="font-medium text-white">Cervical AI v1</p>
+                                    <p class="text-xs text-slate-500">Production · Active</p>
+                                </div>
+                                <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/20">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass rounded-2xl p-6 border border-slate-700/20">
+                    <h3 class="font-semibold text-white mb-6">Performance Metrics</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        ${[{v:'94.2%',l:'Sensitivity'},{v:'91.8%',l:'Specificity'},{v:'93.1%',l:'AUC-ROC'},{v:'847ms',l:'Avg Inference'}].map(m => `
+                            <div class="text-center p-5 rounded-xl bg-slate-800/30 border border-slate-700/20">
+                                <p class="text-2xl font-bold text-medical-400">${m.v}</p>
+                                <p class="text-xs text-slate-500 mt-1 font-medium">${m.l}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // ═══════════════════════════════════════════════════════════════
+        // ACTIONS
+        // ═══════════════════════════════════════════════════════════════
+        let selectedFile = null;
+
+        const handleFile = e => {
+            const f = e.target.files[0];
+            if (!f) return;
+            selectedFile = f;
+            const r = new FileReader();
+            r.onload = ev => {
+                $('#preview-img').src = ev.target.result;
+                $('#file-name').textContent = f.name;
+                $('#upload-placeholder').classList.add('hidden');
+                $('#upload-preview').classList.remove('hidden');
+                $('#analyze-btn').disabled = false;
+            };
+            r.readAsDataURL(f);
+        };
+
+        const clearFile = () => {
+            selectedFile = null;
+            $('#file-input').value = '';
+            $('#upload-placeholder').classList.remove('hidden');
+            $('#upload-preview').classList.add('hidden');
+            $('#analyze-btn').disabled = true;
+        };
+
+        const analyze = async () => {
+            if (!selectedFile) return;
+            setLoading(true);
+            const fd = new FormData();
+            fd.append('file', selectedFile);
+            fd.append('patient_id', $('#patient-id').value || '');
+            fd.append('model_version', $('#model-version').value);
+            try {
+                const ep = state.module === 'breast' ? '/api/breast/upload' : '/api/cervical/upload';
+                const r = await api.upload(ep, fd);
+                toast('Analysis complete!', 'success');
+                state.caseDetail = r;
+                go('report');
+                await Promise.all([loadStats(), loadCases()]);
+            } catch (e) {
+                console.error('Analysis error:', e);
+                toast(e.message || 'Analysis failed. Please try again.', 'error');
+            }
+            finally { setLoading(false); }
+        };
+
+        const review = async (id, st) => {
+            const notes = $('#review-notes')?.value || '';
+            try {
+                const ep = state.caseDetail.module === 'breast' ? `/api/breast/cases/${id}/review` : `/api/cervical/cases/${id}/review`;
+                await api.post(ep, { status: st, notes, reviewer_id: 'dr_smith' });
+                toast(`Case ${st}`, 'success');
+                await Promise.all([loadCase(id), loadCases(), loadStats()]);
+                render();
+            } catch (e) {
+                console.error('Review error:', e);
+                toast(e.message || 'Review failed', 'error');
+            }
+        };
+
+        const filterCases = () => {
+            loadCases();
+        };
+
+        const toggleSidebar = () => {
+            state.sidebarOpen = !state.sidebarOpen;
+            render();
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // AUTH HANDLERS
+        // ═══════════════════════════════════════════════════════════════
+        const handleAuth = async (e) => {
+            e.preventDefault();
+            const email = $('#auth-email').value;
+            const password = $('#auth-password').value;
+            
+            if (!email || !password) {
+                toast('Please fill in all fields', 'warning');
+                return;
+            }
+
+            setLoading(true);
+            try {
+                if (state.authMode === 'login') {
+                    await auth.signIn(email, password);
+                } else {
+                    const name = $('#auth-name').value;
+                    await auth.signUp(email, password, name);
+                }
+                // After successful auth, load data and render
+                await Promise.all([loadStats(), loadCases()]);
+                render();
+            } catch (e) {
+                console.error('Auth error:', e);
+            }
+            setLoading(false);
+        };
+
+        const toggleAuthMode = () => {
+            state.authMode = state.authMode === 'login' ? 'signup' : 'login';
+            render();
+        };
+
+        const handleSignOut = async () => {
+            await auth.signOut();
+            render();
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // RENDER
+        // ═══════════════════════════════════════════════════════════════
+        const render = () => {
+            // Show auth page if not authenticated
+            if (!state.isAuthenticated) {
+                $('#app').innerHTML = AuthView();
+                return;
+            }
+
+            const views = { dashboard: DashboardView, upload: UploadView, report: ReportView, cases: CasesView, review: ReviewView, models: ModelsView };
+            const content = (views[state.view] || DashboardView)();
+            $('#app').innerHTML = `
+                <div class="min-h-screen flex">
+                    ${Sidebar()}
+                    <div class="flex-1 flex flex-col min-w-0">
+                        ${Header()}
+                        <main class="flex-1 p-6 overflow-auto">
+                            <div id="loading-overlay" class="fixed inset-0 z-50 modal-overlay hidden items-center justify-center">
+                                <div class="glass-strong rounded-2xl p-10 flex flex-col items-center gap-5">
+                                    <div class="relative w-14 h-14">
+                                        <div class="absolute inset-0 border-2 border-slate-700/30 rounded-full"></div>
+                                        <div class="absolute inset-0 border-2 border-medical-500 border-t-transparent rounded-full animate-spin"></div>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-white font-semibold">Processing...</p>
+                                        <p class="text-sm text-slate-500 mt-1">Please wait</p>
+                                    </div>
+                                </div>
+                            </div>
+                            ${content}
+                        </main>
+                    </div>
+                </div>
+            `;
+
+            // Drag & drop
+            if (state.view === 'upload') {
+                const dz = $('#drop-zone');
+                if (dz) {
+                    ['dragenter','dragover'].forEach(e => dz.addEventListener(e, ev => { ev.preventDefault(); dz.classList.add('drag-over'); }));
+                    ['dragleave','drop'].forEach(e => dz.addEventListener(e, ev => { ev.preventDefault(); dz.classList.remove('drag-over'); }));
+                    dz.addEventListener('drop', e => {
+                        const files = e.dataTransfer.files;
+                        if (files[0]) { const inp = $('#file-input'); const dt = new DataTransfer(); dt.items.add(files[0]); inp.files = dt.files; handleFile({target: inp}); }
+                    });
+                }
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // INIT
+        // ═══════════════════════════════════════════════════════════════
+        const init = async () => {
+            console.log('Initializing app...');
+            console.log('API Base:', API_BASE);
+            
+            // Check for existing session
+            const session = await auth.getSession();
+            state.isAuthenticated = !!session;
+            if (session) {
+                state.user = session.user;
+            }
+            
+            // Set up auth state listener
+            auth.onAuthStateChange((authenticated, user) => {
+                state.isAuthenticated = authenticated;
+                state.user = user;
+                if (authenticated) {
+                    loadStats();
+                    loadCases();
+                }
+                render();
+            });
+
+            // Load data if authenticated
+            if (state.isAuthenticated) {
+                setLoading(true);
+                try {
+                    await Promise.all([loadStats(), loadCases()]);
+                } catch (e) {
+                    console.error('Init data error:', e);
+                }
+                setLoading(false);
+            }
+            
+            render();
+        };
+
+        // Make functions globally accessible
+        window.go = go;
+        window.handleFile = handleFile;
+        window.clearFile = clearFile;
+        window.analyze = analyze;
+        window.review = review;
+        window.filterCases = filterCases;
+        window.toggleSidebar = toggleSidebar;
+        window.handleAuth = handleAuth;
+        window.toggleAuthMode = toggleAuthMode;
+        window.handleSignOut = handleSignOut;
+        window.loadStats = loadStats;
+        window.loadCases = loadCases;
+        window.loadCase = loadCase;
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
