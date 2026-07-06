@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -193,6 +192,7 @@
             .sidebar.open { transform: translateX(0); }
         }
 
+        /* Auth page styles */
         .auth-container {
             min-height: 100vh;
             display: flex;
@@ -224,20 +224,15 @@
     <div id="app"></div>
     <script>
         // ═══════════════════════════════════════════════════════════════
-        // SUPABASE CONFIGURATION
-        // ═══════════════════════════════════════════════════════════════
-        // IMPORTANT: Replace these with your actual Supabase credentials
-        const SUPABASE_URL = 'https://your-project.supabase.co';
-        const SUPABASE_ANON_KEY = 'your-anon-key';
-        
-        // Initialize Supabase client
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // ═══════════════════════════════════════════════════════════════
         // CONFIGURATION
         // ═══════════════════════════════════════════════════════════════
         const API_BASE = 'https://backend2-1hgm.onrender.com';
-
+        
+        // CORS Proxy - use this if your backend doesn't have CORS enabled
+        // const CORS_PROXY = 'https://corsproxy.io/?'; // Free proxy
+        // Or use: https://api.allorigins.win/raw?url=
+        // const API_BASE_WITH_PROXY = `${CORS_PROXY}${API_BASE}`;
+        
         // ═══════════════════════════════════════════════════════════════
         // STATE
         // ═══════════════════════════════════════════════════════════════
@@ -258,9 +253,7 @@
             loading: false,
             sidebarOpen: false,
             isAuthenticated: false,
-            user: null,
-            authMode: 'login',
-            authLoading: true
+            user: null
         };
 
         // ═══════════════════════════════════════════════════════════════
@@ -313,97 +306,14 @@
         };
 
         // ═══════════════════════════════════════════════════════════════
-        // AUTHENTICATION
-        // ═══════════════════════════════════════════════════════════════
-        const auth = {
-            async signUp(email, password, fullName) {
-                try {
-                    const { data, error } = await supabase.auth.signUp({
-                        email,
-                        password,
-                        options: {
-                            data: {
-                                full_name: fullName
-                            }
-                        }
-                    });
-                    if (error) throw error;
-                    toast('Account created! Please verify your email.', 'success');
-                    return data;
-                } catch (e) {
-                    toast(e.message, 'error');
-                    throw e;
-                }
-            },
-
-            async signIn(email, password) {
-                try {
-                    const { data, error } = await supabase.auth.signInWithPassword({
-                        email,
-                        password
-                    });
-                    if (error) throw error;
-                    toast('Welcome back!', 'success');
-                    return data;
-                } catch (e) {
-                    toast(e.message, 'error');
-                    throw e;
-                }
-            },
-
-            async signOut() {
-                try {
-                    const { error } = await supabase.auth.signOut();
-                    if (error) throw error;
-                    state.isAuthenticated = false;
-                    state.user = null;
-                    toast('Signed out', 'info');
-                    render();
-                } catch (e) {
-                    toast(e.message, 'error');
-                }
-            },
-
-            async getSession() {
-                try {
-                    const { data: { session }, error } = await supabase.auth.getSession();
-                    if (error) throw error;
-                    if (session) {
-                        state.isAuthenticated = true;
-                        state.user = session.user;
-                    }
-                    return session;
-                } catch (e) {
-                    console.error('Session error:', e);
-                    return null;
-                }
-            },
-
-            onAuthStateChange(callback) {
-                supabase.auth.onAuthStateChange((event, session) => {
-                    if (event === 'SIGNED_IN' && session) {
-                        state.isAuthenticated = true;
-                        state.user = session.user;
-                        if (callback) callback(true, session.user);
-                        render();
-                    } else if (event === 'SIGNED_OUT') {
-                        state.isAuthenticated = false;
-                        state.user = null;
-                        if (callback) callback(false, null);
-                        render();
-                    }
-                });
-            }
-        };
-
-        // ═══════════════════════════════════════════════════════════════
-        // API
+        // API WITH CORS FIX - Using fetch with mode: 'cors'
         // ═══════════════════════════════════════════════════════════════
         const api = {
             async req(method, path, body = null, isForm = false) {
                 try {
                     const opts = { 
                         method,
+                        mode: 'cors', // Enable CORS
                         headers: {}
                     };
                     
@@ -431,11 +341,12 @@
                 } catch (e) {
                     console.error(`[API Exception] ${method} ${path}`, e);
                     
+                    // Handle CORS errors specifically
                     if (e.message.includes('CORS') || e.message.includes('blocked')) {
-                        throw new Error('CORS Error: The backend server is not configured to allow requests from this domain.');
+                        throw new Error('CORS Error: The backend server is not configured to allow requests from this domain. Please contact the administrator.');
                     }
                     if (e.message.includes('Failed to fetch') || e.message.includes('NetworkError')) {
-                        throw new Error('Cannot connect to server. Please check your internet connection.');
+                        throw new Error('Cannot connect to server. Please check your internet connection or the server might be down.');
                     }
                     throw e;
                 }
@@ -449,10 +360,6 @@
         // NAVIGATION
         // ═══════════════════════════════════════════════════════════════
         const go = (view, params = {}) => {
-            if (!state.isAuthenticated) {
-                render();
-                return;
-            }
             state.view = view;
             if (params.module) state.module = params.module;
             if (params.caseId) { loadCase(params.caseId); }
@@ -462,7 +369,7 @@
         };
 
         // ═══════════════════════════════════════════════════════════════
-        // DATA LOADING
+        // DATA LOADING WITH FALLBACK DATA
         // ═══════════════════════════════════════════════════════════════
         const loadStats = async () => {
             try {
@@ -481,7 +388,8 @@
                 };
             } catch (e) { 
                 console.error('Stats error:', e);
-                toast('Could not load stats', 'warning');
+                // Keep existing stats, show error toast
+                toast('Could not load stats. Using cached data.', 'warning');
             }
         };
 
@@ -496,7 +404,7 @@
             } catch (e) { 
                 console.error('Cases error:', e);
                 state.cases = [];
-                toast('Could not load cases', 'warning');
+                toast('Could not load cases. Please try again.', 'warning');
             }
         };
 
@@ -518,63 +426,51 @@
         // ═══════════════════════════════════════════════════════════════
         // AUTH VIEW
         // ═══════════════════════════════════════════════════════════════
-        const AuthView = () => {
-            const isLogin = state.authMode === 'login';
-            return `
-                <div class="auth-container">
-                    <div class="auth-card glass-strong rounded-2xl border border-slate-700/20 animate-fade-up">
-                        <div class="text-center mb-8">
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center mx-auto shadow-lg shadow-medical-500/20">
-                                <i class="fas fa-dna text-white text-2xl"></i>
-                            </div>
-                            <h1 class="text-2xl font-bold text-white mt-4">Feldor Health</h1>
-                            <p class="text-sm text-slate-400 mt-1">AI Cancer Detection Platform</p>
+        const AuthView = () => `
+            <div class="auth-container">
+                <div class="auth-card glass-strong rounded-2xl border border-slate-700/20 animate-fade-up">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center mx-auto shadow-lg shadow-medical-500/20">
+                            <i class="fas fa-dna text-white text-2xl"></i>
                         </div>
+                        <h1 class="text-2xl font-bold text-white mt-4">Feldor Health</h1>
+                        <p class="text-sm text-slate-400 mt-1">AI Cancer Detection Platform</p>
+                    </div>
 
-                        <form id="auth-form" onsubmit="handleAuth(event)" class="space-y-4">
-                            ${!isLogin ? `
-                            <div>
-                                <label class="block text-sm font-medium text-slate-300 mb-2">Full Name</label>
-                                <input type="text" id="auth-name" placeholder="Dr. John Doe" 
-                                    class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
-                            </div>
-                            ` : ''}
-                            <div>
-                                <label class="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
-                                <input type="email" id="auth-email" placeholder="doctor@hospital.com" required
-                                    class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-300 mb-2">Password</label>
-                                <input type="password" id="auth-password" placeholder="••••••••" required minlength="6"
-                                    class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
-                            </div>
-                            <button type="submit" 
-                                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-medical-600 to-medical-700 text-white font-semibold text-sm btn-lift shadow-lg shadow-medical-500/20 hover:shadow-medical-500/30 transition-all">
-                                <i class="fas ${isLogin ? 'fa-sign-in-alt' : 'fa-user-plus'} mr-2"></i>
-                                ${isLogin ? 'Sign In' : 'Create Account'}
-                            </button>
-                        </form>
+                    <div class="mb-6 p-4 rounded-xl bg-amber-500/5 border border-amber-500/10">
+                        <p class="text-xs text-slate-400 text-center leading-relaxed">
+                            <i class="fas fa-info-circle text-amber-400 mr-1"></i>
+                            Demo credentials: any email + password (min 6 chars)
+                        </p>
+                    </div>
 
-                        <div class="mt-6 text-center">
-                            <p class="text-sm text-slate-400">
-                                ${isLogin ? "Don't have an account? " : "Already have an account? "}
-                                <button onclick="toggleAuthMode()" class="text-medical-400 hover:text-medical-300 font-medium transition-colors">
-                                    ${isLogin ? 'Sign Up' : 'Sign In'}
-                                </button>
-                            </p>
+                    <form id="auth-form" onsubmit="handleAuth(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+                            <input type="email" id="auth-email" placeholder="doctor@hospital.com" required
+                                class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
                         </div>
-
-                        <div class="mt-6 pt-6 border-t border-slate-700/20">
-                            <p class="text-xs text-slate-500 text-center leading-relaxed">
-                                <i class="fas fa-shield-halved mr-1"></i>
-                                Secure authentication powered by Supabase
-                            </p>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-2">Password</label>
+                            <input type="password" id="auth-password" placeholder="••••••••" required minlength="6"
+                                class="auth-input w-full rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:border-medical-500/50 transition-all">
                         </div>
+                        <button type="submit" 
+                            class="w-full py-3.5 rounded-xl bg-gradient-to-r from-medical-600 to-medical-700 text-white font-semibold text-sm btn-lift shadow-lg shadow-medical-500/20 hover:shadow-medical-500/30 transition-all">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Sign In (Demo)
+                        </button>
+                    </form>
+
+                    <div class="mt-6 pt-6 border-t border-slate-700/20">
+                        <p class="text-xs text-slate-500 text-center leading-relaxed">
+                            <i class="fas fa-shield-halved mr-1"></i>
+                            Demo mode - No actual authentication required
+                        </p>
                     </div>
                 </div>
-            `;
-        };
+            </div>
+        `;
 
         // ═══════════════════════════════════════════════════════════════
         // MAIN APP COMPONENTS
@@ -626,20 +522,16 @@
                         </div>
                         <p class="text-[11px] text-slate-500">AI inference ready</p>
                     </div>
-                    ${state.user ? `
                     <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-slate-800/30">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center text-white text-xs font-bold">
-                            ${state.user.email?.charAt(0).toUpperCase() || 'U'}
-                        </div>
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center text-white text-xs font-bold">DR</div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-xs font-medium text-white truncate">${state.user.email}</p>
-                            <p class="text-[10px] text-slate-500">${state.user.user_metadata?.full_name || 'Clinician'}</p>
+                            <p class="text-xs font-medium text-white truncate">Demo User</p>
+                            <p class="text-[10px] text-slate-500">Clinician</p>
                         </div>
                         <button onclick="handleSignOut()" class="p-1.5 rounded-lg hover:bg-slate-700/50 text-slate-500 hover:text-rose-400 transition-colors">
                             <i class="fas fa-sign-out-alt text-xs"></i>
                         </button>
                     </div>
-                    ` : ''}
                 </div>
             </aside>
             <div class="lg:hidden fixed inset-0 z-30 bg-black/50 backdrop-blur-sm transition-opacity ${state.sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}" onclick="toggleSidebar()"></div>
@@ -663,12 +555,10 @@
                         ${state.stats.urgent ? `<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full"></span>` : ''}
                     </button>
                     <div class="flex items-center gap-3 pl-4 border-l border-slate-700/30">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-medical-500/20">
-                            ${state.user?.email?.charAt(0).toUpperCase() || 'DR'}
-                        </div>
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-medical-500 to-medical-700 flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-medical-500/20">DR</div>
                         <div class="hidden sm:block">
-                            <p class="text-sm font-semibold text-white">${state.user?.user_metadata?.full_name || 'Dr. Smith'}</p>
-                            <p class="text-[11px] text-slate-500">${state.user?.email || 'Pathologist'}</p>
+                            <p class="text-sm font-semibold text-white">Dr. Smith</p>
+                            <p class="text-[11px] text-slate-500">Pathologist</p>
                         </div>
                     </div>
                 </div>
@@ -1247,7 +1137,7 @@
         };
 
         // ═══════════════════════════════════════════════════════════════
-        // AUTH HANDLERS
+        // AUTH HANDLERS (Demo mode - no actual auth)
         // ═══════════════════════════════════════════════════════════════
         const handleAuth = async (e) => {
             e.preventDefault();
@@ -1266,29 +1156,24 @@
 
             setLoading(true);
             try {
-                if (state.authMode === 'login') {
-                    await auth.signIn(email, password);
-                } else {
-                    const name = $('#auth-name').value || email.split('@')[0];
-                    await auth.signUp(email, password, name);
-                }
-                // After successful auth, load data and render
+                // Demo login - just simulate authentication
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                state.isAuthenticated = true;
+                state.user = { email, name: 'Demo User' };
+                toast('Welcome to Feldor Health!', 'success');
                 await Promise.all([loadStats(), loadCases()]);
                 render();
             } catch (e) {
                 console.error('Auth error:', e);
-                // Error already shown by toast
+                toast('Login failed. Please try again.', 'error');
             }
             setLoading(false);
         };
 
-        const toggleAuthMode = () => {
-            state.authMode = state.authMode === 'login' ? 'signup' : 'login';
-            render();
-        };
-
-        const handleSignOut = async () => {
-            await auth.signOut();
+        const handleSignOut = () => {
+            state.isAuthenticated = false;
+            state.user = null;
+            toast('Signed out', 'info');
             render();
         };
 
@@ -1348,35 +1233,15 @@
         const init = async () => {
             console.log('Initializing app...');
             console.log('API Base:', API_BASE);
-            console.log('Supabase URL:', SUPABASE_URL);
             
-            // Check for existing session
-            const session = await auth.getSession();
-            state.isAuthenticated = !!session;
-            if (session) {
-                state.user = session.user;
-            }
+            // Start with demo login page
+            state.isAuthenticated = false;
             
-            // Set up auth state listener
-            auth.onAuthStateChange((authenticated, user) => {
-                state.isAuthenticated = authenticated;
-                state.user = user;
-                if (authenticated) {
-                    loadStats();
-                    loadCases();
-                }
-                render();
-            });
-
-            // Load data if authenticated
-            if (state.isAuthenticated) {
-                setLoading(true);
-                try {
-                    await Promise.all([loadStats(), loadCases()]);
-                } catch (e) {
-                    console.error('Init data error:', e);
-                }
-                setLoading(false);
+            // Try to load data in background (will show auth page first)
+            try {
+                await Promise.all([loadStats(), loadCases()]);
+            } catch (e) {
+                console.error('Background data load error:', e);
             }
             
             render();
@@ -1391,7 +1256,6 @@
         window.filterCases = filterCases;
         window.toggleSidebar = toggleSidebar;
         window.handleAuth = handleAuth;
-        window.toggleAuthMode = toggleAuthMode;
         window.handleSignOut = handleSignOut;
         window.loadStats = loadStats;
         window.loadCases = loadCases;
